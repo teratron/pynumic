@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pynumic"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simple neural network library"
 authors = ["Oleg Alexandrov <alexandrovoleg.ru@gmail.com>"]
 license = "Apache-2.0"
@@ -41,6 +41,7 @@ pylint = "^2.16.1"
 flake8 = "^6.0.0"
 autopep8 = "^2.0.1"
 bandit = "^1.7.4"
+pynumic = { path = "src/pynumic/", develop = true }
 
 [tool.poetry.group.typing.dependencies]
 mypy = "^0.991"

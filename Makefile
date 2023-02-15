@@ -1,42 +1,49 @@
 # Main scripts for the project.
 
-VENV    ?= .venv
-VENV_BIN = $(shell ls -A $(VENV) | grep -E "bin|Scripts")
+VENV     = .venv
+VENV_BIN = $(VENV)/$(shell ls -A $(VENV) | grep -E "bin|Scripts")
+
+init: ## initialize poetry
+	@python -m venv $(VENV)
+	@make install
 
 install: ## install poetry
-	python -m venv $(VENV)
-	make upgrade
-	$(VENV)/$(VENV_BIN)/pip install -U pip setuptools
-	$(VENV)/$(VENV_BIN)/pip install poetry
-	poetry lock
+ifeq ($(shell find . -type d -name $(VENV)), ./$(VENV))
+	@make upgrade
+	@$(VENV_BIN)/pip install -U pip setuptools
+	@$(VENV_BIN)/pip install poetry
+	@poetry lock
+else
+	@make install
+endif
 
 upgrade: ## upgrade pip
-	$(VENV)/$(VENV_BIN)/python -m pip install --upgrade pip
+	@$(VENV_BIN)/python -m pip install --upgrade pip
 
 update: ## update poetry
-	poetry update
-	poetry self update
+	@poetry update
+	@poetry self update
 
 check: ## check poetry
-	poetry check
+	@poetry check
 
 build: check ## build project
-	poetry build
+	@poetry build
 
 publish: build ## publish project
-	poetry publish
+	@poetry publish
 
 lint: ## lint project
-	mypy src --ignore-missing-imports
-	flake8 src --ignore=$(shell cat .flakeignore)
-	black src
-	pylint src
+	@mypy src --ignore-missing-imports
+	@flake8 src --ignore=$(shell cat .flakeignore)
+	@black src
+	@pylint src
 
 clean: ## clean
 	@rm -rf .pytest_cache/ .mypy_cache/ junit/ build/ dist/
-	@find . -not -path "./*venv*" -path "*/__pycache__*" -delete
-	@find . -not -path "./*venv*" -path "*/*.egg-info*" -delete
-	poetry cache clear pypi --all
+	@find . -not -path "./$(VENV)" -path "*/__pycache__*" -delete
+	@find . -not -path "./$(VENV)" -path "*/*.egg-info*" -delete
+	@poetry cache clear pypi --all
 
 # Publish docs to github pages.
 
@@ -47,7 +54,7 @@ DOCS_DIR     = docs
 BUILD_DIR    = $(DOCS_DIR)/build
 
 html: ## build html docs
-	make -C $(DOCS_DIR) html
+	@make -C $(DOCS_DIR) html
 
 gh-deploy: html ## deploy docs to github pages
 ifeq ($(shell git ls-remote --heads . $(GH_BRANCH) | wc -l), 1)
@@ -76,7 +83,7 @@ endif
 set-url: ## git remote set-url origin git@github.com:login/repo.git
 	git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
-.PHONY: help clean install upgrade update check build publish lint gh-deploy html set-url
+.PHONY: help clean init install upgrade update check build publish lint gh-deploy html set-url
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \
