@@ -1,10 +1,10 @@
-from pynumic import PyNumic
+from pynumic import Pynumic
 
 if __name__ == "__main__":
     # Returns a new neural network
     # instance with the default parameters,
     # same n = nn.New("perceptron").
-    pn = PyNumic()
+    pn = Pynumic()
 
     # Properties.
     pn.hidden_layers = [3, 2]

@@ -1,4 +1,4 @@
-from pynumic import PyNumic
+from pynumic import Pynumic
 
 # from timeit import timeit
 
@@ -33,9 +33,9 @@ json_stream = """
 
 if __name__ == "__main__":
     # Returns a new neural network instance from config.
-    pn = PyNumic(json_stream)
-    # pn = PyNumic(json_stream, **{"name": "perceptron"})
-    # pn = PyNumic("-perceptron", **{"-name": "perceptron"})
+    pn = Pynumic(json_stream)
+    # pn = Pynumic(json_stream, **{"name": "perceptron"})
+    # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
 
     # print(timeit(pn))
 

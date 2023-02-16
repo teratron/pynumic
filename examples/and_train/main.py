@@ -1,4 +1,4 @@
-from pynumic import PyNumic
+from pynumic import Pynumic
 
 props = {
     "name": "perceptron",
@@ -28,8 +28,8 @@ props = {
 
 if __name__ == "__main__":
     # Returns a new neural network instance from config.
-    pn = PyNumic(**props)
-    # pn = PyNumic(**{"name": "perceptron"})
+    pn = Pynumic(**props)
+    # pn = Pynumic(**{"name": "perceptron"})
 
     # Dataset:
     data_input = [0.27, 0.31, 0.52]  # input dataset.

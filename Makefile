@@ -8,11 +8,14 @@ init: ## initialize poetry
 	@make install
 
 install: ## install poetry
-ifeq ($(shell find . -type d -name $(VENV)), ./$(VENV))
+ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@make upgrade
 	@$(VENV_BIN)/pip install -U pip setuptools
 	@$(VENV_BIN)/pip install poetry
+	@make check
 	@poetry lock
+	@poetry install
+	@make dev
 else
 	@make install
 endif
@@ -26,6 +29,9 @@ update: ## update poetry
 
 check: ## check poetry
 	@poetry check
+
+dev: check ## dev
+	@$(VENV_BIN)/pip install -e .
 
 build: check ## build project
 	@poetry build
@@ -83,7 +89,7 @@ endif
 set-url: ## git remote set-url origin git@github.com:login/repo.git
 	git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
-.PHONY: help clean init install upgrade update check build publish lint gh-deploy html set-url
+.PHONY: help clean init install upgrade update dev check build publish lint gh-deploy html set-url
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \

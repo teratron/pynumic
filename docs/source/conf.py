@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath("../src"))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "PyNumic"
+project = "Pynumic"
 project_copyright = "2023, Oleg Alexandrov"
 author = "Oleg Alexandrov"
 version = __version__

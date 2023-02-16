@@ -1,4 +1,3 @@
-from pynumic import PyNumic
-import pynumic
+from .pynumic import Pynumic
 
-__all__ = ["PyNumic"]
+__all__ = ["Pynumic"]

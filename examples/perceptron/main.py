@@ -1,19 +1,19 @@
 import time
 
-from pynumic import PyNumic
+from pynumic import Pynumic
 
 if __name__ == "__main__":
     # Returns a new neural network
     # instance with the default parameters
     # for Perceptron neural network.
-    pn = PyNumic(
-        "perceptron",
-        bias=True,
-        hidden_layers=[5, 3],
-        activation_mode=PyNumic.TANH,
-        loss_mode=PyNumic.MSE,
-        loss_limit=1e-6,
-        rate=0.3,
+    pn = Pynumic(
+            "perceptron",
+            bias=True,
+            hidden_layers=[5, 3],
+            activation_mode=Pynumic.TANH,
+            loss_mode=Pynumic.MSE,
+            loss_limit=1e-6,
+            rate=0.3,
     )
 
     pn.query([0.1, 0.2])
