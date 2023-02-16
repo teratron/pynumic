@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 
 from pynumic.architecture.perceptron.perceptron import Perceptron
@@ -11,6 +13,7 @@ def train(obj: Perceptron, *args: Any, **kwargs: Any) -> tuple[int, float]:
 def and_train(obj: Perceptron, *args: Any, **kwargs: Any) -> tuple[int, float]:
     print(obj, args, kwargs)
     return 0, 0.1
+
 
 # // MaxIteration the maximum number of iterations after which training is forcibly terminated.
 # const MaxIteration int = 1e+06

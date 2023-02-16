@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import random
 from typing import Any
 
@@ -12,8 +14,7 @@ from pynumic.interface import Interface
 
 
 class Perceptron(Interface, Propagation):  # Properties
-    """Perceptron is neural network.
-    """
+    """Perceptron is neural network."""
 
     print("Perceptron")
     name: str = "perceptron"
@@ -32,7 +33,8 @@ class Perceptron(Interface, Propagation):  # Properties
             del props["weights"]
         else:
             self.weights = [
-                [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
+                [[random.uniform(-0.5, 0.5) for _ in range(5)]
+                 for _ in range(5)]
                 for _ in range(5)
             ]
 

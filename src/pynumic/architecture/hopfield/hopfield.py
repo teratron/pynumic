@@ -5,8 +5,7 @@ from pynumic.interface import Interface
 
 
 class Hopfield(Interface, Properties):
-    """Hopfield is neural network.
-    """
+    """Hopfield is neural network."""
 
     print("Hopfield")
     name: str = "hopfield"
@@ -19,29 +18,25 @@ class Hopfield(Interface, Properties):
         Properties.__init__(self, **props)
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
-        """Initialize neural network."""
+        # initialize(self, *args, **kwargs)
         pass
 
     def set_props(self, *args: Any, **kwargs: Any) -> None:
-        """Set properties of neural network."""
+        # set_props(self, *args, **kwargs)
         pass
 
     def verify(self, *args: Any, **kwargs: Any) -> float:
-        """Verifying dataset."""
-        pass
+        # return verify(self, *args, **kwargs)
+        return 0
 
     def query(self, *args: Any, **kwargs: Any) -> list[float]:
-        """Querying dataset."""
-        pass
+        # return query(self, args, **kwargs)
+        return [0]
 
     def train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
-        """Training dataset."""
-        pass
+        # return train(self, *args, **kwargs)
+        return 0, 0
 
     def and_train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
-        """Training dataset after the query."""
-        pass
-
-    def write(self, *args: Any, **kwargs: Any) -> None:
-        """Writes the configuration and weights to a file."""
-        pass
+        # return and_train(self, *args, **kwargs)
+        return 0, 0

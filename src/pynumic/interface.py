@@ -4,8 +4,7 @@ from typing import Any, Optional
 
 
 class Interface(ABC):
-    """Interface for neural network.
-    """
+    """Interface for neural network."""
 
     name: str = "interface"
     type: str = "Interface"
@@ -46,12 +45,12 @@ class Interface(ABC):
         ...
 
     def write(
-            self,
-            *,
-            filename: str | None = None,
-            flag: str | None = None,
-            config: str | None = None,
-            weights: str | None = None
+        self,
+        *,
+        filename: str | None = None,
+        flag: str | None = None,
+        config: str | None = None,
+        weights: str | None = None,
     ) -> None:
         """Writes the configuration and weights to a file.
 
@@ -81,7 +80,8 @@ class Interface(ABC):
     def __dir__(self) -> list[str]:
         """Returns all members and all public methods."""
         return (
-                ["__class__", "__doc__", "__module__"] +
-                [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"] +
-                [m for m in self.__dict__ if m[0] != "_"]
+            ["__class__", "__doc__", "__module__"]
+            + [m for cls in self.__class__.mro()
+               for m in cls.__dict__ if m[0] != "_"]
+            + [m for m in self.__dict__ if m[0] != "_"]
         )

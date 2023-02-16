@@ -12,8 +12,7 @@ class Neuron:
 
 
 class Properties(Bias, Layer, Activation, Loss, Rate):
-    """Properties of neural network.
-    """
+    """Properties of neural network."""
 
     # __slots__ = (
     #     "_name",
@@ -26,15 +25,15 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
     # )
 
     def __init__(
-            self,
-            name: str,  # TODO: ?
-            *,
-            bias: bool = True,
-            hidden_layers: LayerType = None,
-            activation_mode: int = Activation.TANH,
-            loss_mode: int = Loss.RMSE,
-            loss_limit: float = 0.1e-3,
-            rate: float = Rate.DEFAULT_RATE,
+        self,
+        name: str,  # TODO: ?
+        *,
+        bias: bool = True,
+        hidden_layers: LayerType = None,
+        activation_mode: int = Activation.TANH,
+        loss_mode: int = Loss.RMSE,
+        loss_limit: float = 0.1e-3,
+        rate: float = Rate.DEFAULT_RATE,
     ) -> None:
         self.name: str = name
         self.bias: bool = bias

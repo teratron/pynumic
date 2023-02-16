@@ -4,8 +4,7 @@ LayerType = Optional[list[int]]
 
 
 class Layer:
-    """Layer.
-    """
+    """Layer."""
 
     _hidden_layers: LayerType = None
 

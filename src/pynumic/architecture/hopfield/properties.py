@@ -1,6 +1,5 @@
 class Properties:
-    """Properties of neural network.
-    """
+    """Properties of neural network."""
 
     __slots__ = (
         "_name",

@@ -26,8 +26,7 @@ class LossMode:
 
 
 class Loss(LossMode):
-    """Loss.
-    """
+    """Loss."""
 
     _loss_mode: int = LossMode.MSE
     _loss_limit: float = 0.1e-6
@@ -85,10 +84,10 @@ def total_loss(mode: int = Loss.MSE) -> _OuterType:
                 _loss = math.sqrt(_loss)
 
             if math.isnan(_loss):
-                raise ValueError(f'{__name__}: loss not-a-number value')
+                raise ValueError(f"{__name__}: loss not-a-number value")
 
             if math.isinf(_loss):
-                raise ValueError(f'{__name__}: loss is infinity')
+                raise ValueError(f"{__name__}: loss is infinity")
 
             return _loss
 
@@ -104,4 +103,4 @@ def __get_loss(value: float, mode: int) -> float:
         case Loss.ARCTAN:
             return math.atan(value) ** 2
         case Loss.MSE | Loss.RMSE | _:
-            return value ** 2
+            return value**2
