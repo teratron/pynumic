@@ -1,5 +1,5 @@
 from typing import Iterable
 
-VERSION: Iterable[int] = (0, 1, 2)
+VERSION: Iterable[int] = (0, 1, 4)
 __version__: str = ".".join(map(str, VERSION))
 """Version."""

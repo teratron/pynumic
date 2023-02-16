@@ -9,19 +9,16 @@ init: ## initialize poetry
 
 install: ## install poetry
 ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
-	@make upgrade
+	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@$(VENV_BIN)/pip install -U pip setuptools
 	@$(VENV_BIN)/pip install poetry
-	@make check
+	@poetry check
 	@poetry lock
 	@poetry install
-	@make dev
+	@$(VENV_BIN)/pip install -e . # dev
 else
 	@make install
 endif
-
-upgrade: ## upgrade pip
-	@$(VENV_BIN)/python -m pip install --upgrade pip
 
 update: ## update poetry
 	@poetry update
@@ -29,9 +26,6 @@ update: ## update poetry
 
 check: ## check poetry
 	@poetry check
-
-dev: check ## dev
-	@$(VENV_BIN)/pip install -e .
 
 build: check ## build project
 	@poetry build
@@ -59,10 +53,8 @@ MAIN_BRANCH ?= master
 DOCS_DIR     = docs
 BUILD_DIR    = $(DOCS_DIR)/build
 
-html: ## build html docs
+gh-deploy: ## deploy docs to github pages
 	@make -C $(DOCS_DIR) html
-
-gh-deploy: html ## deploy docs to github pages
 ifeq ($(shell git ls-remote --heads . $(GH_BRANCH) | wc -l), 1)
 	@echo "--- Local branch $(GH_BRANCH) exist."
 	@echo
@@ -89,7 +81,7 @@ endif
 set-url: ## git remote set-url origin git@github.com:login/repo.git
 	git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
-.PHONY: help clean init install upgrade update dev check build publish lint gh-deploy html set-url
+.PHONY: help init install update check build publish lint clean gh-deploy set-url
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \

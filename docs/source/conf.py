@@ -8,14 +8,14 @@ import sys
 
 from pynumic.__version__ import __version__
 
-sys.path.insert(0, os.path.abspath("../src"))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "..", "src")))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "Pynumic"
-project_copyright = "2023, Oleg Alexandrov"
 author = "Oleg Alexandrov"
+project = "PyNumic"
+project_copyright = "2023, " + author
 version = __version__
 release = __version__
 
