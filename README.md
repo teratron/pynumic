@@ -2,16 +2,18 @@
 
     under construction
 
+___
+
+[![Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
+[![Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
+[![License](https://img.shields.io/github/license/zigenzoog/pynumic)](https://pypi.org/project/pynumic)
+[![Code style: docformatter](https://img.shields.io/badge/%20formatter-docformatter-fedcba.svg)](https://github.com/PyCQA/docformatter)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+______
+
 ## Description
 
 Simple neural network library for python.
-
-## Badges
-
-    On some READMEs, you may see small images that convey metadata,\
-    such as whether or not all the tests are passing for the project.\
-    You can use Shields to add some to your README.\
-    Many services also have instructions for adding a badge.
 
 ## Visuals
 
@@ -88,3 +90,5 @@ You can find examples of neural networks in the
 ## Project status
 
 Project at the initial stage.
+
+![My Skills](https://skillicons.dev/icons?i=py,git,github)
