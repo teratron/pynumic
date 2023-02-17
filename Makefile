@@ -89,7 +89,7 @@ set-url: ## git remote set-url origin git@github.com:login/repo.git
 	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
 env-prepare: # создать .env-файл для секретов
-	@cp -n .env.template .env || true
+	@cp -n .env.sample .env || true
 
 .PHONY: help setup install update check build publish lint clean gh-deploy set-url
 help:
