@@ -14,7 +14,7 @@ class Pynumic:
 
     Pynumic(reader: str, **props)
 
-    Examples:
+    :Examples:
 
         - Pynumic()
         - Pynumic("perceptron")
@@ -34,4 +34,16 @@ class Pynumic:
     """
 
     def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
+        """Returns a new neural network instance of one of the architectures.
+        :param reader: string variable through which is passed:
+                * Name of the neural network ("perceptron" or "hopfield")
+                * Filename of json config ("config.json")
+                * Directly json dump passed as a string ("{'name': 'perceptron', ...}")
+        :param props: properties of the neural network.
+        :type reader:
+        :type props:
+        :return:
+        :rtype:
+        """
         return architecture(reader, **props)
+        # return super().__new__(architecture(reader, **props))

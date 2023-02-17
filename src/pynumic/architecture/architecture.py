@@ -6,8 +6,8 @@ from typing import Any
 def architecture(reader: str, **props: Any) -> Any:
     """Returns an instance of one of the architectures.
     :param reader:
-    :type reader:
     :param props:
+    :type reader:
     :type props:
     :return:
     """

@@ -2,8 +2,10 @@ from abc import ABC, abstractmethod
 from asyncio import Lock
 from typing import Any, Optional
 
+from pynumic import Pynumic
 
-class Interface(ABC):
+
+class Interface(ABC, Pynumic):
     """Interface for neural network."""
 
     name: str = "interface"

@@ -1,13 +1,11 @@
 from typing import Iterable
 
+from pynumic.architecture.perceptron.properties import Properties
 from pynumic.properties.loss import total_loss
-from .properties import Properties
 
 
 class Propagation(Properties):
     """Propagation."""
-
-    # loss_mode: int
 
     def calc_neurons(self) -> None:
         """Calculating neurons."""
@@ -22,14 +20,9 @@ class Propagation(Properties):
                 for k in range(len(self.data_weight[i][j])):
                     if k < length:
                         if i > 0:
-                            self.neurons[i][j].value += (
-                                self.neurons[dec][k].value *
-                                self.data_weight[i][j][k]
-                            )
+                            self.neurons[i][j].value += self.neurons[dec][k].value * self.data_weight[i][j][k]
                         else:
-                            self.neurons[i][j].value += (
-                                self.data_input[k] * self.data_weight[i][j][k]
-                            )
+                            self.neurons[i][j].value += self.data_input[k] * self.data_weight[i][j][k]
                     else:
                         self.neurons[i][j].value += self.data_weight[i][j][k]
                     num += 1
@@ -38,9 +31,7 @@ class Propagation(Properties):
                     if num > 0:
                         self.neurons[i][j].value /= num
                 else:
-                    self.neurons[i][j].value = self.get_activation(
-                        self.neurons[i][j].value
-                    )
+                    self.neurons[i][j].value = self.get_activation(self.neurons[i][j].value)
 
     @total_loss(0)  # self.loss_mode
     def calc_loss(self) -> Iterable[float]:
@@ -85,10 +76,7 @@ class Propagation(Properties):
                 for j in range(len(self.neurons[i])):
                     self.neurons[i][j].miss = 0.0
                     for k in range(len(self.neurons[inc])):
-                        self.neurons[i][j].miss += (
-                            self.neurons[inc][k].miss *
-                            self.data_weight[inc][k][j]
-                        )
+                        self.neurons[i][j].miss += self.neurons[inc][k].miss * self.data_weight[inc][k][j]
 
     def update_weights(self) -> None:
         """Update weights."""
@@ -99,11 +87,7 @@ class Propagation(Properties):
                 length = len(self.neurons[dec])
 
             for j in range(len(self.data_weight[i])):
-                grad = (
-                    self.rate
-                    * self.neurons[i][j].miss
-                    * self.get_derivative(self.neurons[i][j].value)
-                )
+                grad = self.rate * self.neurons[i][j].miss * self.get_derivative(self.neurons[i][j].value)
 
                 for k in range(len(self.data_weight[i][j])):
                     if k < length:

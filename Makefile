@@ -3,7 +3,7 @@
 VENV     = .venv
 VENV_BIN = $(VENV)/$(shell ls -A $(VENV) | grep -E "bin|Scripts")
 
-init: ## initialize poetry
+setup: ## setup virtual environment and poetry
 	@python -m venv $(VENV)
 	@make install
 
@@ -27,7 +27,7 @@ update: ## update poetry
 check: ## check poetry
 	@poetry check
 
-build: check ## build project
+build: check clean ## build project
 	@poetry build
 
 publish: build ## publish project
@@ -39,17 +39,24 @@ lint: ## lint project
 	@black src
 	@pylint src
 
+test-find:
+#	@echo $(shell ls -AR | grep -E "*__pycache__*|*.mypy_cache*|*.egg-info*")
+	@echo $(shell ls -R $(shell ls -A | grep -vE "$(VENV)|.git*|.idea|.mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit") \
+	| grep -E ".mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit")
+
 clean: ## clean
+	@poetry cache clear pypi --all
 	@rm -rf .pytest_cache/ .mypy_cache/ junit/ build/ dist/
+ifeq ($(OS), Linux)
 	@find . -not -path "./$(VENV)" -path "*/__pycache__*" -delete
 	@find . -not -path "./$(VENV)" -path "*/*.egg-info*" -delete
-	@poetry cache clear pypi --all
+endif
 
 # Publish docs to github pages.
 
+MAIN_BRANCH ?= master
 GH_BRANCH   ?= gh-pages
 GH_REMOTE   ?= origin
-MAIN_BRANCH ?= master
 DOCS_DIR     = docs
 BUILD_DIR    = $(DOCS_DIR)/build
 
@@ -65,7 +72,7 @@ endif
 	@echo
 	@git checkout --orphan $(GH_BRANCH)
 	@echo "--- Created orphan branch $(GH_BRANCH)."
-	@rm -rf $(shell ls -A | grep -vE "Makefile|$(DOCS_DIR)|.git\b|$(VENV)|.idea|.fleet|.vscode")
+	@rm -rf $(shell ls -A | grep -vE "Makefile|.git\b|$(DOCS_DIR)|$(VENV)|.idea|.fleet|.vscode")
 	@echo "--- Removed contents of branch $(GH_BRANCH)."
 	@mv -f $(BUILD_DIR)/html/{.[!.],}* $(DOCS_DIR)/.gitignore $(DOCS_DIR)/README.md .
 	@echo "--- Moved contents from docs to root of branch $(GH_BRANCH)."
@@ -79,9 +86,12 @@ endif
 	@echo "--- Finished script to create and push $(GH_REMOTE) $(GH_BRANCH)."
 
 set-url: ## git remote set-url origin git@github.com:login/repo.git
-	git remote set-url origin git@github.com:zigenzoog/pynumic.git
+	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
-.PHONY: help init install update check build publish lint clean gh-deploy set-url
+env-prepare: # создать .env-файл для секретов
+	@cp -n .env.template .env || true
+
+.PHONY: help setup install update check build publish lint clean gh-deploy set-url
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \
