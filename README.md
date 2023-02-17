@@ -2,14 +2,15 @@
 
     under construction
 
-___
-
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynumic)](https://pypi.org/project/pynumic)
 [![PyPI - Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
 [![PyPI - Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
 [![License](https://img.shields.io/github/license/zigenzoog/pynumic)](https://pypi.org/project/pynumic)
-[![Code style: docformatter](https://img.shields.io/badge/%20formatter-docformatter-fedcba.svg)](https://github.com/PyCQA/docformatter)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-______
+[![Code style: docformatter](https://img.shields.io/badge/%20formatter-docformatter-fedcba)](https://github.com/PyCQA/docformatter)
+[![Code style: mypy](https://img.shields.io/badge/code%20style-mypy-green)](https://github.com/python/mypy)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000)](https://github.com/psf/black)
+
+___
 
 ## Description
 
@@ -91,4 +92,8 @@ You can find examples of neural networks in the
 
 Project at the initial stage.
 
-![My Skills](https://skillicons.dev/icons?i=py,git,github)
+See the latest commits on [https://github.com/teratron/pynumic](https://github.com/teratron/pynumic)
+
+---
+
+![My Skills](https://skillicons.dev/icons?i=py,golang,javascript,react,html,css,sass,git,github)

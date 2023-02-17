@@ -39,10 +39,10 @@ lint: ## lint project
 	@black src
 	@pylint src
 
-test-find:
+#test-find:
 #	@echo $(shell ls -AR | grep -E "*__pycache__*|*.mypy_cache*|*.egg-info*")
-	@echo $(shell ls -R $(shell ls -A | grep -vE "$(VENV)|.git*|.idea|.mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit") \
-	| grep -E ".mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit")
+#	@echo $(shell ls -R $(shell ls -A | grep -vE "$(VENV)|.git*|.idea|.mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit") \
+#	| grep -E ".mypy_cache|.pytest_cache|.egg-info|__pycache__|build|dist|junit")
 
 clean: ## clean
 	@poetry cache clear pypi --all
