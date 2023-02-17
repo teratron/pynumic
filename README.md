@@ -4,8 +4,8 @@
 
 ___
 
-[![Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
-[![Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
+[![PyPI - Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
+[![PyPI - Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
 [![License](https://img.shields.io/github/license/zigenzoog/pynumic)](https://pypi.org/project/pynumic)
 [![Code style: docformatter](https://img.shields.io/badge/%20formatter-docformatter-fedcba.svg)](https://github.com/PyCQA/docformatter)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
