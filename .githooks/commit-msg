@@ -9,14 +9,9 @@ Next to update the configurations so that git knows where our hooks:
 """
 
 import os
-
-# Change version at pyproject.toml
-# poetry_config = os.path.join("..", "pyproject.toml")
 import sys
 
 poetry_config = os.path.abspath("pyproject.toml")
-#
-# print(poetry_config)
 
 with open(poetry_config) as handle:
     lines = handle.readlines()
