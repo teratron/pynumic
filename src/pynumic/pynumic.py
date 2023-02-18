@@ -30,7 +30,7 @@ class Pynumic:
         - Name of the neural network ("perceptron" or "hopfield");
         - Filename of json config ("config.json");
         - Directly json dump passed as a string ("{'name': 'perceptron', ...}").
-    **kwargs -- properties of the neural network.
+    **props -- properties of the neural network.
     """
 
     def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
