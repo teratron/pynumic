@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Configuring custom git hook path
 Creating a separate folder .githooks in the root directory of the project
 and add all the hooks there (i.e. pre-commit, prepare-commit-msg, commit-msg, etc.).
