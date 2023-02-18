@@ -10,6 +10,8 @@ Next to update the configurations so that git knows where our hooks:
 
 import os
 
+print("----------- start script -----------")
+
 
 def main():
     poetry_config = os.path.abspath("pyproject.toml")
@@ -38,3 +40,5 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+
+print("----------- end script -----------")
