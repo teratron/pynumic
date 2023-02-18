@@ -91,6 +91,7 @@ set-url: ## git remote set-url origin git@github.com:login/repo.git
 git-hooks:
 	@mkdir .githooks || true
 	@git config --global core.hooksPath .githooks
+#	@git config --global --unset-all core.hooksPath
 
 env-prepare: # создать .env-файл для секретов
 	@cp -n .env.sample .env || true

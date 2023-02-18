@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Configuring custom git hook path
 Creating a separate folder .githooks in the root directory of the project
 and add all the hooks there (i.e. pre-commit, prepare-commit-msg, commit-msg, etc.).
@@ -9,30 +10,30 @@ Next to update the configurations so that git knows where our hooks:
 
 import os
 
-print("----------- start script -----------")
+print('----------- start script -----------')
 
 
 def main():
-    poetry_config = os.path.abspath("pyproject.toml")
+    poetry_config = os.path.abspath('pyproject.toml')
 
     with open(poetry_config) as handle:
         lines = handle.readlines()
 
         i = 0
         for line in lines:
-            ind = line.find("=")
+            ind = line.find('=')
             key = line[:ind].strip()
             value = line[ind + 1:].strip()
 
-            if ind > 0 and key == "version":
-                version = list(map(int, value.strip('"').split(".")))
+            if ind > 0 and key == 'version':
+                version = list(map(int, value.strip('"').split('.')))
                 version[2] += 1
-                __version__ = ".".join(map(str, version))
+                __version__ = '.'.join(map(str, version))
                 lines[i] = line.replace(value, f'"{__version__}"')
                 break
             i += 1
 
-    with open(poetry_config, "w") as handle:
+    with open(poetry_config, 'w') as handle:
         for line in lines:
             handle.writelines(line)
 
@@ -40,4 +41,4 @@ def main():
 if __name__ == '__main__':
     raise SystemExit(main())
 
-print("----------- end script -----------")
+print('----------- end script -----------')
