@@ -5,7 +5,7 @@ and add all the hooks there (i.e. pre-commit, prepare-commit-msg, commit-msg, et
 
 Next to update the configurations so that git knows where our hooks:
 
-`git config core.hooksPath .githooks`
+`git config --global core.hooksPath .githooks`
 """
 
 import os
