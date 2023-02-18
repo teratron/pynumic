@@ -1,3 +1,2 @@
 #!/bin/sh
-#python .githooks/prepare-commit-msg.py "Hop-hey"
-python .githooks/pre-commit.py
+python .githooks/prepare-commit-msg.py "hop_hey.txt"
