@@ -42,7 +42,7 @@ class Activation(ActivationMode):
 
     @classmethod
     def __check(cls, value: int) -> int:
-        return cls.SIGMOID if cls.LINEAR > value > cls.TANH else value
+        return cls.SIGMOID if value < cls.LINEAR or value > cls.TANH else value
 
     def get_activation(self, value: float) -> float:
         return get_activation(value, self._activation_mode)

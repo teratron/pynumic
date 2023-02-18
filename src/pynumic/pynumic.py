@@ -1,7 +1,6 @@
 from typing import Any
 
 from pynumic.architecture.architecture import architecture
-from pynumic.architecture.perceptron.perceptron import Perceptron
 
 
 # from pynumic.architecture.architecture import architecture, NNN
@@ -33,7 +32,9 @@ class Pynumic:
     **props -- properties of the neural network.
     """
 
-    def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
+    # from pynumic.architecture.perceptron.perceptron import Perceptron
+
+    def __new__(cls, reader: str = "", **props: Any) -> Any:
         """Returns a new neural network instance of one of the architectures.
         :param reader: string variable through which is passed:
                 * Name of the neural network ("perceptron" or "hopfield")

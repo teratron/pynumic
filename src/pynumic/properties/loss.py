@@ -42,7 +42,7 @@ class Loss(LossMode):
 
     @classmethod
     def __check_mode(cls, value: int) -> int:
-        return cls.MSE if cls.MSE > value > cls.AVG else value
+        return cls.MSE if value < cls.MSE or value > cls.AVG else value
 
     @property
     def loss_limit(self) -> float:
