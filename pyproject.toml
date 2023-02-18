@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pynumic"
-version = "0.1.6"
+version = "0.1.7"
 description = "Simple neural network library"
 authors = ["Oleg Alexandrov <alexandrovoleg.ru@gmail.com>"]
 license = "MIT"
