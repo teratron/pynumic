@@ -9,29 +9,32 @@ Next to update the configurations so that git knows where our hooks:
 """
 
 import os
-import sys
 
-poetry_config = os.path.abspath("pyproject.toml")
 
-with open(poetry_config) as handle:
-    lines = handle.readlines()
+def main():
+    poetry_config = os.path.abspath("pyproject.toml")
 
-    i = 0
-    for line in lines:
-        ind = line.find("=")
-        key = line[:ind].strip()
-        value = line[ind + 1:].strip()
+    with open(poetry_config) as handle:
+        lines = handle.readlines()
 
-        if ind > 0 and key == "version":
-            version = list(map(int, value.strip('"').split(".")))
-            version[2] += 1
-            __version__ = ".".join(map(str, version))
-            lines[i] = line.replace(value, f'"{__version__}"')
-            break
-        i += 1
+        i = 0
+        for line in lines:
+            ind = line.find("=")
+            key = line[:ind].strip()
+            value = line[ind + 1:].strip()
 
-with open(poetry_config, "w") as handle:
-    for line in lines:
-        handle.writelines(line)
+            if ind > 0 and key == "version":
+                version = list(map(int, value.strip('"').split(".")))
+                version[2] += 1
+                __version__ = ".".join(map(str, version))
+                lines[i] = line.replace(value, f'"{__version__}"')
+                break
+            i += 1
 
-sys.exit(0)
+    with open(poetry_config, "w") as handle:
+        for line in lines:
+            handle.writelines(line)
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
