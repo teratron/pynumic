@@ -46,8 +46,8 @@ repos:
   - repo: https://github.com/pycqa/docformatter
     rev: v1.5.1
     hooks:
-      - id: docformatter # Formats docstrings to follow PEP 257.
-      - id: docformatter-venv # Formats docstrings to follow PEP 257. Uses python3 -m venv.
+      - id: docformatter
+      - id: docformatter-venv
 
   - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
