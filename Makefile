@@ -89,7 +89,7 @@ set-url: ## git remote set-url origin git@github.com:login/repo.git
 	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
 git-hooks:
-	@mkdir .githooks
+	@mkdir .githooks || true
 	@git config core.hooksPath .githooks
 
 env-prepare: # создать .env-файл для секретов
