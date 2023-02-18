@@ -12,6 +12,8 @@ import os
 
 # Change version at pyproject.toml
 # poetry_config = os.path.join("..", "pyproject.toml")
+import sys
+
 poetry_config = os.path.abspath("pyproject.toml")
 #
 # print(poetry_config)
@@ -36,3 +38,5 @@ with open(poetry_config) as handle:
 with open(poetry_config, "w") as handle:
     for line in lines:
         handle.writelines(line)
+
+sys.exit(0)
