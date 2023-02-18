@@ -31,18 +31,25 @@ repos:
     hooks:
       - id: black
 
-  - repo: https://github.com/PyCQA/isort
-    rev: v5.11.5
+  - repo: https://github.com/pycqa/isort
+    rev: 5.11.2
     hooks:
       - id: isort
+        name: isort (python)
+      - id: isort
+        name: isort (cython)
+        types: [ cython ]
+      - id: isort
+        name: isort (pyi)
+        types: [ pyi ]
 
-  - repo: https://github.com/PyCQA/docformatter
+  - repo: https://github.com/pycqa/docformatter
     rev: v1.5.1
     hooks:
       - id: docformatter # Formats docstrings to follow PEP 257.
       - id: docformatter-venv # Formats docstrings to follow PEP 257. Uses python3 -m venv.
 
-  - repo: https://github.com/PyCQA/flake8
+  - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
       - id: flake8

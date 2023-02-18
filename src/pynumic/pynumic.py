@@ -1,6 +1,6 @@
 from typing import Any
 
-from pynumic.architecture import architecture
+from pynumic.architecture.architecture import architecture
 from pynumic.architecture.perceptron.perceptron import Perceptron
 
 

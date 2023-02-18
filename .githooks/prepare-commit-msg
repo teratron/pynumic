@@ -1,0 +1,2 @@
+#!/bin/sh
+python .githooks/prepare-commit-msg.py "Hop-hey"
