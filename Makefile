@@ -15,10 +15,13 @@ ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@poetry check
 	@poetry lock
 	@poetry install
-	@$(VENV_BIN)/pip install -e . # dev
+	@make dev
 else
 	@make install
 endif
+
+dev: ## dev
+	@$(VENV_BIN)/pip install -e .
 
 update: ## update poetry
 	@poetry update
@@ -33,11 +36,9 @@ build: check clean ## build project
 publish: build ## publish project
 	@poetry publish
 
-lint: ## lint project
-	@mypy src --ignore-missing-imports
-	@flake8 src --ignore=$(shell cat .flakeignore)
-	@black src
-	@pylint src
+test: dev ## test
+	pytest --doctest-modules --junitxml=junit/test-results.xml
+	bandit -r src -f xml -o junit/security.xml || true
 
 #test-find:
 #	@echo $(shell ls -AR | grep -E "*__pycache__*|*.mypy_cache*|*.egg-info*")
@@ -51,6 +52,12 @@ ifeq ($(OS), Linux)
 	@find . -not -path "./$(VENV)" -path "*/__pycache__*" -delete
 	@find . -not -path "./$(VENV)" -path "*/*.egg-info*" -delete
 endif
+
+lint: ## lint project
+	@mypy src --ignore-missing-imports
+	@flake8 src --ignore=$(shell cat .flakeignore)
+	@black src
+	@pylint src
 
 # Publish docs to github pages.
 
@@ -100,7 +107,7 @@ endif
 env-prepare: # создать .env-файл для секретов
 	@cp -n .env.sample .env || true
 
-.PHONY: help setup install update check build publish lint clean gh-deploy set-url
+.PHONY: help setup install update check build publish test lint clean gh-deploy set-url
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \
