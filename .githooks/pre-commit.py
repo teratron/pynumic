@@ -43,7 +43,7 @@ from typing import Callable, Any
 #     main()
 
 
-def get_conf_value(path: str, key: str) -> str | None:
+def get_conf_value(path: str, key: str) -> (str | None, list[str]):
     with open(path) as handle:
         lines = handle.readlines()
 
@@ -53,12 +53,24 @@ def get_conf_value(path: str, key: str) -> str | None:
         _val = line[_ind + 1:].strip()
 
         if _ind > 0 and _key == key:
-            return _val
+            return _val, lines
 
-    return None
+    return None,
 
 
 def set_conf_value(path: str, key: str, value: str | Callable[[str, dict[str, Any]], str], **options: Any) -> None:
+    # _val, lines = get_conf_value(path, key)
+    # if _val is not None:
+    #     __val = ""
+    #     if isinstance(value, str):
+    #         __val = value
+    #     elif isinstance(value, Callable):
+    #         __val = value(_val, **options)
+    #     else:
+    #         raise TypeError("error")
+    #
+    #     lines[i] = lines[i].replace(_val, __val)
+
     with open(path) as handle:
         lines = handle.readlines()
 
