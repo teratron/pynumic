@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
 from asyncio import Lock
-from typing import Any, Optional
-
-from pynumic import Pynumic
+from typing import Any
 
 
-class Interface(ABC, Pynumic):
+class Interface(ABC):
     """Interface for neural network."""
 
     name: str = "interface"
@@ -13,7 +11,7 @@ class Interface(ABC, Pynumic):
     description: str = __doc__
 
     is_init: bool = False
-    config: Optional[str] = None
+    config: str | None = None
     mutex: Lock
 
     @abstractmethod

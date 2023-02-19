@@ -43,7 +43,7 @@ from typing import Callable, Any
 #     main()
 
 
-def get_conf_value(path: str, key: str) -> (str | None, list[str]):
+def get_conf_value(path: str, key: str) -> tuple[str | None, list[str]]:
     with open(path) as handle:
         lines = handle.readlines()
 
@@ -55,10 +55,10 @@ def get_conf_value(path: str, key: str) -> (str | None, list[str]):
         if _ind > 0 and _key == key:
             return _val, lines
 
-    return None,
+    return None, []
 
 
-def set_conf_value(path: str, key: str, value: str | Callable[[str, dict[str, Any]], str], **options: Any) -> None:
+def set_conf_value(path: str, key: str, value: str | Callable[[str, Any], str], *options: Any) -> None:
     # _val, lines = get_conf_value(path, key)
     # if _val is not None:
     #     __val = ""
@@ -81,15 +81,12 @@ def set_conf_value(path: str, key: str, value: str | Callable[[str, dict[str, An
         _val = line[_ind + 1:].strip()
 
         if _ind > 0 and _key == key:
-            __val = ""
             if isinstance(value, str):
-                __val = value
-            elif isinstance(value, Callable):
-                __val = value(_val, **options)
+                lines[i] = line.replace(_val, value)
+            elif callable(value):
+                lines[i] = line.replace(_val, value(_val, *options))
             else:
                 raise TypeError("error")
-
-            lines[i] = line.replace(_val, __val)
             break
         i += 1
 
@@ -98,20 +95,21 @@ def set_conf_value(path: str, key: str, value: str | Callable[[str, dict[str, An
             handle.writelines(line)
 
 
-def increase_version(value: str, *, w: int = 2) -> str:
-    if w < 0 or w > 2:
+# MAJOR.MINOR.PATCH
+def increase_version(value: str, numeric: int = 2) -> str:
+    if numeric < 0 or numeric > 2:
         raise IndexError("error")
 
-    version = list(map(int, value.strip('"').split(".")))
-    version[w] += 1
+    tag = list(map(int, value.strip('"').split(".")))
+    tag[numeric] += 1
 
-    match w:
+    match numeric:
         case 1:
-            version[2] = 0
+            tag[2] = 0
         case 0:
-            version[2] = version[1] = 0
+            tag[2] = tag[1] = 0
 
-    return f'"{".".join(map(str, version))}"'
+    return f'"{".".join(map(str, tag))}"'
 
 
 set_conf_value(os.path.abspath("../pyproject.toml"), "version", increase_version)

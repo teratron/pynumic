@@ -26,7 +26,7 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
 
     def __init__(
         self,
-        name: str,  # TODO: ?
+            # name: str,  # TODO: ?
         *,
         bias: bool = True,
         hidden_layers: LayerType = None,
@@ -35,7 +35,7 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
         loss_limit: float = 0.1e-3,
         rate: float = Rate.DEFAULT_RATE,
     ) -> None:
-        self.name: str = name
+        #self.name: str = name
         self.bias: bool = bias
         self.hidden_layers: LayerType = hidden_layers
         self.activation_mode: int = activation_mode
@@ -50,13 +50,13 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
         # Bias.__init__(self, bias)
 
     # Neurons
-    neurons: list[list[Neuron]]
+    neurons: list[list[Neuron]] | None = None
 
     # Transfer data
-    data_weight: list[list[list[float]]]
-    data_input: list[float]
-    data_target: list[float]
-    data_output: list[float]
+    data_weight: list[list[list[float]]] | None = None
+    data_input: list[float] | None = None
+    data_target: list[float] | None = None
+    data_output: list[float] | None = None
 
     # Settings
     len_input: int = 0

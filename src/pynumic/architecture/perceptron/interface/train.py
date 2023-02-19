@@ -1,14 +1,15 @@
 from typing import Any
 
-from pynumic.architecture.perceptron.perceptron import Perceptron
+
+# from pynumic.architecture.perceptron.perceptron import Perceptron
 
 
-def train(obj: Perceptron, *args: Any, **kwargs: Any) -> tuple[int, float]:
+def train(obj: object, *args: Any, **kwargs: Any) -> tuple[int, float]:
     print(obj, args, kwargs)
     return 0, 0.1
 
 
-def and_train(obj: Perceptron, *args: Any, **kwargs: Any) -> tuple[int, float]:
+def and_train(obj: object, *args: Any, **kwargs: Any) -> tuple[int, float]:
     print(obj, args, kwargs)
     return 0, 0.1
 

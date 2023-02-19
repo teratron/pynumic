@@ -11,10 +11,9 @@ from pynumic.architecture.perceptron.properties import Properties
 from pynumic.interface import Interface
 
 
-class Perceptron(Interface, Propagation):  # Properties
+class Perceptron(Interface, Propagation):
     """Perceptron is neural network."""
 
-    print("Perceptron")
     name: str = "perceptron"
     type: str = "Perceptron"
     description: str = __doc__

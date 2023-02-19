@@ -1,4 +1,4 @@
-from pynumic import Pynumic
+from pynumic import architecture
 
 # from timeit import timeit
 
@@ -33,15 +33,15 @@ json_stream = """
 
 if __name__ == "__main__":
     # Returns a new neural network instance from config.
-    pn = Pynumic(json_stream)
+    pn = architecture("perceptron")
+    # pn = Pynumic("perceptron")
+    # pn = Pynumic(json_stream)
     # pn = Pynumic(json_stream, **{"name": "perceptron"})
     # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
 
     # print(timeit(pn))
-
     # print("++++", pn.rate, pn.__dict__)
     # print("++++", pn.len_input)
-
     # print("pn.call2(2)", pn.call(5))
 
     # Input dataset.

@@ -3,9 +3,9 @@ from typing import Any
 from pynumic.architecture.architecture import architecture
 
 
-# from pynumic.architecture.architecture import architecture, NNN
 # from pynumic.properties.activation import ActivationMode
 # from pynumic.properties.loss import LossMode
+# from pynumic.interface import Interface
 
 
 class Pynumic:
@@ -14,7 +14,6 @@ class Pynumic:
     Pynumic(reader: str, **props)
 
     :Examples:
-
         - Pynumic()
         - Pynumic("perceptron")
         - Pynumic("perceptron", bias=True, rate=0.3)
@@ -22,19 +21,11 @@ class Pynumic:
         - Pynumic("config/perceptron.json")
         - Pynumic("{'name': 'perceptron', 'bias': true, 'rate': 0.3}")
         - Pynumic(**{"name": "perceptron", "bias": True, "rate": 0.3})
-
-    Keyword arguments:
-
-    reader -- string variable through which is passed:
-        - Name of the neural network ("perceptron" or "hopfield");
-        - Filename of json config ("config.json");
-        - Directly json dump passed as a string ("{'name': 'perceptron', ...}").
-    **props -- properties of the neural network.
     """
 
-    # from pynumic.architecture.perceptron.perceptron import Perceptron
+    from pynumic.architecture.perceptron.perceptron import Perceptron
 
-    def __new__(cls, reader: str = "", **props: Any) -> Any:
+    def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
         """Returns a new neural network instance of one of the architectures.
         :param reader: string variable through which is passed:
                 * Name of the neural network ("perceptron" or "hopfield")
