@@ -1,6 +1,8 @@
 import random
 from typing import Any
 
+print("++++")
+# from pynumic.pynumic import Pynumic
 from pynumic.architecture.perceptron.interface.initialize import initialize
 from pynumic.architecture.perceptron.interface.query import query
 from pynumic.architecture.perceptron.interface.set_props import set_props
@@ -8,15 +10,16 @@ from pynumic.architecture.perceptron.interface.train import train, and_train
 from pynumic.architecture.perceptron.interface.verify import verify
 from pynumic.architecture.perceptron.propagation import Propagation
 from pynumic.architecture.perceptron.properties import Properties
-from pynumic.interface import Interface
+from pynumic.interface.interface import Interface
 
 
-class Perceptron(Interface, Propagation):
+class Perceptron(Interface, Propagation):  # Interface Pynumic
     """Perceptron is neural network."""
 
     name: str = "perceptron"
     type: str = "Perceptron"
     description: str = __doc__
+    print("Perceptron")
 
     def __init__(self, **props: Any) -> None:
         # print("__init__", props)
@@ -42,6 +45,7 @@ class Perceptron(Interface, Propagation):
 
         Properties.__init__(self, **props)
         # Propagation.__init__(self, self)
+        # super().__new__(self.name, **props)
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
         initialize(self, *args, **kwargs)

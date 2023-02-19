@@ -1,10 +1,13 @@
 from typing import Any
 
 from pynumic.architecture.hopfield.properties import Properties
-from pynumic.interface import Interface
+from pynumic.interface.interface import Interface
 
 
-class Hopfield(Interface, Properties):
+# from pynumic.pynumic import Pynumic
+
+
+class Hopfield(Interface, Properties):  # Interface
     """Hopfield is neural network."""
 
     print("Hopfield")

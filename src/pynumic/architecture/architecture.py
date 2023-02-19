@@ -3,6 +3,8 @@ import os
 from typing import Any
 
 
+# NN
+
 def architecture(reader: str, **props: Any) -> Any:
     """Returns an instance of one of the architectures.
     :param reader:

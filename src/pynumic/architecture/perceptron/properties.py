@@ -25,17 +25,17 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
     # )
 
     def __init__(
-        self,
+            self,
             # name: str,  # TODO: ?
-        *,
-        bias: bool = True,
-        hidden_layers: LayerType = None,
-        activation_mode: int = Activation.TANH,
-        loss_mode: int = Loss.RMSE,
-        loss_limit: float = 0.1e-3,
-        rate: float = Rate.DEFAULT_RATE,
+            *,
+            bias: bool = True,
+            hidden_layers: LayerType = None,
+            activation_mode: int = Activation.TANH,
+            loss_mode: int = Loss.RMSE,
+            loss_limit: float = 0.1e-3,
+            rate: float = Rate.DEFAULT_RATE,
     ) -> None:
-        #self.name: str = name
+        # self.name: str = name
         self.bias: bool = bias
         self.hidden_layers: LayerType = hidden_layers
         self.activation_mode: int = activation_mode

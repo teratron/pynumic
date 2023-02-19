@@ -69,7 +69,7 @@ class Interface(ABC):
         * Writes 2 files, configuration separately and weights separately:
         write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        ...
+        pass
 
     def __str__(self) -> str:
         return "%s.%s" % (self.__class__.__name__, self.name)
