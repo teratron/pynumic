@@ -5,7 +5,6 @@ class Rate:
     """
 
     DEFAULT_RATE: float = 0.3
-
     _rate: float = DEFAULT_RATE
 
     @property

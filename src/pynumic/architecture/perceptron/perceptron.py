@@ -1,14 +1,14 @@
 import random
 from typing import Any
 
-from pynumic.architecture.perceptron.interface.initialize import initialize
-from pynumic.architecture.perceptron.interface.query import query
-from pynumic.architecture.perceptron.interface.set_props import set_props
-from pynumic.architecture.perceptron.interface.train import train, and_train
-from pynumic.architecture.perceptron.interface.verify import verify
-from pynumic.architecture.perceptron.propagation import Propagation
-from pynumic.architecture.perceptron.properties import Properties
-from pynumic.interface import Interface
+from src.pynumic.architecture.perceptron.interface.initialize import initialize
+from src.pynumic.architecture.perceptron.interface.query import query
+from src.pynumic.architecture.perceptron.interface.set_props import set_props
+from src.pynumic.architecture.perceptron.interface.train import train, and_train
+from src.pynumic.architecture.perceptron.interface.verify import verify
+from src.pynumic.architecture.perceptron.propagation import Propagation
+from src.pynumic.architecture.perceptron.properties import Properties
+from src.pynumic.interface import Interface
 
 
 class Perceptron(Interface, Propagation):  # Interface Pynumic
@@ -42,8 +42,6 @@ class Perceptron(Interface, Propagation):  # Interface Pynumic
             del props["config"]
 
         Properties.__init__(self, **props)
-        # Propagation.__init__(self, self)
-        # super().__new__(self.name, **props)
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
         initialize(self, *args, **kwargs)

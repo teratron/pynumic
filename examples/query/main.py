@@ -1,4 +1,4 @@
-from pynumic.pynumic import Pynumic
+from pynumic import Pynumic
 
 json_stream = """
 {

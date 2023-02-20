@@ -1,8 +1,8 @@
-from pynumic.properties.activation import Activation
-from pynumic.properties.bias import Bias
-from pynumic.properties.layer import Layer, LayerType
-from pynumic.properties.loss import Loss
-from pynumic.properties.rate import Rate
+from src.pynumic.properties.activation import Activation
+from src.pynumic.properties.bias import Bias
+from src.pynumic.properties.layer import Layer, LayerType
+from src.pynumic.properties.loss import Loss
+from src.pynumic.properties.rate import Rate
 
 
 class Neuron:
@@ -50,13 +50,13 @@ class Properties(Bias, Layer, Activation, Loss, Rate):
         # Bias.__init__(self, bias)
 
     # Neurons
-    neurons: list[list[Neuron]] | None = None
+    neurons: list[list[Neuron]]
 
     # Transfer data
-    data_weight: list[list[list[float]]] | None = None
-    data_input: list[float] | None = None
-    data_target: list[float] | None = None
-    data_output: list[float] | None = None
+    data_weight: list[list[list[float]]]
+    data_input: list[float]
+    data_target: list[float]
+    data_output: list[float]
 
     # Settings
     len_input: int = 0

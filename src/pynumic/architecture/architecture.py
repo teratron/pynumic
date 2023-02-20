@@ -10,7 +10,7 @@ from typing import Any
 # from pynumic.interface import Interface
 
 
-def architecture(reader: str, **props: Any):
+def architecture(reader: str, **props: Any):  # -> Perceptron | Hopfield
     """Returns an instance of one of the architectures.
     :param reader:
     :param props:
@@ -23,10 +23,10 @@ def architecture(reader: str, **props: Any):
     name = reader.lower()
 
     if name == "perceptron":
-        from pynumic.architecture.perceptron.perceptron import Perceptron
+        from src.pynumic.architecture.perceptron.perceptron import Perceptron
         return Perceptron(**props)
     elif name == "hopfield":
-        from pynumic.architecture.hopfield.hopfield import Hopfield
+        from src.pynumic.architecture.hopfield.hopfield import Hopfield
         return Hopfield(**props)
     else:
         if reader != "":
@@ -55,7 +55,6 @@ def _get_props_from(reader: str) -> dict[str, Any]:
             print(data)
         else:
             raise FileExistsError(f"{__name__}: incorrect config file extension: {extension}")
-
     else:
         try:
             data = json.loads(reader)

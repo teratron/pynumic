@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from pynumic.architecture.perceptron.properties import Properties
-from pynumic.properties.loss import total_loss
+from src.pynumic.architecture.perceptron.properties import Properties
+from src.pynumic.properties.loss import total_loss
 
 
 class Propagation(Properties):

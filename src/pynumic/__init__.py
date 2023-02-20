@@ -1,3 +1,3 @@
-# from pynumic.pynumic import Pynumic
-#
-# __all__ = ["Pynumic", "architecture"]
+from src.pynumic.pynumic import Pynumic
+
+__all__ = ["Pynumic"]

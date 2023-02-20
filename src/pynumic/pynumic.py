@@ -1,11 +1,11 @@
 from typing import Any
 
-from pynumic.architecture.architecture import architecture
-from pynumic.architecture.hopfield.hopfield import Hopfield
-from pynumic.architecture.perceptron.perceptron import Perceptron
+# from src.pynumic.architecture.hopfield.hopfield import Hopfield
+# from src.pynumic.architecture.perceptron.perceptron import Perceptron
+from src.pynumic.architecture.architecture import architecture
 
 
-class Pynumic(Perceptron, Hopfield):
+class Pynumic:  # (Perceptron, Hopfield)
     """Access point to neural network.
 
     Pynumic(reader: str, **props)
@@ -20,9 +20,7 @@ class Pynumic(Perceptron, Hopfield):
         - Pynumic(**{"name": "perceptron", "bias": True, "rate": 0.3})
     """
 
-    # __instance = None
-
-    def __new__(cls, reader: str = "", **props: Any):
+    def __new__(cls, reader: str = "", **props: Any):  # -> Perceptron | Hopfield
         """Returns a new neural network instance of one of the architectures.
         :param reader: string variable through which is passed:
                 * Name of the neural network ("perceptron" or "hopfield")
@@ -34,8 +32,4 @@ class Pynumic(Perceptron, Hopfield):
         :return:
         :rtype:
         """
-        # cls.__instance = architecture(reader, **props)
-        # if cls.__instance is None:
-        #     cls.__instance = super().__new__(cls)
-        # return cls.__instance
         return architecture(reader, **props)

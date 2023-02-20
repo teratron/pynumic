@@ -1,4 +1,6 @@
+#################################################
 # Main scripts for the project.
+#################################################
 
 VENV     = .venv
 VENV_BIN = $(VENV)/$(shell ls -A $(VENV) | grep -E "bin|Scripts")
@@ -55,11 +57,16 @@ endif
 
 lint: ## lint project
 	@mypy src --ignore-missing-imports
-	@flake8 src --ignore=$(shell cat .flakeignore)
+	@flake8 src --ignore=$(shell cat .flakeignore || true)
 	@black src
 	@pylint src
 
+env-prepare: # создать .env-файл для секретов
+	@cp -n .env.sample .env || true
+
+#################################################
 # Publish docs to github pages.
+#################################################
 
 MAIN_BRANCH ?= master
 GH_BRANCH   ?= gh-pages
@@ -92,6 +99,10 @@ endif
 	@git switch $(MAIN_BRANCH)
 	@echo "--- Finished script to create and push $(GH_REMOTE) $(GH_BRANCH)."
 
+#################################################
+# Git setup.
+#################################################
+
 set-url: ## git remote set-url origin git@github.com:login/repo.git
 	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
@@ -104,8 +115,9 @@ else
 	@git config --get core.hooksPath
 endif
 
-env-prepare: # создать .env-файл для секретов
-	@cp -n .env.sample .env || true
+#################################################
+# Print help.
+#################################################
 
 .PHONY: help setup install update check build publish test lint clean gh-deploy set-url
 help:

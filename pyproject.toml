@@ -56,6 +56,17 @@ docformatter = { extras = ["tomli"], version = "^1.5.1" }
 pytest = "^7.2.1"
 pytest-cov = "^4.0.0"
 
+[tool.poetry.scripts]
+perceptron = "examples.perceptron.main:main"
+query = "examples.query.main:main"
+
+[tool.mypy]
+strict = true
+namespace_packages = true
+explicit_package_bases = true
+ignore_missing_imports = true
+show_error_codes = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
