@@ -1,9 +1,5 @@
-# from pynumic import architecture
-
-# from timeit import timeit
 from pynumic.pynumic import Pynumic
 
-print("-----")
 json_stream = """
 {
     "name": "perceptron",
@@ -42,14 +38,12 @@ if __name__ == "__main__":
     # pn = Pynumic(json_stream, **{"name": "perceptron"})
     # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
 
-    # print(timeit(pn))
     # print("++++", pn.rate, pn.__dict__)
     # print("++++", pn.len_input)
-    # print("pn.call2(2)", pn.call(5))
 
     # Input dataset.
     data_input = [0.27, 0.31, 0.52]
 
     # Getting the results of the trained network.
     data_output = pn.query(data_input)
-    #print(data_output)
+    print(data_output)

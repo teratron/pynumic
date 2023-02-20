@@ -1,10 +1,10 @@
 class Properties:
     """Properties of neural network."""
 
-    __slots__ = (
-        "_name",
-        "_energy",
-    )
+    # __slots__ = (
+    #     "_name",
+    #     "_energy",
+    # )
     print("Hopfield props")
 
     def __init__(self, name: str, *, energy: float = 0.3) -> None:

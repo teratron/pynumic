@@ -3,9 +3,14 @@ import os
 from typing import Any
 
 
-# NN
+# from pynumic.architecture.perceptron.perceptron import Perceptron
+# from pynumic.architecture.hopfield.hopfield import Hopfield
+#
+# NN = Perceptron | Hopfield
+# from pynumic.interface import Interface
 
-def architecture(reader: str, **props: Any) -> Any:
+
+def architecture(reader: str, **props: Any):
     """Returns an instance of one of the architectures.
     :param reader:
     :param props:
@@ -33,8 +38,7 @@ def architecture(reader: str, **props: Any) -> Any:
             else:
                 raise NameError(f"{__name__}: missing field: name")
 
-    # return Perceptron()
-    return None
+    return architecture("perceptron", **props)
 
 
 def _get_props_from(reader: str) -> dict[str, Any]:

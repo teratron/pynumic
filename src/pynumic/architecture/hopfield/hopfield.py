@@ -1,7 +1,7 @@
 from typing import Any
 
 from pynumic.architecture.hopfield.properties import Properties
-from pynumic.interface.interface import Interface
+from pynumic.interface import Interface
 
 
 # from pynumic.pynumic import Pynumic

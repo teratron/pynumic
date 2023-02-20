@@ -1,14 +1,11 @@
 from typing import Any
 
-from .architecture.architecture import architecture
-# from pynumic.properties.activation import ActivationMode
-# from pynumic.properties.loss import LossMode
-# from pynumic.interface import Interface
-# from pynumic.architecture.perceptron.perceptron import Perceptron
-from .architecture.perceptron.perceptron import Perceptron
+from pynumic.architecture.architecture import architecture
+from pynumic.architecture.hopfield.hopfield import Hopfield
+from pynumic.architecture.perceptron.perceptron import Perceptron
 
 
-class Pynumic:
+class Pynumic(Perceptron, Hopfield):
     """Access point to neural network.
 
     Pynumic(reader: str, **props)
@@ -23,11 +20,9 @@ class Pynumic:
         - Pynumic(**{"name": "perceptron", "bias": True, "rate": 0.3})
     """
 
-    # def _init__(self, reader: str = "", **props: Any) -> None:
-    #     pass
+    # __instance = None
 
-    def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
-        print("__new__", cls)
+    def __new__(cls, reader: str = "", **props: Any):
         """Returns a new neural network instance of one of the architectures.
         :param reader: string variable through which is passed:
                 * Name of the neural network ("perceptron" or "hopfield")
@@ -39,8 +34,8 @@ class Pynumic:
         :return:
         :rtype:
         """
-        inst = architecture(reader, **props)
-        print("inst", type(inst))
-        return inst
-        # return architecture(reader, **props)
-        # return super().__new__(architecture(reader, **props))
+        # cls.__instance = architecture(reader, **props)
+        # if cls.__instance is None:
+        #     cls.__instance = super().__new__(cls)
+        # return cls.__instance
+        return architecture(reader, **props)
