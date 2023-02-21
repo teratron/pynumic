@@ -1,10 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from src.pynumic.nn import NeuralNetwork
 
-
-class Interface(NeuralNetwork, ABC):
+class Interface(ABC):
     """Interface for neural network."""
 
     @abstractmethod
@@ -36,3 +34,30 @@ class Interface(NeuralNetwork, ABC):
     def and_train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
         """Training dataset after the query."""
         ...
+
+    def write(
+            self,
+            *,
+            filename: str | None = None,
+            flag: str | None = None,
+            config: str | None = None,
+            weights: str | None = None,
+    ) -> None:
+        """Writes the configuration and weights to a file.
+
+        * Writes configuration and weights to one file:
+        write("perceptron.json")
+        write(config="perceptron.json", weights="perceptron.json")
+
+        * Writes configuration only:
+        write(config="perceptron.json")
+        write("perceptron.json", flag="config")
+
+        * Writes only weights:
+        write(weights="perceptron_weights.json")
+        write("perceptron.json", flag="weights")
+
+        * Writes 2 files, configuration separately and weights separately:
+        write(config="perceptron.json", weights="perceptron_weights.json")
+        """
+        pass

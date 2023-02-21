@@ -1,13 +1,13 @@
 import random
 from typing import Any
 
-from src.pynumic.architecture.perceptron.interface.initialize import initialize
-from src.pynumic.architecture.perceptron.interface.query import query
-from src.pynumic.architecture.perceptron.interface.set_props import set_props
-from src.pynumic.architecture.perceptron.interface.train import train, and_train
-from src.pynumic.architecture.perceptron.interface.verify import verify
-from src.pynumic.architecture.perceptron.propagation import Propagation
-from src.pynumic.architecture.perceptron.properties import Properties
+from pynumic.interface.initialize import initialize
+from pynumic.interface.query import query
+from pynumic.interface.set_props import set_props
+from pynumic.interface.train import train, and_train
+from pynumic.interface.verify import verify
+from pynumic.propagation import Propagation
+from pynumic.properties import Properties
 from src.pynumic.interface import Interface
 
 

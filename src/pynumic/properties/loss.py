@@ -28,8 +28,9 @@ class LossMode:
 class Loss(LossMode):
     """Loss."""
 
+    DEFAULT_LOSS_LIMIT = 0.1e-3
     _loss_mode: int = LossMode.MSE
-    _loss_limit: float = 0.1e-6
+    _loss_limit: float = DEFAULT_LOSS_LIMIT
 
     @property
     def loss_mode(self) -> int:
@@ -53,9 +54,9 @@ class Loss(LossMode):
     def loss_limit(self, value: float) -> None:
         self._loss_limit = Loss.__check_limit(value)
 
-    @staticmethod
-    def __check_limit(value: float) -> float:
-        return 0.1e-6 if value <= 0 else value
+    @classmethod
+    def __check_limit(cls, value: float) -> float:
+        return cls.DEFAULT_LOSS_LIMIT if value <= 0 else value
 
 
 _TargetType = Callable[[], Union[Iterable[float], float]]

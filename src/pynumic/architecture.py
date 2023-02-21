@@ -2,15 +2,13 @@ import json
 import os
 from typing import Any
 
-from src.pynumic.architecture.hopfield.hopfield import Hopfield
-from src.pynumic.architecture.perceptron.perceptron import Perceptron
+from pynumic.perceptron import Perceptron
 
 
-# NN = Perceptron | Hopfield
 # from pynumic.interface import Interface
 
 
-def architecture(reader: str, **props: Any) -> Perceptron | Hopfield:  #
+def architecture(reader: str, **props: Any) -> Perceptron:  #
     """Returns an instance of one of the architectures.
     :param reader:
     :param props:
@@ -23,7 +21,7 @@ def architecture(reader: str, **props: Any) -> Perceptron | Hopfield:  #
     name = reader.lower()
 
     if name == "perceptron":
-        from src.pynumic.architecture.perceptron.perceptron import Perceptron
+        from pynumic.perceptron import Perceptron
         return Perceptron(**props)
     elif name == "hopfield":
         from src.pynumic.architecture.hopfield.hopfield import Hopfield

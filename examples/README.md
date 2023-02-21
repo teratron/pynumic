@@ -4,10 +4,6 @@
 
 [perceptron](perceptron)
 
-### Hopfield
-
-[hopfield](hopfield)
-
 ### Linear
 
 [linear](linear)
