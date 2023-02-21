@@ -1,11 +1,11 @@
+"""Architecture."""
+
 import json
 import os
 from typing import Any
 
-from pynumic.perceptron import Perceptron
 
-
-# from pynumic.interface import Interface
+# from src.pynumic.interface import Interface
 
 
 def architecture(reader: str, **props: Any) -> Perceptron:  #
@@ -21,11 +21,8 @@ def architecture(reader: str, **props: Any) -> Perceptron:  #
     name = reader.lower()
 
     if name == "perceptron":
-        from pynumic.perceptron import Perceptron
+        from src.pynumic.perceptron import Perceptron
         return Perceptron(**props)
-    elif name == "hopfield":
-        from src.pynumic.architecture.hopfield.hopfield import Hopfield
-        return Hopfield(**props)
     else:
         if reader != "":
             props = _get_props_from(reader)
@@ -47,7 +44,7 @@ def _get_props_from(reader: str) -> dict[str, Any]:
         _, extension = os.path.splitext(filename)
 
         if extension == ".json":
-            with open(filename) as handle:
+            with open(filename, "r", encoding="utf-8") as handle:
                 data = json.load(handle)
             data.update(config=filename)
             print(data)

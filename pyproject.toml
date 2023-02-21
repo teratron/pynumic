@@ -37,10 +37,10 @@ python = "^3.10"
 requests = "^2.28.2"
 setuptools = "^67.2.0"
 pre-commit = "^3.0.4"
-black = "^23.1.0"
 pylint = "^2.16.1"
 flake8 = "^6.0.0"
 autopep8 = "^2.0.1"
+black = "^23.1.0"
 bandit = "^1.7.4"
 isort = "^5.12.0"
 
@@ -60,7 +60,7 @@ pytest-cov = "^4.0.0"
 
 [tool.mypy]
 files = "src/**/*.py"
-packages = "src/pynn"
+packages = "src/pynumic"
 strict = true
 namespace_packages = true
 explicit_package_bases = true

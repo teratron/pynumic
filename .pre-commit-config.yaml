@@ -31,7 +31,7 @@ repos:
     hooks:
       - id: black
 
-  - repo: https://github.com/pycqa/isort
+  - repo: https://github.com/PyCQA/isort
     rev: 5.11.2
     hooks:
       - id: isort
@@ -43,13 +43,23 @@ repos:
         name: isort (pyi)
         types: [ pyi ]
 
-  - repo: https://github.com/pycqa/docformatter
+  - repo: https://github.com/PyCQA/docformatter
     rev: v1.5.1
     hooks:
       - id: docformatter
       - id: docformatter-venv
 
-  - repo: https://github.com/pycqa/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: 2.16.2
+    hooks:
+      - id: pylint

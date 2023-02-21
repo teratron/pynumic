@@ -1,13 +1,15 @@
+"""PyNumic."""
+
 import random
 from asyncio import Lock
 from typing import Any
 
-from pynumic.interface.initialize import initialize
-from pynumic.interface.query import query
-from pynumic.interface.set_props import set_props
-from pynumic.interface.train import train, and_train
-from pynumic.interface.verify import verify
-from pynumic.properties import Properties
+from src.pynumic.interface.initialize import initialize
+from src.pynumic.interface.query import query
+from src.pynumic.interface.set_props import set_props
+from src.pynumic.interface.train import and_train, train
+from src.pynumic.interface.verify import verify
+from src.pynumic.properties.properties import Properties
 
 
 class Pynumic:
@@ -48,25 +50,58 @@ class Pynumic:
             self.config = props["config"]
             del props["config"]
 
-        Properties.__init__(self, **props)
+        Properties.__init__(**props)
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
+        """Initialize neural network."""
         initialize(self, *args, **kwargs)
 
     def set_props(self, *args: Any, **kwargs: Any) -> None:
+        """Set properties of neural network."""
         set_props(self, *args, **kwargs)
 
-    def verify(self, *args: Any, **kwargs: Any) -> float:
-        return verify(self, *args, **kwargs)
+    def verify(self, input: list[float], target: list[float]) -> float:
+        """Verifying dataset."""
+        return verify(self, input, target)
 
     def query(self, *args: Any, **kwargs: Any) -> list[float]:
+        """Querying dataset."""
         return query(self, args, **kwargs)
 
     def train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
+        """Training dataset."""
         return train(self, *args, **kwargs)
 
     def and_train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
+        """Training dataset after the query."""
         return and_train(self, *args, **kwargs)
+
+    def write(
+            self,
+            *,
+            filename: str | None = None,
+            flag: str | None = None,
+            config: str | None = None,
+            weights: str | None = None,
+    ) -> None:
+        """Writes the configuration and weights to a file.
+
+        * Writes configuration and weights to one file:
+        write("perceptron.json")
+        write(config="perceptron.json", weights="perceptron.json")
+
+        * Writes configuration only:
+        write(config="perceptron.json")
+        write("perceptron.json", flag="config")
+
+        * Writes only weights:
+        write(weights="perceptron_weights.json")
+        write("perceptron.json", flag="weights")
+
+        * Writes 2 files, configuration separately and weights separately:
+        write(config="perceptron.json", weights="perceptron_weights.json")
+        """
+        pass
 
     def __str__(self) -> str:
         return "%s.%s" % (self.__class__.__name__, self.name)

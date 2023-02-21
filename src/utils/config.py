@@ -1,6 +1,5 @@
 import os
-from typing import Callable, Any
-
+from typing import Any, Callable
 
 # def main():
 #     poetry_config = os.path.abspath('pyproject.toml')

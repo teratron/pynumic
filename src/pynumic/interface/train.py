@@ -1,7 +1,6 @@
 from typing import Any
 
-
-# from pynumic.architecture.perceptron.perceptron import Perceptron
+# from src.pynumic.architecture.perceptron.perceptron import Perceptron
 
 
 def train(obj: object, *args: Any, **kwargs: Any) -> tuple[int, float]:

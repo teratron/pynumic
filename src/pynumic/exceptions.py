@@ -1,6 +1,9 @@
+"""Exceptions."""
+
+
 class PynumicException(Exception):
-    pass
+    """PynumicException."""
 
 
 class InvalidProjectFile(PynumicException):
-    pass
+    """InvalidProjectFile."""

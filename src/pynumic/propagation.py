@@ -1,7 +1,9 @@
 from typing import Iterable
 
-from pynumic.properties import Properties
-from src.pynumic.properties.loss import total_loss
+from src.pynumic.properties.properties import Properties
+
+
+# from src.pynumic.properties.loss import total_loss
 
 
 class Propagation(Properties):
@@ -33,7 +35,7 @@ class Propagation(Properties):
                 else:
                     self.neurons[i][j].value = self.get_activation(self.neurons[i][j].value)
 
-    @total_loss(0)  # self.loss_mode
+    # @total_loss(0)  # self.loss_mode
     def calc_loss(self) -> Iterable[float]:
         """Calculating and return the total error of the output neurons."""
         for i in range(self.len_output):
