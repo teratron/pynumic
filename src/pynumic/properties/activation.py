@@ -1,3 +1,5 @@
+"""TODO:"""
+
 import math
 
 
@@ -34,20 +36,24 @@ class Activation(ActivationMode):
 
     @property
     def activation_mode(self) -> int:
+        """TODO:"""
         return self._activation_mode
 
     @activation_mode.setter
     def activation_mode(self, value: int) -> None:
-        self._activation_mode = Activation.__check(value)
+        self._activation_mode = Activation.check(value)
 
     @classmethod
-    def __check(cls, value: int) -> int:
+    def check(cls, value: int) -> int:
+        """Checking whether the value corresponds to normal conditions."""
         return cls.SIGMOID if value < cls.LINEAR or value > cls.TANH else value
 
     def get_activation(self, value: float) -> float:
+        """Activation function."""
         return get_activation(value, self._activation_mode)
 
     def get_derivative(self, value: float) -> float:
+        """Derivative activation function."""
         return get_derivative(value, self._activation_mode)
 
 

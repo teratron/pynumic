@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from src.pynumic.properties.properties import Properties
+from src.pynumic.properties import Properties
 
 
 # from src.pynumic.properties.loss import total_loss

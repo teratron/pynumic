@@ -1,3 +1,5 @@
+"""TODO:"""
+
 import math
 from typing import Callable, Iterable, Union
 
@@ -55,6 +57,7 @@ class Loss(LossMode):
 
     @classmethod
     def __check_limit(cls, value: float) -> float:
+        """Checking whether the value corresponds to normal conditions."""
         return cls.DEFAULT_LOSS_LIMIT if value <= 0 else value
 
 
@@ -64,6 +67,7 @@ _OuterType = Callable[[_TargetType], _InnerType]
 
 
 def total_loss(mode: int = Loss.MSE) -> _OuterType:
+    """TODO:"""
     def outer(func: _TargetType) -> _InnerType:
         def inner() -> float:
             _loss = 0.0

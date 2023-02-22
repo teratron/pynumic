@@ -2,6 +2,7 @@ import random
 from typing import Any
 
 from src.pynumic.interface.interface import Interface
+from src.pynumic.properties.properties import Properties
 
 from src.pynumic.interface.initialize import initialize
 from src.pynumic.interface.query import query
@@ -9,7 +10,6 @@ from src.pynumic.interface.set_props import set_props
 from src.pynumic.interface.train import and_train, train
 from src.pynumic.interface.verify import verify
 from src.pynumic.propagation import Propagation
-from src.pynumic.properties.properties import Properties
 
 
 class Perceptron(Interface, Propagation):  # Interface Pynumic

@@ -1,3 +1,6 @@
+"""TODO:"""
+
+
 class Bias:
     """Bias.
 
@@ -8,6 +11,7 @@ class Bias:
 
     @property
     def bias(self) -> bool:
+        """TODO:"""
         return self._bias
 
     @bias.setter

@@ -1,18 +1,14 @@
 """PyNumic."""
 
-import random
 from asyncio import Lock
 from typing import Any
 
-from src.pynumic.interface.initialize import initialize
-from src.pynumic.interface.query import query
-from src.pynumic.interface.set_props import set_props
-from src.pynumic.interface.train import and_train, train
-from src.pynumic.interface.verify import verify
-from src.pynumic.properties.properties import Properties
+from pynumic.interface import Interface
+from pynumic.properties import Properties
+from pynumic.properties.layers import LayersType
 
 
-class Pynumic:
+class Pynumic(Interface):
     """Access point to neural network.
 
     Pynumic(reader: str, **props)
@@ -25,89 +21,49 @@ class Pynumic:
         - Pynumic(**{"bias": True, "rate": 0.3})
     """
 
+    __slots__ = (
+        "_bias",
+        "_hidden_layers",
+        "_activation_mode",
+        "_loss_mode",
+        "_loss_limit",
+        "_rate"
+    )
+
     name: str = "pynumic"
     type: str = "Pynumic"
-    description: str = __doc__
-
     is_init: bool = False
     config: str | None = None
     mutex: Lock | None = None
 
-    def __init__(self, **props: Any) -> None:
-        # Weights
-        if "weights" in props:
-            self.weights = props["weights"]
-            del props["weights"]
-        else:
-            self.weights = [
-                [[random.uniform(-0.5, 0.5) for _ in range(5)]
-                 for _ in range(5)]
-                for _ in range(5)
-            ]
-
-        # Config
-        if "config" in props:
-            self.config = props["config"]
-            del props["config"]
-
-        Properties.__init__(**props)
-
-    def _initialize(self, *args: Any, **kwargs: Any) -> None:
-        """Initialize neural network."""
-        initialize(self, *args, **kwargs)
-
-    def set_props(self, *args: Any, **kwargs: Any) -> None:
-        """Set properties of neural network."""
-        set_props(self, *args, **kwargs)
-
-    def verify(self, input: list[float], target: list[float]) -> float:
-        """Verifying dataset."""
-        return verify(self, input, target)
-
-    def query(self, *args: Any, **kwargs: Any) -> list[float]:
-        """Querying dataset."""
-        return query(self, args, **kwargs)
-
-    def train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
-        """Training dataset."""
-        return train(self, *args, **kwargs)
-
-    def and_train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
-        """Training dataset after the query."""
-        return and_train(self, *args, **kwargs)
-
-    def write(
+    def __init__(
             self,
             *,
-            filename: str | None = None,
-            flag: str | None = None,
-            config: str | None = None,
-            weights: str | None = None,
+            bias: bool = True,
+            hidden_layers: LayersType = None,
+            activation_mode: int = Properties.TANH,
+            loss_mode: int = Properties.RMSE,
+            loss_limit: float = Properties.DEFAULT_LOSS_LIMIT,
+            rate: float = Properties.DEFAULT_RATE,
     ) -> None:
-        """Writes the configuration and weights to a file.
+        self.bias: bool = bias
+        self.hidden_layers: LayersType = hidden_layers
+        self.activation_mode: int = activation_mode
+        self.loss_mode: int = loss_mode
+        self.loss_limit: float = loss_limit
+        self.rate: float = rate
+        # print(self.__dict__, self.__dir__())
+        super().__init__()
+        Properties.__init__(self, **self.__dict__)
 
-        * Writes configuration and weights to one file:
-        write("perceptron.json")
-        write(config="perceptron.json", weights="perceptron.json")
-
-        * Writes configuration only:
-        write(config="perceptron.json")
-        write("perceptron.json", flag="config")
-
-        * Writes only weights:
-        write(weights="perceptron_weights.json")
-        write("perceptron.json", flag="weights")
-
-        * Writes 2 files, configuration separately and weights separately:
-        write(config="perceptron.json", weights="perceptron_weights.json")
-        """
-        pass
+    def __call__(self, *args: Any, **kwargs: Any) -> None:
+        """Set properties of neural network."""
 
     def __str__(self) -> str:
-        return "%s.%s" % (self.__class__.__name__, self.name)
+        return f"{self.__class__.__name__}.{self.name}"
 
     def __repr__(self) -> str:
-        return "<%s: %r>" % (self.__str__(), self.__dict__)
+        return f"{self.__str__()}: {self.__dict__}"
 
     def __dir__(self) -> list[str]:
         """Returns all members and all public methods."""
@@ -117,17 +73,3 @@ class Pynumic:
                    for m in cls.__dict__ if m[0] != "_"]
                 + [m for m in self.__dict__ if m[0] != "_"]
         )
-
-    # def __new__(cls, reader: str = "", **props: Any) -> Perceptron:
-    #     """Returns a new neural network instance of one of the architectures.
-    #     :param reader: string variable through which is passed:
-    #             * Filename of json config ("config.json")
-    #             * Directly json dump passed as a string ("{'name': 'perceptron', ...}")
-    #     :param props: properties of the neural network.
-    #     :type reader:
-    #     :type props:
-    #     :return:
-    #     :rtype:
-    #     """
-    #     # return super().__new__(architecture(reader, **props))
-    #     return architecture(reader, **props)
