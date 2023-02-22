@@ -67,6 +67,9 @@ explicit_package_bases = true
 ignore_missing_imports = true
 show_error_codes = true
 
+#[tool.pylint]
+#init-hook = 'import sys; sys.path.append("/src/pynumic")'
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -4,10 +4,8 @@ import json
 import os
 from typing import Any
 
-# from src.pynumic.interface import Interface
 
-
-def architecture(reader: str, **props: Any) -> Perceptron:  #
+def architecture(reader: str, **props: Any):  #
     """Returns an instance of one of the architectures.
     :param reader:
     :param props:
@@ -20,8 +18,8 @@ def architecture(reader: str, **props: Any) -> Perceptron:  #
     name = reader.lower()
 
     if name == "perceptron":
-        from src.pynumic.perceptron import Perceptron
-        return Perceptron(**props)
+        ##from src.pynumic.perceptron import Perceptron
+        return None  # Perceptron(**props)
     else:
         if reader != "":
             props = _get_props_from(reader)

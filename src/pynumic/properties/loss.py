@@ -4,8 +4,10 @@ import math
 from typing import Callable, Iterable, Union
 
 
-class LossMode:
-    """The mode of calculation of the total error:
+class Loss:
+    """Loss.
+
+    The mode of calculation of the total error:
 
     * MSE -- Mean Squared Error (0);
     * RMSE -- Root Mean Squared Error (1);
@@ -25,12 +27,8 @@ class LossMode:
     AVG: int = 3
     """AVG -- Average Error (3)."""
 
-
-class Loss(LossMode):
-    """Loss."""
-
     DEFAULT_LOSS_LIMIT = 0.1e-3
-    _loss_mode: int = LossMode.MSE
+    _loss_mode: int = MSE
     _loss_limit: float = DEFAULT_LOSS_LIMIT
 
     @property
@@ -40,10 +38,11 @@ class Loss(LossMode):
 
     @loss_mode.setter
     def loss_mode(self, value: int) -> None:
-        self._loss_mode = Loss.__check_mode(value)
+        self._loss_mode = Loss.check_mode(value)
 
     @classmethod
-    def __check_mode(cls, value: int) -> int:
+    def check_mode(cls, value: int) -> int:
+        """Checking whether the value corresponds to normal conditions."""
         return cls.MSE if value < cls.MSE or value > cls.AVG else value
 
     @property
@@ -53,10 +52,10 @@ class Loss(LossMode):
 
     @loss_limit.setter
     def loss_limit(self, value: float) -> None:
-        self._loss_limit = Loss.__check_limit(value)
+        self._loss_limit = Loss.check_limit(value)
 
     @classmethod
-    def __check_limit(cls, value: float) -> float:
+    def check_limit(cls, value: float) -> float:
         """Checking whether the value corresponds to normal conditions."""
         return cls.DEFAULT_LOSS_LIMIT if value <= 0 else value
 

@@ -1,7 +1,10 @@
+"""TODO:"""
+
 from typing import Any
 
 
 def query(obj: object, *args: Any, **kwargs: Any) -> list[float]:
+    """TODO:"""
     print("query***:", obj, args, kwargs)
     # obj.calc_neurons()
     return [0, 1]

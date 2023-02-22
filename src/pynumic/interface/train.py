@@ -1,14 +1,19 @@
+"""TODO:"""
+
 from typing import Any
+
 
 # from src.pynumic.architecture.perceptron.perceptron import Perceptron
 
 
 def train(obj: object, *args: Any, **kwargs: Any) -> tuple[int, float]:
+    """TODO:"""
     print(obj, args, kwargs)
     return 0, 0.1
 
 
 def and_train(obj: object, *args: Any, **kwargs: Any) -> tuple[int, float]:
+    """TODO:"""
     print(obj, args, kwargs)
     return 0, 0.1
 

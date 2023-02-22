@@ -53,6 +53,7 @@ class Pynumic(Interface):
         self.loss_limit: float = loss_limit
         self.rate: float = rate
         # print(self.__dict__, self.__dir__())
+
         super().__init__()
         Properties.__init__(self, **self.__dict__)
 

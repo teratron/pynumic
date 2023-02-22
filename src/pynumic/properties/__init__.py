@@ -43,8 +43,13 @@ class Properties(
             self.config = props["config"]
             del props["config"]
 
+        # Layers.__init__(self, hidden_layers)
+        # Activation.__init__(self, activation_mode)
+        # Loss.__init__(self, loss_mode, loss_limit)
+        # Rate.__init__(self, rate)
+        # Bias.__init__(self, bias)
+
         self.__dict__ = props
-        print(self.__dict__, self.hidden_layers, self.loss_limit)
 
     # Neurons
     neurons: list[list[Neuron]]

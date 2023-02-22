@@ -3,8 +3,10 @@
 import math
 
 
-class ActivationMode:
-    """Activation function mode:
+class Activation:
+    """Activation.
+
+    :Mode:
 
     * LINEAR -- Linear/identity (0);
     * RELU -- ReLu (rectified linear unit) (1);
@@ -28,11 +30,7 @@ class ActivationMode:
     TANH: int = 4
     """TANH -- TanH (hyperbolic tangent) (4)."""
 
-
-class Activation(ActivationMode):
-    """Activation."""
-
-    _activation_mode: int = ActivationMode.SIGMOID
+    _activation_mode: int = SIGMOID
 
     @property
     def activation_mode(self) -> int:

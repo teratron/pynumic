@@ -11,7 +11,7 @@ from pynumic.propagation import Propagation
 class Interface(Propagation):
     """Interface for neural network."""
 
-    all = ["verify", "query", "train", "and_train", "write"]
+    # all = ["verify", "query", "train", "and_train", "write"]
 
     def verify(self, input_data: list[float], target_data: list[float]) -> float:
         """Verifying dataset."""

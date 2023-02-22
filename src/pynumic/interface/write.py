@@ -1,7 +1,10 @@
+"""TODO:"""
+
 from typing import Any
 
 
 def write(obj: object, *args: Any, **kwargs: Any) -> None:
+    """TODO:"""
     print(obj, args, kwargs)
 
 # def write_config(obj, filename: str) -> Exception:
