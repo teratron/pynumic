@@ -18,7 +18,6 @@ def architecture(reader: str, **props: Any):  #
     name = reader.lower()
 
     if name == "perceptron":
-        ##from src.pynumic.perceptron import Perceptron
         return None  # Perceptron(**props)
     else:
         if reader != "":

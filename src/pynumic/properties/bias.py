@@ -9,6 +9,9 @@ class Bias:
 
     _bias: bool = True
 
+    def __init__(self, bias: bool):
+        self._bias: bool = bias
+
     @property
     def bias(self) -> bool:
         """TODO:"""

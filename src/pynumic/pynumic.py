@@ -21,14 +21,14 @@ class Pynumic(Interface):
         - Pynumic(**{"bias": True, "rate": 0.3})
     """
 
-    __slots__ = (
-        "_bias",
-        "_hidden_layers",
-        "_activation_mode",
-        "_loss_mode",
-        "_loss_limit",
-        "_rate"
-    )
+    # __slots__ = (
+    #     "_bias",
+    #     "_hidden_layers",
+    #     "_activation_mode",
+    #     "_loss_mode",
+    #     "_loss_limit",
+    #     "_rate"
+    # )
 
     name: str = "pynumic"
     type: str = "Pynumic"
@@ -52,7 +52,7 @@ class Pynumic(Interface):
         self.loss_mode: int = loss_mode
         self.loss_limit: float = loss_limit
         self.rate: float = rate
-        # print(self.__dict__, self.__dir__())
+        print(self.__dict__, self.__dir__())
 
         super().__init__()
         Properties.__init__(self, **self.__dict__)

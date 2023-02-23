@@ -12,13 +12,14 @@ from pynumic.properties.rate import Rate
 
 
 class Neuron:
+    """TODO:"""
     def __init__(self, value: float, miss: float) -> None:
         self.value = value
         self.miss = miss
 
 
 class Properties(
-    Bias,
+    # Bias,
     Layers,
     Activation,
     Loss,
@@ -47,7 +48,8 @@ class Properties(
         # Activation.__init__(self, activation_mode)
         # Loss.__init__(self, loss_mode, loss_limit)
         # Rate.__init__(self, rate)
-        # Bias.__init__(self, bias)
+        if "_bias" in props:
+            Bias.__init__(self, props["_bias"])
 
         self.__dict__ = props
 

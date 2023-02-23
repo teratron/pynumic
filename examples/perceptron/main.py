@@ -13,7 +13,7 @@ if __name__ == "__main__":
         rate=0.378
     )
 
-    print(pn.hidden_layers)
+    print(f"{pn.hidden_layers = }")
     print(pn.rate)
 
     # pn.query([0.1, 0.2])
