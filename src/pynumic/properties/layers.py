@@ -15,13 +15,13 @@ class Layers:
 
     @hidden_layers.setter
     def hidden_layers(self, value: list[int]) -> None:
-        self._hidden_layers = Layers.check(value)
+        self._hidden_layers = Layers.check_layers(value)
 
     @hidden_layers.deleter
     def hidden_layers(self) -> None:
         del self._hidden_layers
 
     @staticmethod
-    def check(value: LayersType) -> list[int]:
+    def check_layers(value: LayersType) -> list[int]:
         """Checking whether the value corresponds to normal conditions."""
         return [0] if value is None else value

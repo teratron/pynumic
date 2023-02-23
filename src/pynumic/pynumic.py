@@ -32,20 +32,22 @@ class Pynumic(Interface):
 
     name: str = "pynumic"
     type: str = "Pynumic"
-    is_init: bool = False
     config: str | None = None
     mutex: Lock | None = None
+    is_init: bool = False
 
     def __init__(
             self,
+            reader: str | None = None,
             *,
             bias: bool = True,
             hidden_layers: LayersType = None,
             activation_mode: int = Properties.TANH,
             loss_mode: int = Properties.RMSE,
             loss_limit: float = Properties.DEFAULT_LOSS_LIMIT,
-            rate: float = Properties.DEFAULT_RATE,
+            rate: float = Properties.DEFAULT_RATE
     ) -> None:
+        self.reader = reader
         self.bias: bool = bias
         self.hidden_layers: LayersType = hidden_layers
         self.activation_mode: int = activation_mode

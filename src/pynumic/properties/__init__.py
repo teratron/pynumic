@@ -19,11 +19,11 @@ class Neuron:
 
 
 class Properties(
-    # Bias,
-    Layers,
-    Activation,
-    Loss,
-    Rate
+        Bias,
+        Layers,
+        Activation,
+        Loss,
+        Rate
 ):
     """Properties of neural network."""
 

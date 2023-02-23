@@ -6,7 +6,7 @@ import math
 class Activation:
     """Activation.
 
-    :Mode:
+    Mode:
 
     * LINEAR -- Linear/identity (0);
     * RELU -- ReLu (rectified linear unit) (1);
@@ -39,10 +39,10 @@ class Activation:
 
     @activation_mode.setter
     def activation_mode(self, value: int) -> None:
-        self._activation_mode = Activation.check(value)
+        self._activation_mode = Activation.check_activation_mode(value)
 
     @classmethod
-    def check(cls, value: int) -> int:
+    def check_activation_mode(cls, value: int) -> int:
         """Checking whether the value corresponds to normal conditions."""
         return cls.SIGMOID if value < cls.LINEAR or value > cls.TANH else value
 

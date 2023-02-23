@@ -14,9 +14,9 @@ class Rate:
 
     @rate.setter
     def rate(self, value: float) -> None:
-        self._rate = Rate.check(value)
+        self._rate = Rate.check_rate(value)
 
     @classmethod
-    def check(cls, value: float) -> float:
+    def check_rate(cls, value: float) -> float:
         """Checking whether the value corresponds to normal conditions."""
         return cls.DEFAULT_RATE if value <= 0 or value > 1 else value

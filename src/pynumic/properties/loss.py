@@ -38,10 +38,10 @@ class Loss:
 
     @loss_mode.setter
     def loss_mode(self, value: int) -> None:
-        self._loss_mode = Loss.check_mode(value)
+        self._loss_mode = Loss.check_loss_mode(value)
 
     @classmethod
-    def check_mode(cls, value: int) -> int:
+    def check_loss_mode(cls, value: int) -> int:
         """Checking whether the value corresponds to normal conditions."""
         return cls.MSE if value < cls.MSE or value > cls.AVG else value
 
@@ -52,10 +52,10 @@ class Loss:
 
     @loss_limit.setter
     def loss_limit(self, value: float) -> None:
-        self._loss_limit = Loss.check_limit(value)
+        self._loss_limit = Loss.check_loss_limit(value)
 
     @classmethod
-    def check_limit(cls, value: float) -> float:
+    def check_loss_limit(cls, value: float) -> float:
         """Checking whether the value corresponds to normal conditions."""
         return cls.DEFAULT_LOSS_LIMIT if value <= 0 else value
 

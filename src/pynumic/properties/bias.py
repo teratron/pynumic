@@ -7,14 +7,14 @@ class Bias:
     The neuron bias, false or true (required field for a config).
     """
 
-    _bias: bool = True
+    # _bias: bool = True
 
     def __init__(self, bias: bool):
         self._bias: bool = bias
 
     @property
     def bias(self) -> bool:
-        """TODO:"""
+        """The neuron bias, false or true (required field for a config)."""
         return self._bias
 
     @bias.setter
