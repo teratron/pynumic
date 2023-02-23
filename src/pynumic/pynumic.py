@@ -1,11 +1,10 @@
 """PyNumic."""
-
+import random
 from asyncio import Lock
 from typing import Any
 
 from pynumic.interface import Interface
 from pynumic.properties import Properties
-from pynumic.properties.layers import LayersType
 
 
 class Pynumic(Interface):
@@ -21,43 +20,34 @@ class Pynumic(Interface):
         - Pynumic(**{"bias": True, "rate": 0.3})
     """
 
-    # __slots__ = (
-    #     "_bias",
-    #     "_hidden_layers",
-    #     "_activation_mode",
-    #     "_loss_mode",
-    #     "_loss_limit",
-    #     "_rate"
-    # )
-
     name: str = "pynumic"
     type: str = "Pynumic"
     config: str | None = None
     mutex: Lock | None = None
     is_init: bool = False
 
-    def __init__(
-            self,
-            reader: str | None = None,
-            *,
-            bias: bool = True,
-            hidden_layers: LayersType = None,
-            activation_mode: int = Properties.TANH,
-            loss_mode: int = Properties.RMSE,
-            loss_limit: float = Properties.DEFAULT_LOSS_LIMIT,
-            rate: float = Properties.DEFAULT_RATE
-    ) -> None:
+    def __init__(self, reader: str = "", **props: Any) -> None:
         self.reader = reader
-        self.bias: bool = bias
-        self.hidden_layers: LayersType = hidden_layers
-        self.activation_mode: int = activation_mode
-        self.loss_mode: int = loss_mode
-        self.loss_limit: float = loss_limit
-        self.rate: float = rate
-        print(self.__dict__, self.__dir__())
+
+        # Weights
+        if "weights" in props:
+            self.weights = props["weights"]
+            del props["weights"]
+        else:
+            self.weights = [
+                [[random.uniform(-0.5, 0.5) for _ in range(5)]
+                 for _ in range(5)]
+                for _ in range(5)
+            ]
+
+        # Config
+        if "config" in props:
+            self.config = props["config"]
+            del props["config"]
 
         super().__init__()
-        Properties.__init__(self, **self.__dict__)
+        Properties.__init__(self, **props)
+        print(self.__dict__, self.__dir__())
 
     def __call__(self, *args: Any, **kwargs: Any) -> None:
         """Set properties of neural network."""

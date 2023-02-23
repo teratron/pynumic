@@ -30,21 +30,23 @@ class Activation:
     TANH: int = 4
     """TANH -- TanH (hyperbolic tangent) (4)."""
 
-    _activation_mode: int = SIGMOID
+    DEFAULT_ACTIVATION_MODE: int = SIGMOID
+    DEFAULT_ACTIVATION_LIMIT: float = 0.1e-3
+
+    def __init__(self, activation_mode: int) -> None:
+        self._activation_mode: int = self.__check_activation_mode(activation_mode)
 
     @property
     def activation_mode(self) -> int:
-        """TODO:"""
+        """Activation function mode."""
         return self._activation_mode
 
     @activation_mode.setter
     def activation_mode(self, value: int) -> None:
-        self._activation_mode = Activation.check_activation_mode(value)
+        self._activation_mode = self.__check_activation_mode(value)
 
-    @classmethod
-    def check_activation_mode(cls, value: int) -> int:
-        """Checking whether the value corresponds to normal conditions."""
-        return cls.SIGMOID if value < cls.LINEAR or value > cls.TANH else value
+    def __check_activation_mode(self, value: int) -> int:
+        return self.DEFAULT_ACTIVATION_MODE if value < self.LINEAR or value > self.TANH else value
 
     def get_activation(self, value: float) -> float:
         """Activation function."""

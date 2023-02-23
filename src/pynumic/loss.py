@@ -27,9 +27,12 @@ class Loss:
     AVG: int = 3
     """AVG -- Average Error (3)."""
 
-    DEFAULT_LOSS_LIMIT = 0.1e-3
-    _loss_mode: int = MSE
-    _loss_limit: float = DEFAULT_LOSS_LIMIT
+    DEFAULT_LOSS_MODE: int = MSE
+    DEFAULT_LOSS_LIMIT: float = 0.1e-3
+
+    def __init__(self, loss_mode: int, loss_limit: float) -> None:
+        self._loss_mode: int = self.__check_loss_mode(loss_mode)
+        self._loss_limit: float = self.__check_loss_limit(loss_limit)
 
     @property
     def loss_mode(self) -> int:
@@ -38,12 +41,10 @@ class Loss:
 
     @loss_mode.setter
     def loss_mode(self, value: int) -> None:
-        self._loss_mode = Loss.check_loss_mode(value)
+        self._loss_mode = self.__check_loss_mode(value)
 
-    @classmethod
-    def check_loss_mode(cls, value: int) -> int:
-        """Checking whether the value corresponds to normal conditions."""
-        return cls.MSE if value < cls.MSE or value > cls.AVG else value
+    def __check_loss_mode(self, value: int) -> int:
+        return self.DEFAULT_LOSS_MODE if value < self.MSE or value > self.AVG else value
 
     @property
     def loss_limit(self) -> float:
@@ -52,12 +53,10 @@ class Loss:
 
     @loss_limit.setter
     def loss_limit(self, value: float) -> None:
-        self._loss_limit = Loss.check_loss_limit(value)
+        self._loss_limit = self.__check_loss_limit(value)
 
-    @classmethod
-    def check_loss_limit(cls, value: float) -> float:
-        """Checking whether the value corresponds to normal conditions."""
-        return cls.DEFAULT_LOSS_LIMIT if value <= 0 else value
+    def __check_loss_limit(self, value: float) -> float:
+        return self.DEFAULT_LOSS_LIMIT if value <= 0 else value
 
 
 _TargetType = Callable[[], Union[Iterable[float], float]]
