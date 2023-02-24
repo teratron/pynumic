@@ -1,11 +1,12 @@
 """Properties of neural network."""
-
+import random
 from typing import Any
 
 from pynumic.activation import Activation
 from pynumic.interface.initialize import initialize
 from pynumic.loss import Loss
 
+WeightsType = list[list[list[float]]] | None
 LayersType = list[int] | None
 
 
@@ -39,11 +40,21 @@ class Properties(Activation, Loss):
             activation_mode: int = Activation.TANH,
             loss_mode: int = Loss.RMSE,
             loss_limit: float = Loss.DEFAULT_LOSS_LIMIT,
-            rate: float = DEFAULT_RATE
+            rate: float = DEFAULT_RATE,
+            weights: WeightsType = None
     ) -> None:
         self._bias: bool = bias
         self._hidden_layers: LayersType = self.__check_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
+
+        # Weights
+        if weights is not None:
+            self.weights = weights
+        else:
+            self.weights = [
+                [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
+                for _ in range(5)
+            ]
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
@@ -52,7 +63,7 @@ class Properties(Activation, Loss):
     neurons: list[list[Neuron]]
 
     # Transfer data
-    data_weight: list[list[list[float]]]
+    data_weight: WeightsType
     data_input: list[float]
     data_target: list[float]
     data_output: list[float]
