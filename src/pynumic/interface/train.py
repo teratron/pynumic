@@ -2,7 +2,6 @@
 
 from typing import Any
 
-
 # from src.pynumic.architecture.perceptron.perceptron import Perceptron
 
 

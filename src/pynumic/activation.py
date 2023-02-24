@@ -46,7 +46,11 @@ class Activation:
         self._activation_mode = self.__check_activation_mode(value)
 
     def __check_activation_mode(self, value: int) -> int:
-        return self.DEFAULT_ACTIVATION_MODE if value < self.LINEAR or value > self.TANH else value
+        return (
+            self.DEFAULT_ACTIVATION_MODE
+            if value < self.LINEAR or value > self.TANH
+            else value
+        )
 
     def get_activation(self, value: float) -> float:
         """Activation function."""

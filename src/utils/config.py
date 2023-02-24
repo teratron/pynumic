@@ -3,7 +3,6 @@
 import os
 from typing import Any, Callable
 
-
 # def main():
 #     poetry_config = os.path.abspath('pyproject.toml')
 #     # poetry_config = os.path.abspath("../pyproject.toml")
@@ -50,7 +49,9 @@ def get_conf_value(path: str, key: str) -> tuple[str | None, list[str]]:
     return None, []
 
 
-def set_conf_value(path: str, key: str, value: str | Callable[[str, Any], str], *options: Any) -> None:
+def set_conf_value(
+        path: str, key: str, value: str | Callable[[str, Any], str], *options: Any
+) -> None:
     # _val, lines = get_conf_value(path, key)
     # if _val is not None:
     #     __val = ""

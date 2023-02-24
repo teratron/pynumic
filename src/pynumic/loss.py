@@ -1,9 +1,5 @@
 """TODO:"""
 
-import math
-from typing import Callable, Iterable, Union
-
-
 class Loss:
     """Loss.
 
@@ -57,52 +53,3 @@ class Loss:
 
     def __check_loss_limit(self, value: float) -> float:
         return self.DEFAULT_LOSS_LIMIT if value <= 0 else value
-
-
-_TargetType = Callable[[], Union[Iterable[float], float]]
-_InnerType = Callable[[], float]
-_OuterType = Callable[[_TargetType], _InnerType]
-
-
-def total_loss(mode: int = Loss.MSE) -> _OuterType:
-    """TODO:"""
-    def outer(func: _TargetType) -> _InnerType:
-        def inner() -> float:
-            _loss = 0.0
-            miss = func()
-
-            if isinstance(miss, Iterable):
-                count = 0.0
-                for value in miss:
-                    _loss += __get_loss(value, mode)
-                    count += 1
-
-                if count > 1:
-                    _loss /= count
-            elif isinstance(miss, float):
-                _loss += __get_loss(miss, mode)
-
-            if mode == Loss.RMSE:
-                _loss = math.sqrt(_loss)
-
-            if math.isnan(_loss):
-                raise ValueError(f"{__name__}: loss not-a-number value")
-
-            if math.isinf(_loss):
-                raise ValueError(f"{__name__}: loss is infinity")
-
-            return _loss
-
-        return inner
-
-    return outer
-
-
-def __get_loss(value: float, mode: int) -> float:
-    match mode:
-        case Loss.AVG:
-            return math.fabs(value)
-        case Loss.ARCTAN:
-            return math.atan(value) ** 2
-        case Loss.MSE | Loss.RMSE | _:
-            return value**2

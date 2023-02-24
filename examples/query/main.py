@@ -1,8 +1,8 @@
 from pynumic import Pynumic
 
+# TODO: "name": "perceptron",
 json_stream = """
 {
-    "name": "perceptron",
     "bias": true,
     "activation_mode": 3,
     "loss_mode": 0,

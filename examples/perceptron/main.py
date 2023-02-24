@@ -5,12 +5,12 @@ if __name__ == "__main__":
     # instance with the default parameters
     # for Perceptron neural network.
     pn = Pynumic(
-        bias=True,
-        hidden_layers=[5, 3, 7, 4],
-        activation_mode=Pynumic.TANH,
-        loss_mode=Pynumic.MSE,
-        loss_limit=1e-11,
-        rate=0.378
+            bias=True,
+            hidden_layers=[5, 3, 7, 4],
+            activation_mode=Pynumic.TANH,
+            loss_mode=Pynumic.MSE,
+            loss_limit=1e-11,
+            rate=0.378,
     )
 
     print(f"{pn.hidden_layers = }")

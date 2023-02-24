@@ -1,4 +1,6 @@
 """PyNumic."""
+import json
+import os
 import random
 from asyncio import Lock
 from typing import Any
@@ -38,7 +40,14 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
-        self.reader = reader
+        if reader != "":
+            props = _get_props_from(reader)
+
+        # if props != {}:
+        #     if "name" in props:
+        #         return architecture(props["name"], **props)
+        #     else:
+        #         raise NameError(f"{__name__}: missing field: name")
 
         # Weights
         if "weights" in props:
@@ -46,8 +55,7 @@ class Pynumic(Interface):
             del props["weights"]
         else:
             self.weights = [
-                [[random.uniform(-0.5, 0.5) for _ in range(5)]
-                 for _ in range(5)]
+                [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
                 for _ in range(5)
             ]
 
@@ -73,7 +81,35 @@ class Pynumic(Interface):
         """Returns all members and all public methods."""
         return (
                 ["__class__", "__doc__", "__module__"]
-                + [m for cls in self.__class__.mro()
-                   for m in cls.__dict__ if m[0] != "_"]
+                + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
                 + [m for m in self.__dict__ if m[0] != "_"]
         )
+
+
+def _get_props_from(reader: str) -> dict[str, Any]:
+    data: dict[str, Any] = {}
+
+    if os.path.isfile(reader):
+        filename = os.path.normpath(reader)
+        _, extension = os.path.splitext(filename)
+
+        if extension == ".json":
+            with open(filename, "r", encoding="utf-8") as handle:
+                try:
+                    data = json.load(handle)
+                except json.JSONDecodeError as err:
+                    print(f"{__name__}: JSONDecodeError: {err}")
+
+            data.update(config=filename)
+            print(data)
+        else:
+            raise FileExistsError(
+                    f"{__name__}: incorrect config file extension: {extension}"
+            )
+    else:
+        try:
+            data = json.loads(reader)
+        except json.JSONDecodeError as err:
+            print(f"{__name__}: JSONDecodeError: {err}")
+
+    return data
