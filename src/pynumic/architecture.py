@@ -5,7 +5,7 @@ import os
 from typing import Any
 
 
-def architecture(reader: str, **props: Any):  #
+def architecture(reader: str, **props: Any):
     """Returns an instance of one of the architectures.
     :param reader:
     :param props:

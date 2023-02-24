@@ -27,6 +27,17 @@ class Pynumic(Interface):
     is_init: bool = False
 
     def __init__(self, reader: str = "", **props: Any) -> None:
+        """Returns a new neural network instance of one of the architectures.
+        :param reader: string variable through which is passed:
+                * Name of the neural network ("perceptron" or "hopfield")
+                * Filename of json config ("config.json")
+                * Directly json dump passed as a string ("{'name': 'perceptron', ...}")
+        :param props: properties of the neural network.
+        :type reader:
+        :type props:
+        :return:
+        :rtype:
+        """
         self.reader = reader
 
         # Weights
@@ -49,7 +60,7 @@ class Pynumic(Interface):
         Properties.__init__(self, **props)
         print(self.__dict__, self.__dir__())
 
-    def __call__(self, *args: Any, **kwargs: Any) -> None:
+    def __call__(self, **props: Any) -> None:
         """Set properties of neural network."""
 
     def __str__(self) -> str:

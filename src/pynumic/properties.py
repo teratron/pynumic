@@ -67,7 +67,6 @@ class Properties(Activation, Loss):
         initialize(self, *args, **kwargs)
 
     # Bias
-    # -----------------------------------------------------
     @property
     def bias(self) -> bool:
         """The neuron bias, false or true (required field for a config)."""
@@ -78,7 +77,6 @@ class Properties(Activation, Loss):
         self._bias = value
 
     # Hidden Layers
-    # -----------------------------------------------------
     @property
     def hidden_layers(self) -> LayersType:
         """List of the number of neuron in each hidden layers."""
@@ -97,7 +95,6 @@ class Properties(Activation, Loss):
         return [0] if value is None else value
 
     # Rate
-    # -----------------------------------------------------
     @property
     def rate(self) -> float:
         """Learning coefficient (greater than 0.0 and less than or equal to 1.0)."""
