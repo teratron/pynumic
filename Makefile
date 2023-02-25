@@ -26,6 +26,7 @@ dev: ## dev
 	@$(VENV_BIN)/pip install -e .
 
 update: ## update poetry
+	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@poetry update
 	@poetry self update
 

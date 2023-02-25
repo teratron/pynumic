@@ -4,8 +4,8 @@ import os
 from asyncio import Lock
 from typing import Any
 
-from pynumic.interface import Interface
-from pynumic.properties import Properties
+from src.pynumic.interface import Interface
+from src.pynumic.properties import Properties
 
 
 class Pynumic(Interface):
@@ -27,7 +27,6 @@ class Pynumic(Interface):
     type: str = "Pynumic"
     config: str | None = None
     mutex: Lock | None = None
-    is_init: bool = False
 
     def __init__(self, reader: str = "", **props: Any) -> None:
         """Returns a new neural network instance of one of the architectures.
@@ -40,18 +39,18 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
+        super().__init__()
+        self.__call__(reader, **props)
+
+    def __call__(self, reader: str = "", **props: Any) -> None:
         if reader != "":
             props = _get_props_from(reader)
-
             if "config" in props:
                 self.config = props["config"]
                 del props["config"]
 
-        super().__init__()
-        Properties.__init__(self, **props)
-
-    def __call__(self, reader: str = "", **props: Any) -> None:
-        self.__init__(reader, **props)
+        if props != {}:
+            Properties.__init__(self, **props)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"

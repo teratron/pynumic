@@ -1,11 +1,9 @@
 """Interface for neural network."""
 
-from typing import Any
-
-from pynumic.interface.query import query
-from pynumic.interface.train import and_train, train
-from pynumic.interface.verify import verify
-from pynumic.propagation import Propagation
+from src.pynumic.interface.query import query
+from src.pynumic.interface.train import and_train, train
+from src.pynumic.interface.verify import verify
+from src.pynumic.propagation import Propagation
 
 
 class Interface(Propagation):
@@ -17,17 +15,17 @@ class Interface(Propagation):
         """Verifying dataset."""
         return verify(self, input_data, target_data)
 
-    def query(self, *args: Any, **kwargs: Any) -> list[float]:
+    def query(self, input_data: list[float]) -> list[float]:
         """Querying dataset."""
-        return query(self, args, **kwargs)
+        return query(self, input_data)
 
-    def train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
+    def train(self, input_data: list[float], target_data: list[float]) -> tuple[int, float]:
         """Training dataset."""
-        return train(self, *args, **kwargs)
+        return train(self, input_data, target_data)
 
-    def and_train(self, *args: Any, **kwargs: Any) -> tuple[int, float]:
+    def and_train(self, target_data: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
-        return and_train(self, *args, **kwargs)
+        return and_train(self, target_data)
 
     def write(
             self,

@@ -2,33 +2,36 @@
 import random
 from typing import Any
 
-from pynumic.activation import Activation
-from pynumic.interface.initialize import initialize
-from pynumic.loss import Loss
-
-WeightsType = list[list[list[float]]] | None
-LayersType = list[int] | None
+from src.pynumic.activation import Activation
+from src.pynumic.interface.initialize import initialize
+from src.pynumic.loss import Loss
 
 
 class Neuron:
     """TODO:"""
 
     def __init__(self, value: float, miss: float) -> None:
-        self.value = value
-        self.miss = miss
+        self.value: float = value
+        self.miss: float = miss
+
+
+NeuronsType = list[list[Neuron]]
+WeightsType = list[list[list[float]]]
+LayersType = list[int] | None
 
 
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    # __slots__ = (
-    #     "_bias",
-    #     "_hidden_layers",
-    #     "_activation_mode",
-    #     "_loss_mode",
-    #     "_loss_limit",
-    #     "_rate"
-    # )
+    __slots__ = (
+        "_bias",
+        "_hidden_layers",
+        "_activation_mode",
+        "_loss_mode",
+        "_loss_limit",
+        "_rate",
+        "weights"
+    )
 
     DEFAULT_RATE: float = 0.3
 
@@ -37,19 +40,20 @@ class Properties(Activation, Loss):
             *,
             bias: bool = True,
             hidden_layers: LayersType = None,
-            activation_mode: int = Activation.TANH,
-            loss_mode: int = Loss.RMSE,
+            activation_mode: int = Activation.DEFAULT_ACTIVATION_MODE,
+            loss_mode: int = Loss.DEFAULT_LOSS_MODE,
             loss_limit: float = Loss.DEFAULT_LOSS_LIMIT,
             rate: float = DEFAULT_RATE,
-            weights: WeightsType = None
+            weights: WeightsType | None = None
     ) -> None:
         self._bias: bool = bias
         self._hidden_layers: LayersType = self.__check_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
+        # self.weights = weights
 
         # Weights
         if weights is not None:
-            self.weights = weights
+            self.weights: WeightsType = weights
         else:
             self.weights = [
                 [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
@@ -60,7 +64,7 @@ class Properties(Activation, Loss):
         Loss.__init__(self, loss_mode, loss_limit)
 
     # Neurons
-    neurons: list[list[Neuron]]
+    neurons: NeuronsType = [[Neuron(0, 0)]]
 
     # Transfer data
     data_weight: WeightsType
@@ -72,6 +76,7 @@ class Properties(Activation, Loss):
     len_input: int = 0
     len_output: int = 0
     last_layer_ind: int = 0
+    is_init: bool = False
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
         """Initialize neural network."""
@@ -96,6 +101,8 @@ class Properties(Activation, Loss):
     @hidden_layers.setter
     def hidden_layers(self, value: list[int]) -> None:
         self._hidden_layers = self.__check_layers(value)
+        # self.total_layers = self._hidden_layers + 2
+        # print("set hidden_layers", self.total_layers)
 
     @hidden_layers.deleter
     def hidden_layers(self) -> None:

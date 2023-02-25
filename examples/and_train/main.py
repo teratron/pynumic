@@ -1,12 +1,14 @@
+"""TODO:"""
+
 from pynumic import Pynumic
 
 props = {
-    "name": "perceptron",
-    "bias": True,
+    "name":            "perceptron",
+    "bias":            True,
     "activation_mode": 3,
-    "loss_mode": 0,
-    "loss_limit": 1e-10,
-    "weights": [
+    "loss_mode":       0,
+    "loss_limit":      1e-10,
+    "weights":         [
         [
             [-2.5128086, 2.6974556, 3.034397, -2.4341068],
             [-1.2436904, -1.1729956, 4.4001436, -2.1053333],

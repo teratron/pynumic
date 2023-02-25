@@ -1,3 +1,5 @@
+"""TODO:"""
+
 import os
 
 from pynumic import Pynumic
@@ -14,4 +16,4 @@ if __name__ == "__main__":
     _, _ = pn.train(data_input, data_target)
 
     # Writing weights to a file.
-    _ = pn.write(weights="perceptron_weights.json")
+    pn.write(weights="perceptron_weights.json")
