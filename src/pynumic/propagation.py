@@ -7,27 +7,24 @@ from src.pynumic.properties import Properties
 class Propagation(Properties):
     """Propagation."""
 
-    _len: int
-    _dec: int
-
-    def _calc_neurons(self) -> None:
+    def calc_neurons(self) -> None:
         """Calculating neurons."""
-        i, self._dec, self._len = 0, 0, self.len_input
+        i, _dec, _len = 0, 0, self.len_input
         for neuron in self.neurons:
             if i > 0:
-                self._dec = i - 1
-                self._len = len(self.neurons[self._dec])
+                _dec = i - 1
+                _len = len(self.neurons[_dec])
 
             for j in range(len(neuron)):
-                self._get_neuron(i, j)
+                self._get_neuron(i, j, _dec, _len)
             i += 1
 
-    def _get_neuron(self, i: int, j: int) -> None:
+    def _get_neuron(self, i: int, j: int, _dec: int, _len: int) -> None:
         k = self.neurons[i][j].value = 0
         for weight in self.data_weight[i][j]:
-            if k < self._len:
+            if k < _len:
                 if i > 0:
-                    self.neurons[i][j].value += self.neurons[self._dec][k].value * weight
+                    self.neurons[i][j].value += self.neurons[_dec][k].value * weight
                 else:
                     self.neurons[i][j].value += self.data_input[k] * weight
             else:
@@ -40,33 +37,33 @@ class Propagation(Properties):
         else:
             self.neurons[i][j].value = self.get_activation(self.neurons[i][j].value)
 
-    def _calc_loss(self) -> float:
+    def calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""
-        i, error = 0, 0.0
+        i, loss = 0, 0.0
         for neuron in self.neurons[self.last_layer_ind]:
             neuron.miss = self.data_target[i] - neuron.value
             match self.loss_mode:
                 case self.AVG:
-                    error += math.fabs(neuron.miss)
+                    loss += math.fabs(neuron.miss)
                 case self.ARCTAN:
-                    error += math.atan(neuron.miss) ** 2
+                    loss += math.atan(neuron.miss) ** 2
                 case self.MSE | self.RMSE | _:
-                    error += neuron.miss ** 2
+                    loss += neuron.miss ** 2
             i += 1
 
-        error /= self.len_output
+        loss /= self.len_output
         if self.loss_mode == self.RMSE:
-            error = math.sqrt(error)
+            loss = math.sqrt(loss)
 
-        if math.isnan(error):
+        if math.isnan(loss):
             raise ValueError(f"{__name__}: loss not-a-number value")
 
-        if math.isinf(error):
+        if math.isinf(loss):
             raise ValueError(f"{__name__}: loss is infinity")
 
-        return error
+        return loss
 
-    def _calc_miss(self) -> None:
+    def calc_miss(self) -> None:
         """Calculating the error of neuron in hidden layers."""
         if self.last_layer_ind > 0:
             for i in range(self.last_layer_ind - 1, -1, -1):
@@ -74,25 +71,31 @@ class Propagation(Properties):
                 for j in range(len(self.neurons[i])):
                     self.neurons[i][j].miss = 0
                     for k in range(len(self.neurons[inc])):
-                        self.neurons[i][j].miss += self.neurons[inc][k].miss * self.data_weight[inc][k][j]
+                        self.neurons[i][j].miss += (
+                                self.neurons[inc][k].miss * self.data_weight[inc][k][j]
+                        )
 
-    def _update_weights(self) -> None:
+    def update_weights(self) -> None:
         """Update weights."""
-        i, self._dec, self._len = 0, 0, self.len_input
+        i, _dec, _len = 0, 0, self.len_input
         for weight in self.data_weight:
             if i > 0:
-                self._dec = i - 1
-                self._len = len(self.neurons[self._dec])
+                _dec = i - 1
+                _len = len(self.neurons[_dec])
 
             for j in range(len(weight)):
-                self._get_weight(i, j)
+                self._get_weight(i, j, _dec, _len)
             i += 1
 
-    def _get_weight(self, i: int, j: int) -> None:
-        grad = self.rate * self.neurons[i][j].miss * self.get_derivative(self.neurons[i][j].value)
+    def _get_weight(self, i: int, j: int, _dec: int, _len: int) -> None:
+        grad = (
+                self.rate
+                * self.neurons[i][j].miss
+                * self.get_derivative(self.neurons[i][j].value)
+        )
         for k in range(len(self.data_weight[i][j])):
-            if k < self._len:
-                value = self.neurons[self._dec][k].value
+            if k < _len:
+                value = self.neurons[_dec][k].value
                 if i == 0:
                     value = self.data_input[k]
 

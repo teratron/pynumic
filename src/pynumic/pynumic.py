@@ -79,7 +79,9 @@ def _get_props_from(reader: str) -> dict[str, Any]:
                     data = json.load(handle)
                 data.update(config=filename)
             else:
-                raise FileExistsError(f"{__name__}: incorrect config file extension: {extension}")
+                raise FileExistsError(
+                    f"{__name__}: incorrect config file extension: {extension}"
+                )
         else:
             data = json.loads(reader)
 

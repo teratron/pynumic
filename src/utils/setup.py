@@ -10,6 +10,7 @@ TESTS: str = os.path.join(ROOT, "../../tests")
 # print(__file__)
 # print(sys.argv[0].rstrip("/setup.py"))
 
+
 @dataclass
 class Path:
     # directories

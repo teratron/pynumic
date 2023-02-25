@@ -2,9 +2,9 @@
 import random
 from typing import Any
 
-from src.pynumic.activation import Activation
-from src.pynumic.interface.initialize import initialize
-from src.pynumic.loss import Loss
+from pynumic.activation import Activation
+from pynumic.initialize import initialize
+from pynumic.loss import Loss
 
 
 class Neuron:
@@ -30,7 +30,7 @@ class Properties(Activation, Loss):
         "_loss_mode",
         "_loss_limit",
         "_rate",
-        "weights"
+        "weights",
     )
 
     DEFAULT_RATE: float = 0.3
@@ -47,7 +47,7 @@ class Properties(Activation, Loss):
             weights: WeightsType | None = None
     ) -> None:
         self._bias: bool = bias
-        self._hidden_layers: LayersType = self.__check_layers(hidden_layers)
+        self.hidden_layers: LayersType = self.__check_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
         # self.weights = weights
 
@@ -101,8 +101,12 @@ class Properties(Activation, Loss):
     @hidden_layers.setter
     def hidden_layers(self, value: list[int]) -> None:
         self._hidden_layers = self.__check_layers(value)
-        # self.total_layers = self._hidden_layers + 2
-        # print("set hidden_layers", self.total_layers)
+
+        if self._hidden_layers[0] > 0:
+            self.last_layer_ind = len(self._hidden_layers)
+            # self.layers = self._hidden_layers.append(self.len_output)
+        else:
+            self.last_layer_ind = 0
 
     @hidden_layers.deleter
     def hidden_layers(self) -> None:
