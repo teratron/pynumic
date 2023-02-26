@@ -21,6 +21,15 @@ class Pynumic(Interface):
         - Pynumic("config/perceptron.json", bias=True, rate=0.3)
         - Pynumic("{'bias': true, 'rate': 0.5}")
         - Pynumic("{'bias': true, 'rate': 0.5}, bias=True, rate=0.3")
+
+    :pn = Pynumic():
+        - pn() -- reset to default
+        - pn(bias=True, rate=0.3)
+        - pn(**{"bias": True, "rate": 0.3})
+        - pn("config/perceptron.json")
+        - pn("config/perceptron.json", bias=True, rate=0.3)
+        - pn("{'bias': true, 'rate': 0.5}")
+        - pn("{'bias': true, 'rate': 0.5}, bias=True, rate=0.3")
     """
 
     name: str = "pynumic"

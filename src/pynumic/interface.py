@@ -8,6 +8,11 @@ class Interface(Propagation):
 
     # all = ["verify", "query", "train", "and_train", "write"]
 
+    MAX_ITERATION: int = 1e+06
+
+    #
+    # var GetMaxIteration = getMaxIteration
+
     def verify(self, input_data: list[float], target_data: list[float]) -> float:
         """Verifying dataset."""
         return verify(self, input_data, target_data)
@@ -102,6 +107,10 @@ def verify(obj: Interface, input_data: list[float], target_data: list[float]) ->
 
 def query(obj: Interface, input_data: list[float]) -> list[float]:
     """TODO:"""
+    if len(input_data) > 0:
+        if obj.is_init and obj.len_input == len(input_data):
+            pass
+
     print("query***:", obj, input_data)
     # obj.calc_neurons()
     return [0, 1]
