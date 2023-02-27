@@ -8,18 +8,24 @@ class Interface(Propagation):
 
     # all = ["verify", "query", "train", "and_train", "write"]
 
-    MAX_ITERATION: int = 1e+06
+    MAX_ITERATION: float = 1e+06
 
-    #
-    # var GetMaxIteration = getMaxIteration
-
-    def verify(self, input_data: list[float], target_data: list[float]) -> float:
+    def verify(self, input_arg: list[float], target_arg: list[float]) -> float:
         """Verifying dataset."""
-        return verify(self, input_data, target_data)
+        return _verify(self, input_arg, target_arg)
 
-    def query(self, input_data: list[float]) -> list[float]:
+    def query(self, input_arg: list[float]) -> list[float]:
         """Querying dataset."""
-        return query(self, input_data)
+        if not self.is_init or self.len_input != len(input_arg):
+            raise AttributeError()
+
+        if self.weights is not None:
+            self.data_weight = self.weights.copy()
+
+        self.data_input = input_arg
+        self.calc_neurons()
+
+        return self.data_output
 
     def train(self, input_data: list[float], target_data: list[float]) -> tuple[int, float]:
         """Training dataset."""
@@ -57,7 +63,7 @@ class Interface(Propagation):
         pass
 
 
-def verify(obj: Interface, input_data: list[float], target_data: list[float]) -> float:
+def _verify(obj: Interface, input_data: list[float], target_data: list[float]) -> float:
     print(obj, input_data, target_data)
     return 0.0
 
@@ -105,15 +111,24 @@ def verify(obj: Interface, input_data: list[float], target_data: list[float]) ->
 # }
 
 
-def query(obj: Interface, input_data: list[float]) -> list[float]:
-    """TODO:"""
-    if len(input_data) > 0:
-        if obj.is_init and obj.len_input == len(input_data):
-            pass
+def _query(obj: Interface, input_data: list[float]) -> list[float]:
+    # if len(input_arg) > 0:
+    #     if obj.is_init and obj.len_input == len(input_arg):
+    #         pass
 
-    print("query***:", obj, input_data)
+    if obj.weights is not None:
+        obj.data_weight = obj.weights.copy()
+
+    obj.data_input = input_data
+    obj.calc_neurons()
+
+    obj.data_output = obj.neurons[obj.last_layer_ind]
+
+    return obj.data_output
+
+    # print("query***:", obj, input_arg)
     # obj.calc_neurons()
-    return [0, 1]
+    # return [0, 1]
 
 
 # // Query querying dataset.

@@ -9,19 +9,21 @@ class Propagation(Properties):
 
     def calc_neurons(self) -> None:
         """Calculating neurons."""
-        i, _dec, _len = 0, 0, self.len_input
-        for neuron in self.neurons:
+        _dec, _len = 0, self.len_input
+        for i, layer in enumerate(self.neurons):
             if i > 0:
                 _dec = i - 1
                 _len = len(self.neurons[_dec])
 
-            for j in range(len(neuron)):
+            for j, _ in enumerate(layer):
                 self._get_neuron(i, j, _dec, _len)
-            i += 1
+
+                if i == self.last_layer_ind:
+                    self.data_output[j] = self.neurons[i][j].value
 
     def _get_neuron(self, i: int, j: int, _dec: int, _len: int) -> None:
         k = self.neurons[i][j].value = 0
-        for weight in self.data_weight[i][j]:
+        for k, weight in enumerate(self.data_weight[i][j]):
             if k < _len:
                 if i > 0:
                     self.neurons[i][j].value += self.neurons[_dec][k].value * weight
@@ -29,18 +31,16 @@ class Propagation(Properties):
                     self.neurons[i][j].value += self.data_input[k] * weight
             else:
                 self.neurons[i][j].value += weight
-            k += 1
 
         if self.activation_mode == self.LINEAR:
-            if k > 0:
-                self.neurons[i][j].value /= k
+            self.neurons[i][j].value /= k if k > 0 else 1
         else:
             self.neurons[i][j].value = self.get_activation(self.neurons[i][j].value)
 
     def calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""
-        i, loss = 0, 0.0
-        for neuron in self.neurons[self.last_layer_ind]:
+        loss = 0.0
+        for i, neuron in enumerate(self.neurons[self.last_layer_ind]):
             neuron.miss = self.data_target[i] - neuron.value
             match self.loss_mode:
                 case self.AVG:
@@ -49,7 +49,6 @@ class Propagation(Properties):
                     loss += math.atan(neuron.miss) ** 2
                 case self.MSE | self.RMSE | _:
                     loss += neuron.miss ** 2
-            i += 1
 
         loss /= self.len_output
         if self.loss_mode == self.RMSE:
@@ -68,24 +67,23 @@ class Propagation(Properties):
         if self.last_layer_ind > 0:
             for i in range(self.last_layer_ind - 1, -1, -1):
                 inc = i + 1
-                for j in range(len(self.neurons[i])):
+                for j, _ in enumerate(self.neurons[i]):
                     self.neurons[i][j].miss = 0
-                    for k in range(len(self.neurons[inc])):
+                    for k, _ in enumerate(self.neurons[inc]):
                         self.neurons[i][j].miss += (
                                 self.neurons[inc][k].miss * self.data_weight[inc][k][j]
                         )
 
     def update_weights(self) -> None:
         """Update weights."""
-        i, _dec, _len = 0, 0, self.len_input
-        for weight in self.data_weight:
+        _dec, _len = 0, self.len_input
+        for i, weight in enumerate(self.data_weight):
             if i > 0:
                 _dec = i - 1
                 _len = len(self.neurons[_dec])
 
-            for j in range(len(weight)):
+            for j, _ in enumerate(weight):
                 self._get_weight(i, j, _dec, _len)
-            i += 1
 
     def _get_weight(self, i: int, j: int, _dec: int, _len: int) -> None:
         grad = (
@@ -93,15 +91,12 @@ class Propagation(Properties):
                 * self.neurons[i][j].miss
                 * self.get_derivative(self.neurons[i][j].value)
         )
-        for k in range(len(self.data_weight[i][j])):
+        for k, _ in enumerate(self.data_weight[i][j]):
             if k < _len:
-                value = self.neurons[_dec][k].value
-                if i == 0:
-                    value = self.data_input[k]
+                value = self.neurons[_dec][k].value if i > 0 else self.data_input[k]
 
                 if self.activation_mode == self.LINEAR:
-                    if value != 0:
-                        self.data_weight[i][j][k] += grad / value
+                    self.data_weight[i][j][k] += grad / value if value != 0 else 0
                 else:
                     self.data_weight[i][j][k] += grad * value
             else:

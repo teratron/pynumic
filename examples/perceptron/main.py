@@ -35,7 +35,7 @@ if __name__ == "__main__":
     #
     # # Training.
     # len_data = len(dataset) - len_output
-    # for epoch in range(1, 10001):
+    # for epoch in range(10_000):
     #     for i in range(len_input, len_data + 1):
     #         _, _ = pn.train(dataset[i - len_input: i], dataset[i: i + len_output])
     #

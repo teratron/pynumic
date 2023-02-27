@@ -1,39 +1,62 @@
 """Properties of neural network."""
+
 import random
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, TypeAlias
 
 from pynumic.activation import Activation
 from pynumic.initialize import initialize
 from pynumic.loss import Loss
 
 
+# class Neuron:
+#     """TODO:"""
+#
+#     def __init__(self, value: float, miss: float) -> None:
+#         self.value: float = value
+#         self.miss: float = miss
+
+@dataclass
 class Neuron:
-    """TODO:"""
-
-    def __init__(self, value: float, miss: float) -> None:
-        self.value: float = value
-        self.miss: float = miss
+    """Neuron."""
+    value: float
+    miss: float
 
 
-NeuronsType = list[list[Neuron]]
-WeightsType = list[list[list[float]]]
-LayersType = list[int] | None
+NeuronsType: TypeAlias = list[list[Neuron]]
+WeightsType: TypeAlias = list[list[list[float]]]
+LayersType: TypeAlias = list[int] | None
 
 
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    __slots__ = (
-        "_bias",
-        "_hidden_layers",
-        "_activation_mode",
-        "_loss_mode",
-        "_loss_limit",
-        "_rate",
-        "weights",
-    )
+    # __slots__ = (
+    #     "_bias",
+    #     "_hidden_layers",
+    #     "_activation_mode",
+    #     "_loss_mode",
+    #     "_loss_limit",
+    #     "_rate",
+    #     "weights",
+    # )
 
     DEFAULT_RATE: float = 0.3
+
+    # Neurons
+    neurons: NeuronsType = [[Neuron(0, 0)]]
+
+    # Transfer data
+    data_weight: WeightsType
+    # data_input: list[float]
+    # data_target: list[float]
+    # data_output: list[float]
+
+    # Settings
+    len_input: int = 0
+    len_output: int = 0
+    last_layer_ind: int = 0
+    is_init: bool = False
 
     def __init__(
             self,
@@ -56,27 +79,19 @@ class Properties(Activation, Loss):
             self.weights: WeightsType = weights
         else:
             self.weights = [
-                [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
-                for _ in range(5)
+                [
+                    [
+                        random.uniform(-0.5, 0.5) for _ in range(5)
+                    ] for _ in range(5)
+                ] for _ in range(5)
             ]
+
+        self.data_input: list[float] = [0 for _ in range(2)]
+        self.data_target: list[float] = [0 for _ in range(2)]
+        self.data_output: list[float] = [0 for _ in range(2)]
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
-
-    # Neurons
-    neurons: NeuronsType = [[Neuron(0, 0)]]
-
-    # Transfer data
-    data_weight: WeightsType
-    data_input: list[float]
-    data_target: list[float]
-    data_output: list[float]
-
-    # Settings
-    len_input: int = 0
-    len_output: int = 0
-    last_layer_ind: int = 0
-    is_init: bool = False
 
     def _initialize(self, *args: Any, **kwargs: Any) -> None:
         """Initialize neural network."""

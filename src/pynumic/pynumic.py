@@ -13,7 +13,7 @@ class Pynumic(Interface):
 
     Pynumic(reader: str, **props)
 
-    :Examples:
+    Examples:
         - Pynumic()
         - Pynumic(bias=True, rate=0.3)
         - Pynumic(**{"bias": True, "rate": 0.3})
@@ -22,7 +22,7 @@ class Pynumic(Interface):
         - Pynumic("{'bias': true, 'rate': 0.5}")
         - Pynumic("{'bias': true, 'rate': 0.5}, bias=True, rate=0.3")
 
-    :pn = Pynumic():
+    pn = Pynumic():
         - pn() -- reset to default
         - pn(bias=True, rate=0.3)
         - pn(**{"bias": True, "rate": 0.3})
