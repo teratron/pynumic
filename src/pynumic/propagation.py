@@ -1,4 +1,4 @@
-"""TODO:"""
+"""TODO: Propagation"""
 import math
 
 from src.pynumic.properties import Properties
@@ -16,14 +16,14 @@ class Propagation(Properties):
                 _len = len(self.neurons[_dec])
 
             for j, _ in enumerate(layer):
-                self._get_neuron(i, j, _dec, _len)
+                self.__get_neuron(i, j, _dec, _len)
 
                 if i == self.last_layer_ind:
                     self.data_output[j] = self.neurons[i][j].value
 
-    def _get_neuron(self, i: int, j: int, _dec: int, _len: int) -> None:
+    def __get_neuron(self, i: int, j: int, _dec: int, _len: int) -> None:
         k = self.neurons[i][j].value = 0
-        for k, weight in enumerate(self.data_weight[i][j]):
+        for k, weight in enumerate(self.weights[i][j]):
             if k < _len:
                 if i > 0:
                     self.neurons[i][j].value += self.neurons[_dec][k].value * weight
@@ -71,36 +71,36 @@ class Propagation(Properties):
                     self.neurons[i][j].miss = 0
                     for k, _ in enumerate(self.neurons[inc]):
                         self.neurons[i][j].miss += (
-                                self.neurons[inc][k].miss * self.data_weight[inc][k][j]
+                                self.neurons[inc][k].miss * self.weights[inc][k][j]
                         )
 
     def update_weights(self) -> None:
         """Update weights."""
         _dec, _len = 0, self.len_input
-        for i, weight in enumerate(self.data_weight):
+        for i, weight in enumerate(self.weights):
             if i > 0:
                 _dec = i - 1
                 _len = len(self.neurons[_dec])
 
             for j, _ in enumerate(weight):
-                self._get_weight(i, j, _dec, _len)
+                self.__get_weight(i, j, _dec, _len)
 
-    def _get_weight(self, i: int, j: int, _dec: int, _len: int) -> None:
+    def __get_weight(self, i: int, j: int, _dec: int, _len: int) -> None:
         grad = (
                 self.rate
                 * self.neurons[i][j].miss
                 * self.get_derivative(self.neurons[i][j].value)
         )
-        for k, _ in enumerate(self.data_weight[i][j]):
+        for k, _ in enumerate(self.weights[i][j]):
             if k < _len:
                 value = self.neurons[_dec][k].value if i > 0 else self.data_input[k]
 
                 if self.activation_mode == self.LINEAR:
-                    self.data_weight[i][j][k] += grad / value if value != 0 else 0
+                    self.weights[i][j][k] += grad / value if value != 0 else 0
                 else:
-                    self.data_weight[i][j][k] += grad * value
+                    self.weights[i][j][k] += grad * value
             else:
-                self.data_weight[i][j][k] += grad
+                self.weights[i][j][k] += grad
 
 
 # // calcNeuron.

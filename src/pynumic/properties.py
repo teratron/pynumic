@@ -123,10 +123,6 @@ class Properties(Activation, Loss):
         else:
             self.last_layer_ind = 0
 
-    @hidden_layers.deleter
-    def hidden_layers(self) -> None:
-        del self._hidden_layers
-
     @staticmethod
     def __check_layers(value: LayersType) -> list[int]:
         return [0] if value is None else value

@@ -8,32 +8,98 @@ class Interface(Propagation):
 
     # all = ["verify", "query", "train", "and_train", "write"]
 
-    MAX_ITERATION: float = 1e+06
+    MAX_ITERATION: int = 1_000_000
+    """Maximum number of iterations after which training is forcibly terminated."""
 
     def verify(self, input_arg: list[float], target_arg: list[float]) -> float:
         """Verifying dataset."""
-        return _verify(self, input_arg, target_arg)
+        if self.len_input != len(input_arg) or self.len_output != len(target_arg):
+            raise AttributeError()
+
+        if not self.is_init:
+            self._initialize()  # TODO:
+
+        self.data_input = input_arg
+        self.data_target = target_arg
+        self.calc_neurons()
+        return self.calc_loss()
 
     def query(self, input_arg: list[float]) -> list[float]:
         """Querying dataset."""
-        if not self.is_init or self.len_input != len(input_arg):
+        if self.len_input != len(input_arg):
             raise AttributeError()
 
-        if self.weights is not None:
-            self.data_weight = self.weights.copy()
+        if not self.is_init:
+            raise ValueError(f"{__name__}: not initialized")
 
         self.data_input = input_arg
         self.calc_neurons()
-
         return self.data_output
 
-    def train(self, input_data: list[float], target_data: list[float]) -> tuple[int, float]:
+    def train(self, input_arg: list[float], target_arg: list[float]) -> tuple[int, float]:
         """Training dataset."""
-        return train(self, input_data, target_data)
+        if self.len_input != len(input_arg) or self.len_output != len(target_arg):
+            raise AttributeError()
 
-    def and_train(self, target_data: list[float]) -> tuple[int, float]:
+        if not self.is_init:
+            self._initialize()  # TODO:
+
+        self.data_input = input_arg
+        self.data_target = target_arg
+
+        min_loss = 1.0
+        min_count = 0
+        for count in range(1, self.MAX_ITERATION):
+            self.calc_neurons()
+            loss = self.calc_loss()
+            if loss < min_loss:
+                min_loss = loss
+                min_count = count
+                self.data_weight = self.weights.copy()
+                if loss < self._loss_limit:
+                    self.weights = self.data_weight.copy()
+                    return min_count, min_loss
+
+            self.calc_miss()
+            self.update_weights()
+
+        if min_count > 0:
+            self.weights = self.data_weight.copy()
+
+        return min_count, min_loss
+
+    def and_train(self, target_arg: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
-        return and_train(self, target_data)
+        if self.len_output != len(target_arg):
+            raise AttributeError()
+
+        if not self.is_init:
+            self._initialize()  # TODO:
+
+        self.data_target = target_arg
+
+        min_loss = 1.0
+        min_count = 0
+        for count in range(1, self.MAX_ITERATION):
+            if count > 1:
+                self.calc_neurons()
+
+            loss = self.calc_loss()
+            if loss < min_loss:
+                min_loss = loss
+                min_count = count
+                self.data_weight = self.weights.copy()
+                if loss < self._loss_limit:
+                    self.weights = self.data_weight.copy()
+                    return min_count, min_loss
+
+            self.calc_miss()
+            self.update_weights()
+
+        if min_count > 0:
+            self.weights = self.data_weight.copy()
+
+        return min_count, min_loss
 
     def write(
             self,
@@ -62,10 +128,9 @@ class Interface(Propagation):
         """
         pass
 
-
-def _verify(obj: Interface, input_data: list[float], target_data: list[float]) -> float:
-    print(obj, input_data, target_data)
-    return 0.0
+# def _verify(obj: Interface, input_data: list[float], target_data: list[float]) -> float:
+#     print(obj, input_data, target_data)
+#     return 0.0
 
 
 # // Verify verifying dataset.
@@ -111,24 +176,24 @@ def _verify(obj: Interface, input_data: list[float], target_data: list[float]) -
 # }
 
 
-def _query(obj: Interface, input_data: list[float]) -> list[float]:
-    # if len(input_arg) > 0:
-    #     if obj.is_init and obj.len_input == len(input_arg):
-    #         pass
+# def _query(obj: Interface, input_data: list[float]) -> list[float]:
+#     # if len(input_arg) > 0:
+#     #     if obj.is_init and obj.len_input == len(input_arg):
+#     #         pass
+#
+#     if obj.weights is not None:
+#         obj.data_weight = obj.weights.copy()
+#
+#     obj.data_input = input_data
+#     obj.calc_neurons()
+#
+#     obj.data_output = obj.neurons[obj.last_layer_ind]
+#
+#     return obj.data_output
 
-    if obj.weights is not None:
-        obj.data_weight = obj.weights.copy()
-
-    obj.data_input = input_data
-    obj.calc_neurons()
-
-    obj.data_output = obj.neurons[obj.last_layer_ind]
-
-    return obj.data_output
-
-    # print("query***:", obj, input_arg)
-    # obj.calc_neurons()
-    # return [0, 1]
+# print("query***:", obj, input_arg)
+# obj.calc_neurons()
+# return [0, 1]
 
 
 # // Query querying dataset.
@@ -167,16 +232,14 @@ def _query(obj: Interface, input_data: list[float]) -> list[float]:
 # }
 
 
-def train(obj: Interface, input_data: list[float], target_data: list[float]) -> tuple[int, float]:
-    """TODO:"""
-    print(obj, input_data, target_data)
-    return 0, 0.1
-
-
-def and_train(obj: Interface, target_data: list[float]) -> tuple[int, float]:
-    """TODO:"""
-    print(obj, target_data)
-    return 0, 0.1
+# def train(obj: Interface, input_data: list[float], target_data: list[float]) -> tuple[int, float]:
+#     print(obj, input_data, target_data)
+#     return 0, 0.1
+#
+#
+# def and_train(obj: Interface, target_data: list[float]) -> tuple[int, float]:
+#     print(obj, target_data)
+#     return 0, 0.1
 
 # // MaxIteration the maximum number of iterations after which training is forcibly terminated.
 # const MaxIteration int = 1e+06

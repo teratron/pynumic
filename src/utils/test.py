@@ -1,4 +1,12 @@
+"""Test."""
 hidden_layers = [5, 3, 7, 4]
+
+hl1 = hidden_layers
+hl2 = hidden_layers.copy()
+
+hl1[0] = 32
+hidden_layers[3] = 42
+print(hidden_layers, hl1, hl2)
 
 n = 0
 for i in hidden_layers:
