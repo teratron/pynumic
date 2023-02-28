@@ -57,6 +57,7 @@ class Properties(Activation, Loss):
     len_output: int = 0
     last_layer_ind: int = 0
     is_init: bool = False
+    is_query: bool = False
 
     def __init__(
             self,

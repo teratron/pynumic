@@ -1,4 +1,5 @@
 """Interface for neural network."""
+import copy
 
 from src.pynumic.propagation import Propagation
 
@@ -34,6 +35,7 @@ class Interface(Propagation):
 
         self.data_input = input_arg
         self.calc_neurons()
+        self.is_query = True
         return self.data_output
 
     def train(self, input_arg: list[float], target_arg: list[float]) -> tuple[int, float]:
@@ -46,27 +48,7 @@ class Interface(Propagation):
 
         self.data_input = input_arg
         self.data_target = target_arg
-
-        min_loss = 1.0
-        min_count = 0
-        for count in range(1, self.MAX_ITERATION):
-            self.calc_neurons()
-            loss = self.calc_loss()
-            if loss < min_loss:
-                min_loss = loss
-                min_count = count
-                self.data_weight = self.weights.copy()
-                if loss < self._loss_limit:
-                    self.weights = self.data_weight.copy()
-                    return min_count, min_loss
-
-            self.calc_miss()
-            self.update_weights()
-
-        if min_count > 0:
-            self.weights = self.data_weight.copy()
-
-        return min_count, min_loss
+        return self.__train()
 
     def and_train(self, target_arg: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
@@ -77,27 +59,31 @@ class Interface(Propagation):
             self._initialize()  # TODO:
 
         self.data_target = target_arg
+        return self.__train()
 
+    def __train(self) -> tuple[int, float]:
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
-            if count > 1:
+            if not self.is_query:
                 self.calc_neurons()
+            else:
+                self.is_query = False
 
             loss = self.calc_loss()
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
-                self.data_weight = self.weights.copy()
+                self.data_weight = copy.deepcopy(self.weights)
                 if loss < self._loss_limit:
-                    self.weights = self.data_weight.copy()
+                    self.weights = copy.deepcopy(self.data_weight)
                     return min_count, min_loss
 
             self.calc_miss()
             self.update_weights()
 
         if min_count > 0:
-            self.weights = self.data_weight.copy()
+            self.weights = copy.deepcopy(self.data_weight)
 
         return min_count, min_loss
 
