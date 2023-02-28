@@ -2,6 +2,7 @@
 
 import random
 from dataclasses import dataclass
+from threading import Lock
 from typing import Any, TypeAlias
 
 from pynumic.activation import Activation
@@ -90,6 +91,7 @@ class Properties(Activation, Loss):
         self.data_input: list[float] = [0 for _ in range(2)]
         self.data_target: list[float] = [0 for _ in range(2)]
         self.data_output: list[float] = [0 for _ in range(2)]
+        self.mutex = Lock()
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)

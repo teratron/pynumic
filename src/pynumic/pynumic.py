@@ -1,7 +1,6 @@
 """PyNumic."""
 import json
 import os
-from asyncio import Lock
 from typing import Any
 
 from src.pynumic.interface import Interface
@@ -35,7 +34,6 @@ class Pynumic(Interface):
     name: str = "pynumic"
     type: str = "Pynumic"
     config: str | None = None
-    mutex: Lock | None = None
 
     def __init__(self, reader: str = "", **props: Any) -> None:
         """Returns a new neural network instance of one of the architectures.

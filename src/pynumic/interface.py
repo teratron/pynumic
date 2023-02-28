@@ -1,13 +1,11 @@
 """Interface for neural network."""
-import copy
+from copy import deepcopy
 
 from src.pynumic.propagation import Propagation
 
 
 class Interface(Propagation):
     """Interface for neural network."""
-
-    # all = ["verify", "query", "train", "and_train", "write"]
 
     MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
@@ -19,6 +17,15 @@ class Interface(Propagation):
 
         if not self.is_init:
             self._initialize()  # TODO:
+
+        # self.mutex.acquire()
+        # self.mutex.release()
+
+        # self.mutex.acquire()
+        # try:
+        #     """... доступ к общим ресурсам"""
+        # finally:
+        #     self.mutex.release()  # освобождаем блокировку независимо от результата
 
         self.data_input = input_arg
         self.data_target = target_arg
@@ -74,16 +81,16 @@ class Interface(Propagation):
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
-                self.data_weight = copy.deepcopy(self.weights)
+                self.data_weight = deepcopy(self.weights)
                 if loss < self._loss_limit:
-                    self.weights = copy.deepcopy(self.data_weight)
+                    self.weights = deepcopy(self.data_weight)
                     return min_count, min_loss
 
             self.calc_miss()
             self.update_weights()
 
         if min_count > 0:
-            self.weights = copy.deepcopy(self.data_weight)
+            self.weights = deepcopy(self.data_weight)
 
         return min_count, min_loss
 

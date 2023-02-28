@@ -2,5 +2,5 @@
 
 from src.pynumic.pynumic import Pynumic
 
-#
-# __all__ = ["Pynumic"]
+# , "verify", "query", "train", "and_train", "write"
+__all__ = ["Pynumic"]
