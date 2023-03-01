@@ -1,4 +1,4 @@
-"""Interface for neural network."""
+"""TODO: Interface for neural network."""
 from copy import deepcopy
 from threading import Lock
 

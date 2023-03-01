@@ -34,8 +34,13 @@ from typing import Any, Callable
 #     main()
 
 
+class Config:
+    """TODO: Config"""
+    pass
+
+
 def get_conf_value(path: str, key: str) -> tuple[str | None, list[str]]:
-    with open(path) as handle:
+    with open(path, "r", encoding="utf-8") as handle:
         lines = handle.readlines()
 
     for line in lines:
@@ -52,6 +57,7 @@ def get_conf_value(path: str, key: str) -> tuple[str | None, list[str]]:
 def set_conf_value(
         path: str, key: str, value: str | Callable[[str, Any], str], *options: Any
 ) -> None:
+    """TODO:"""
     # _val, lines = get_conf_value(path, key)
     # if _val is not None:
     #     __val = ""
@@ -64,7 +70,7 @@ def set_conf_value(
     #
     #     lines[i] = lines[i].replace(_val, __val)
 
-    with open(path) as handle:
+    with open(path, "r", encoding="utf-8") as handle:
         lines = handle.readlines()
 
     i = 0
@@ -83,7 +89,7 @@ def set_conf_value(
             break
         i += 1
 
-    with open(path, "w", newline="\n") as handle:
+    with open(path, "w", encoding="utf-8", newline="\n") as handle:
         for line in lines:
             handle.writelines(line)
 

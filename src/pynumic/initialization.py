@@ -13,7 +13,7 @@ class Neuron:
     miss: float
 
 
-class Initialization(Properties):
+class Initialization(Properties):  # TODO: Pylint: Too many instance attributes (12/7)
     """Initialization neural network."""
 
     # Neurons
@@ -40,50 +40,50 @@ class Initialization(Properties):
         if self.last_layer_ind > 0 and self._hidden_layers[0] == 0:
             self.last_layer_ind = 0
 
-        layer: list[int] = self._hidden_layers.copy()
+        layers: list[int] = self._hidden_layers.copy()
         if self.last_layer_ind > 0:
-            layer.append(self.len_output)
+            layers.append(self.len_output)
         else:
-            layer = [self.len_output]
+            layers = [self.len_output]
 
-        len_layer = len(layer)
-
+        len_layers = len(layers)
         bias_input = self.len_input + int(self._bias)
-        biasLayer: int
+        bias_layer: int = 0  # TODO:
 
-        self.weights = make(pkg.Float3Type, len_layer)
-        self.data_weight = make(pkg.Float3Type, len_layer)
-        self.neurons = make([][] * Neuron, len_layer)
-        for i, v := range layer:
-            self.weights[i] = make(pkg.Float2Type, v)
-            self.data_weight[i] = make(pkg.Float2Type, v)
-            self.neurons[i] = make([] * Neuron, v)
+        # self.weights = make(pkg.Float3Type, len_layers)
+        # self.data_weight = make(pkg.Float3Type, len_layers)
+        # self.neurons = make([][]*Neuron, len_layers)
+        self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+
+        for i, v in enumerate(layers):
+            # self.weights[i] = make(pkg.Float2Type, v)
+            # self.data_weight[i] = make(pkg.Float2Type, v)
+            # self.neurons[i] = make([] * Neuron, v)
             if i > 0:
-                biasLayer = int(layer[i - 1]) + int(self._bias)
+                bias_layer = int(layers[i - 1]) + int(self._bias)
 
-            for j := 0; j < int(v); j++:
-                if i > 0:
-                    self.weights[i][j] = make(pkg.Float1Type, biasLayer)
-                    self.data_weight[i][j] = make(pkg.Float1Type, biasLayer)
-                else:
-                    self.weights[i][j] = make(pkg.Float1Type, bias_input)
-                    self.data_weight[i][j] = make(pkg.Float1Type, bias_input)
+            # for j in range(v):
+            #     if i > 0:
+            #         self.weights[i][j] = make(pkg.Float1Type, bias_layer)
+            #         self.data_weight[i][j] = make(pkg.Float1Type, bias_layer)
+            #     else:
+            #         self.weights[i][j] = make(pkg.Float1Type, bias_input)
+            #         self.data_weight[i][j] = make(pkg.Float1Type, bias_input)
+            #
+            #     for k in self.weights[i][j]:
+            #         if self.activation_mode == self.LINEAR:
+            #             self.weights[i][j][k] = 0.5
+            #         else:
+            #             self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
 
-                for k := range self.weights[i][j]:
-                    if self.activation_mode == self.LINEAR:
-                        self.weights[i][j][k] = .5
-                    else:
-                        self.weights[i][j][k] = params.GetRandFloat()
-
-                self.neurons[i][j] = & Neuron
-                {}
+            # self.neurons[i][j] = &Neuron{}
 
         self.weights = [
             [
                 [
                     random.uniform(-0.5, 0.5) for _ in range(5)
                 ] for _ in range(5)
-            ] for _ in range(5)
+            ] for _ in range(len_layers)
         ]
 
         return self._init_completion()

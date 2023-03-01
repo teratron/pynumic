@@ -1,4 +1,4 @@
-"""Properties of neural network."""
+"""TODO: Properties of neural network."""
 from typing import TypeAlias
 
 from pynumic.activation import Activation
