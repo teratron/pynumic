@@ -1,10 +1,10 @@
 """TODO: Propagation"""
 import math
 
-from src.pynumic.properties import Properties
+from src.pynumic.initialization import Initialization
 
 
-class Propagation(Properties):
+class Propagation(Initialization):
     """Propagation."""
 
     def calc_neurons(self) -> None:

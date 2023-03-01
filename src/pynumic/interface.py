@@ -1,5 +1,6 @@
 """Interface for neural network."""
 from copy import deepcopy
+from threading import Lock
 
 from src.pynumic.propagation import Propagation
 
@@ -10,13 +11,16 @@ class Interface(Propagation):
     MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
+    mutex: Lock = Lock()
+    is_query: bool = False
+
     def verify(self, input_arg: list[float], target_arg: list[float]) -> float:
         """Verifying dataset."""
         if self.len_input != len(input_arg) or self.len_output != len(target_arg):
             raise AttributeError()
 
         if not self.is_init:
-            self._initialize()  # TODO:
+            self.init_from_new(self.len_input, self.len_input)  # TODO:
 
         # self.mutex.acquire()
         # self.mutex.release()
@@ -51,7 +55,7 @@ class Interface(Propagation):
             raise AttributeError()
 
         if not self.is_init:
-            self._initialize()  # TODO:
+            self.init_from_new(self.len_input, self.len_input)  # TODO:
 
         self.data_input = input_arg
         self.data_target = target_arg
@@ -63,7 +67,7 @@ class Interface(Propagation):
             raise AttributeError()
 
         if not self.is_init:
-            self._initialize()  # TODO:
+            self.init_from_new(self.len_input, self.len_input)  # TODO:
 
         self.data_target = target_arg
         return self.__train()
