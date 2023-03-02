@@ -13,26 +13,21 @@ class Neuron:
     miss: float
 
 
-class Initialization(Properties):  # TODO: Pylint: Too many instance attributes (12/7)
+class Initialization(Properties):
     """Initialization neural network."""
 
-    # Neurons
     neurons: list[list[Neuron]]
-
-    # Transfer data
     data_weight: WeightsType
-    # data_input: list[float]
-    # data_target: list[float]
-    # data_output: list[float]
-
-    # Settings
-    # len_input: int = 0
-    # len_output: int = 0
+    layers: list[int]
     last_layer_ind: int = 0
     is_init: bool = False
 
-    def init_from_new(self, len_input: int, len_target: int) -> bool:
+    def init_from_new(self, len_input: int, len_target: int) -> None:
         """TODO:"""
+        self.layers = [len_input + int(self._bias)]
+        self.layers.extend(self._hidden_layers)
+        self.layers.append(len_target)
+
         # self.len_input = len_input
         # self.len_output = len_target
         self.last_layer_ind = len(self._hidden_layers)
@@ -87,9 +82,7 @@ class Initialization(Properties):  # TODO: Pylint: Too many instance attributes 
         ]
         self.is_init = True
 
-        return self.is_init
-
-    def init_from_weight(self) -> bool:
+    def init_from_weight(self) -> None:
         """TODO:"""
         length = len(self.weights)
         self.last_layer_ind = length - 1
@@ -105,19 +98,10 @@ class Initialization(Properties):  # TODO: Pylint: Too many instance attributes 
         else:
             self._hidden_layers = [0]
 
-        self.data_weight = [[[0.0 for _ in w] for w in v] for v in self.weights]
+        self.data_weight = [[[0 for _ in w] for w in v] for v in self.weights]
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
         self.is_init = True
 
-        return self.is_init
-    #
-    # def _init_completion(self) -> bool:
-    #     # self.data_input = [0.0 for _ in range(self.len_input)]
-    #     # self.data_target = [0.0 for _ in range(self.len_output)]
-    #     # self.data_output = self.data_target.copy()
-    #     self.is_init = True
-    #
-    #     return self.is_init
 
 # // Init initialize.
 # func (nn *NN) Init(data ...interface{}) {

@@ -56,6 +56,10 @@ class Pynumic(Interface):
                 self.config = props["config"]
                 del props["config"]
 
+            if "weights" in props:
+                if props["weights"] is not None:
+                    self.init_from_weight()
+
         if props != {}:
             Properties.__init__(self, **props)
 
