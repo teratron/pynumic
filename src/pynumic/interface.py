@@ -8,19 +8,17 @@ from src.pynumic.propagation import Propagation
 class Interface(Propagation):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_000
+    MAX_ITERATION: int = 1_000_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     mutex: Lock = Lock()
+    buff_input: list[float]
     is_query: bool = False
 
-    def verify(self, input_arg: list[float], target_arg: list[float]) -> float:
+    def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
-        if self.len_input != len(input_arg) or self.len_output != len(target_arg):
-            raise AttributeError()
-
         if not self.is_init:
-            self.init_from_new(self.len_input, self.len_input)  # TODO:
+            self.init_from_new(len(data_input), len(data_target))  # TODO:
 
         # self.mutex.acquire()
         # self.mutex.release()
@@ -31,57 +29,45 @@ class Interface(Propagation):
         # finally:
         #     self.mutex.release()  # освобождаем блокировку независимо от результата
 
-        self.data_input = input_arg
-        self.data_target = target_arg
-        self.calc_neurons()
-        return self.calc_loss()
+        self.calc_neurons(data_input)
 
-    def query(self, input_arg: list[float]) -> list[float]:
+        return self.calc_loss(data_target)
+
+    def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""
-        if self.len_input != len(input_arg):
-            raise AttributeError()
-
         if not self.is_init:
             raise ValueError(f"{__name__}: not initialized")
 
-        self.data_input = input_arg
-        self.calc_neurons()
+        self.calc_neurons(data_input)
+        self.buff_input = data_input
         self.is_query = True
-        return self.data_output
 
-    def train(self, input_arg: list[float], target_arg: list[float]) -> tuple[int, float]:
+        return [n.value for n in self.neurons[self.last_layer_ind]]
+
+    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
-        if self.len_input != len(input_arg) or self.len_output != len(target_arg):
-            raise AttributeError()
-
         if not self.is_init:
-            self.init_from_new(self.len_input, self.len_input)  # TODO:
+            self.init_from_new(len(data_input), len(data_target))  # TODO:
 
-        self.data_input = input_arg
-        self.data_target = target_arg
-        return self.__train()
+        return self.__train(data_input, data_target)
 
-    def and_train(self, target_arg: list[float]) -> tuple[int, float]:
+    def and_train(self, data_target: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
-        if self.len_output != len(target_arg):
-            raise AttributeError()
-
         if not self.is_init:
-            self.init_from_new(self.len_input, self.len_input)  # TODO:
+            raise ValueError(f"{__name__}: not initialized")
 
-        self.data_target = target_arg
-        return self.__train()
+        return self.__train(self.buff_input, data_target)
 
-    def __train(self) -> tuple[int, float]:
+    def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
             if not self.is_query:
-                self.calc_neurons()
+                self.calc_neurons(data_input)
             else:
                 self.is_query = False
 
-            loss = self.calc_loss()
+            loss = self.calc_loss(data_target)
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
@@ -91,7 +77,7 @@ class Interface(Propagation):
                     return min_count, min_loss
 
             self.calc_miss()
-            self.update_weights()
+            self.update_weights(data_input)
 
         if min_count > 0:
             self.weights = deepcopy(self.data_weight)

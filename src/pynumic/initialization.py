@@ -21,20 +21,20 @@ class Initialization(Properties):  # TODO: Pylint: Too many instance attributes 
 
     # Transfer data
     data_weight: WeightsType
-    data_input: list[float]
-    data_target: list[float]
-    data_output: list[float]
+    # data_input: list[float]
+    # data_target: list[float]
+    # data_output: list[float]
 
     # Settings
-    len_input: int = 0
-    len_output: int = 0
+    # len_input: int = 0
+    # len_output: int = 0
     last_layer_ind: int = 0
     is_init: bool = False
 
     def init_from_new(self, len_input: int, len_target: int) -> bool:
         """TODO:"""
-        self.len_input = len_input
-        self.len_output = len_target
+        # self.len_input = len_input
+        # self.len_output = len_target
         self.last_layer_ind = len(self._hidden_layers)
 
         if self.last_layer_ind > 0 and self._hidden_layers[0] == 0:
@@ -42,12 +42,12 @@ class Initialization(Properties):  # TODO: Pylint: Too many instance attributes 
 
         layers: list[int] = self._hidden_layers.copy()
         if self.last_layer_ind > 0:
-            layers.append(self.len_output)
+            layers.append(len_target)
         else:
-            layers = [self.len_output]
+            layers = [len_target]
 
         len_layers = len(layers)
-        bias_input = self.len_input + int(self._bias)
+        bias_input = len_input + int(self._bias)
         bias_layer: int = 0  # TODO:
 
         # self.weights = make(pkg.Float3Type, len_layers)
@@ -85,37 +85,39 @@ class Initialization(Properties):  # TODO: Pylint: Too many instance attributes 
                 ] for _ in range(5)
             ] for _ in range(len_layers)
         ]
+        self.is_init = True
 
-        return self._init_completion()
+        return self.is_init
 
     def init_from_weight(self) -> bool:
         """TODO:"""
         length = len(self.weights)
         self.last_layer_ind = length - 1
-        self.len_output = len(self.weights[self.last_layer_ind])
-        self.len_input = len(self.weights[0][0])
+        # self.len_output = len(self.weights[self.last_layer_ind])
+        # self.len_input = len(self.weights[0][0])
 
         if length > 1 and len(self.weights[0]) + 1 == len(self.weights[1][0]):
             self._bias = True
-            self.len_input -= 1
+            # self.len_input -= 1
 
         if self.last_layer_ind > 0:
-            self._hidden_layers = [len(self.weights[i]) for i in enumerate(self._hidden_layers)]
+            self._hidden_layers = [len(self.weights[i]) for i, _ in enumerate(self._hidden_layers)]
         else:
             self._hidden_layers = [0]
 
         self.data_weight = [[[0.0 for _ in w] for w in v] for v in self.weights]
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
-
-        return self._init_completion()
-
-    def _init_completion(self) -> bool:
-        self.data_input = [0.0 for _ in range(self.len_input)]
-        self.data_target = [0.0 for _ in range(self.len_output)]
-        self.data_output = self.data_target.copy()
         self.is_init = True
 
         return self.is_init
+    #
+    # def _init_completion(self) -> bool:
+    #     # self.data_input = [0.0 for _ in range(self.len_input)]
+    #     # self.data_target = [0.0 for _ in range(self.len_output)]
+    #     # self.data_output = self.data_target.copy()
+    #     self.is_init = True
+    #
+    #     return self.is_init
 
 # // Init initialize.
 # func (nn *NN) Init(data ...interface{}) {

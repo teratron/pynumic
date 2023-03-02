@@ -25,15 +25,17 @@ endif
 dev: ## dev
 	@$(VENV_BIN)/pip install -e .
 
-update: ## update poetry
+update: ## update dependency
 	@$(VENV_BIN)/python -m pip install --upgrade pip
-	@poetry self update
 	@poetry update
 
-check: ## check poetry
+poetry.update: ## update poetry
+	@poetry self update
+
+poetry.check: ## check poetry
 	@poetry check
 
-build: check clean ## build project
+build: poetry.check clean ## build project
 	@poetry build
 
 publish: build ## publish project
@@ -120,7 +122,7 @@ endif
 # Print help.
 #################################################
 
-.PHONY: help setup install update check build publish test lint clean gh-deploy set-url
+.PHONY: help
 help:
 	@awk '                                             \
 		BEGIN {FS = ":.*?## "}                         \
