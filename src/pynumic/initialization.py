@@ -2,7 +2,7 @@
 import random
 from dataclasses import dataclass
 
-from pynumic.properties import Properties, WeightsType
+from src.pynumic.properties import Properties, WeightsType
 
 
 @dataclass
@@ -102,6 +102,11 @@ class Initialization(Properties):
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
         self.is_init = True
 
+
+if __name__ == "__main__":
+    inz = Initialization()
+    print(inz.__dict__)
+    # print(inz.__dir__())
 
 # // Init initialize.
 # func (nn *NN) Init(data ...interface{}) {

@@ -1,10 +1,10 @@
 """TODO: Properties of neural network."""
 from typing import TypeAlias
 
-from pynumic.activation import Activation
-from pynumic.loss import Loss
+from src.pynumic.activation import Activation
+from src.pynumic.loss import Loss
 
-WeightsType: TypeAlias = list[list[list[float]]] | None
+WeightsType: TypeAlias = list[list[list[float]]]
 LayersType: TypeAlias = list[int] | None
 
 
@@ -32,12 +32,14 @@ class Properties(Activation, Loss):
             loss_mode: int = Loss.DEFAULT_LOSS_MODE,
             loss_limit: float = Loss.DEFAULT_LOSS_LIMIT,
             rate: float = DEFAULT_RATE,
-            weights: WeightsType = None
+            weights: WeightsType | None = None
     ) -> None:
         self._bias: bool = bias
         self._hidden_layers: LayersType = self.__check_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
-        self.weights: WeightsType = weights
+
+        if weights is not None:
+            self.weights: WeightsType = weights
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)

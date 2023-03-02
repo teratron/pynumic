@@ -74,13 +74,15 @@ class Propagation(Initialization):
     def update_weights(self, data_input: list[float]) -> None:
         """Update weights."""
         _dec, _len = 0, self.len_input
-        for i, weight in enumerate(self.weights):
-            if i > 0:
-                _dec = i - 1
-                _len = len(self.neurons[_dec])
 
-            for j, _ in enumerate(weight):
-                self.__get_weight(i, j, _dec, _len, data_input)
+        if self.weights is not None:
+            for i, weight in enumerate(self.weights):
+                if i > 0:
+                    _dec = i - 1
+                    _len = len(self.neurons[_dec])
+
+                for j, _ in enumerate(weight):
+                    self.__get_weight(i, j, _dec, _len, data_input)
 
     def __get_weight(self, i: int, j: int, _dec: int, _len: int, data_input: list[float]) -> None:
         grad = (

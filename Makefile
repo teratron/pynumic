@@ -29,13 +29,13 @@ update: ## update dependency
 	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@poetry update
 
-poetry.update: ## update poetry
+poetry-update: ## update poetry
 	@poetry self update
 
-poetry.check: ## check poetry
+check: ## check poetry
 	@poetry check
 
-build: poetry.check clean ## build project
+build: check clean ## build project
 	@poetry build
 
 publish: build ## publish project
