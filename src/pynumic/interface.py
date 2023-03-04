@@ -15,7 +15,9 @@ class Interface(Propagation):
     buff_input: list[float]
     is_query: bool = False
 
-    def verify(self, data_input: list[float], data_target: list[float]) -> float:
+    def verify(
+            self, data_input: list[float], data_target: list[float]
+    ) -> float:
         """Verifying dataset."""
         if not self.is_init:
             self.init_from_new(len(data_input), len(data_target))  # TODO:
@@ -42,9 +44,11 @@ class Interface(Propagation):
         self.buff_input = data_input
         self.is_query = True
 
-        return [n.value for n in self.neurons[self.last_layer_ind]]
+        return [n.value for n in self.neurons[self.layers["last_index"]]]
 
-    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+    def train(
+            self, data_input: list[float], data_target: list[float]
+    ) -> tuple[int, float]:
         """Training dataset."""
         if not self.is_init:
             self.init_from_new(len(data_input), len(data_target))  # TODO:
@@ -58,7 +62,9 @@ class Interface(Propagation):
 
         return self.__train(self.buff_input, data_target)
 
-    def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+    def __train(
+            self, data_input: list[float], data_target: list[float]
+    ) -> tuple[int, float]:
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):

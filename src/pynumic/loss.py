@@ -41,7 +41,11 @@ class Loss:
         self._loss_mode = self.__check_loss_mode(value)
 
     def __check_loss_mode(self, value: int) -> int:
-        return self.DEFAULT_LOSS_MODE if value < self.MSE or value > self.AVG else value
+        return (
+            self.DEFAULT_LOSS_MODE
+            if value < self.MSE or value > self.AVG
+            else value
+        )
 
     @property
     def loss_limit(self) -> float:

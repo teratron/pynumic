@@ -18,25 +18,44 @@ class Initialization(Properties):
 
     neurons: list[list[Neuron]]
     data_weight: WeightsType
-    layers: list[int]
-    last_layer_ind: int = 0
+    # layers: list[int]
+    layers: dict[str, int] = {
+        "len_input":  0,
+        "len_output": 0,
+        "last_index": 0,
+        "prev_index": 0,
+    }
+    # len_input: int = 0
+    # len_output: int = 0
+    # last_layer_ind: int = 0
     is_init: bool = False
 
     def init_from_new(self, len_input: int, len_target: int) -> None:
         """TODO:"""
-        self.layers = [len_input + int(self._bias)]
-        self.layers.extend(self._hidden_layers)
-        self.layers.append(len_target)
+        # self.layers = [len_input + int(self._bias)]
+        # self.layers.extend(self._hidden_layers)
+        # self.layers.append(len_target)
+
+        self.layers = {
+            "len_input":  len_input,
+            "len_output": len_target,
+            "last_index": len(self._hidden_layers),
+        }
+        # self.layers["len_input"] = len_input
+        # self.layers["len_output"] = len_target
+        # self.layers["last_index"] = len(self._hidden_layers)
 
         # self.len_input = len_input
         # self.len_output = len_target
-        self.last_layer_ind = len(self._hidden_layers)
+        # self.last_layer_ind = len(self._hidden_layers)
 
-        if self.last_layer_ind > 0 and self._hidden_layers[0] == 0:
-            self.last_layer_ind = 0
+        if self.layers["last_index"] > 0 and self._hidden_layers[0] == 0:
+            self.layers["last_index"] = 0
+
+        self.layers["prev_index"] = self.layers["last_index"] - 1
 
         layers: list[int] = self._hidden_layers.copy()
-        if self.last_layer_ind > 0:
+        if self.layers["last_index"] > 0:
             layers.append(len_target)
         else:
             layers = [len_target]
@@ -74,27 +93,31 @@ class Initialization(Properties):
             # self.neurons[i][j] = &Neuron{}
 
         self.weights = [
-            [
-                [
-                    random.uniform(-0.5, 0.5) for _ in range(5)
-                ] for _ in range(5)
-            ] for _ in range(len_layers)
+            [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
+            for _ in range(len_layers)
         ]
         self.is_init = True
 
     def init_from_weight(self) -> None:
         """TODO:"""
         length = len(self.weights)
-        self.last_layer_ind = length - 1
+        self.layers["last_index"] = length - 1
         # self.len_output = len(self.weights[self.last_layer_ind])
         # self.len_input = len(self.weights[0][0])
 
+        self.layers = {
+            "len_input":  len(self.weights[0][0]),
+            "len_output": len(self.weights[self.layers["last_index"]]),
+        }
+
         if length > 1 and len(self.weights[0]) + 1 == len(self.weights[1][0]):
             self._bias = True
-            # self.len_input -= 1
+            self.layers["len_input"] -= 1
 
-        if self.last_layer_ind > 0:
-            self._hidden_layers = [len(self.weights[i]) for i, _ in enumerate(self._hidden_layers)]
+        if self.layers["last_index"] > 0:
+            self._hidden_layers = [
+                len(self.weights[i]) for i, _ in enumerate(self._hidden_layers)
+            ]
         else:
             self._hidden_layers = [0]
 
@@ -102,11 +125,9 @@ class Initialization(Properties):
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
         self.is_init = True
 
-
-if __name__ == "__main__":
-    inz = Initialization()
-    print(inz.__dict__)
-    # print(inz.__dir__())
+# if __name__ == "__main__":
+#     inz = Initialization()
+#     print(inz.__dict__)
 
 # // Init initialize.
 # func (nn *NN) Init(data ...interface{}) {
@@ -240,3 +261,16 @@ if __name__ == "__main__":
 # 	nn.output = make([]float64, nn.lenOutput)
 # 	nn.isInit = true
 # }
+
+
+# def _init_from_new(len_input: int, len_target: int) -> None:
+#     _hidden_layers = [42, 21]
+#     _bias: bool = False
+#     layers = [len_input + int(_bias)]
+#     layers.extend(_hidden_layers)
+#     layers.append(len_target)
+#     print(layers)
+#
+#
+# if __name__ == "__main__":
+#     _init_from_new(3, 2)

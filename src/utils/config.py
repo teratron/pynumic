@@ -36,6 +36,7 @@ from typing import Any, Callable
 
 class Config:
     """TODO: Config"""
+
     pass
 
 
@@ -111,5 +112,7 @@ def increase_version(value: str, numeric: int = 2) -> str:
     return f'"{".".join(map(str, tag))}"'
 
 
-set_conf_value(os.path.abspath("../pyproject.toml"), "version", increase_version)
+set_conf_value(
+        os.path.abspath("../pyproject.toml"), "version", increase_version
+)
 # set_conf_value(os.path.abspath("../pyproject.toml"), "version", increase_version, w=0)

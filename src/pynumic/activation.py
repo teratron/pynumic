@@ -33,7 +33,9 @@ class Activation:
     DEFAULT_ACTIVATION_LIMIT: float = 0.1e-3
 
     def __init__(self, activation_mode: int) -> None:
-        self._activation_mode: int = self.__check_activation_mode(activation_mode)
+        self._activation_mode: int = self.__check_activation_mode(
+                activation_mode
+        )
 
     @property
     def activation_mode(self) -> int:

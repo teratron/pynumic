@@ -9,7 +9,7 @@ class Propagation(Initialization):
 
     def calc_neurons(self, data_input: list[float]) -> None:
         """Calculating neurons."""
-        _dec, _len = 0, self.len_input
+        _dec, _len = 0, self.layers["len_input"]
         for i, layer in enumerate(self.neurons):
             if i > 0:
                 _dec = i - 1
@@ -18,26 +18,31 @@ class Propagation(Initialization):
             for j, _ in enumerate(layer):
                 self.__get_neuron(i, j, _dec, _len, data_input)
 
-    def __get_neuron(self, i: int, j: int, _dec: int, _len: int, data_input: list[float]) -> None:
+    def __get_neuron(
+            self, i: int, j: int, _dec: int, _len: int, data_input: list[float]
+    ) -> None:
         k = self.neurons[i][j].value = 0
         for k, weight in enumerate(self.weights[i][j]):
             if k < _len:
-                if i > 0:
-                    self.neurons[i][j].value += self.neurons[_dec][k].value * weight
-                else:
-                    self.neurons[i][j].value += data_input[k] * weight
+                self.neurons[i][j].value += (
+                    self.neurons[_dec][k].value * weight
+                    if i > 0
+                    else data_input[k] * weight
+                )
             else:
                 self.neurons[i][j].value += weight
 
         if self.activation_mode == self.LINEAR:
             self.neurons[i][j].value /= k if k > 0 else 1
         else:
-            self.neurons[i][j].value = self.get_activation(self.neurons[i][j].value)
+            self.neurons[i][j].value = self.get_activation(
+                    self.neurons[i][j].value
+            )
 
     def calc_loss(self, data_target: list[float]) -> float:
         """Calculating and return the total error of the output neurons."""
         loss = 0.0
-        for i, neuron in enumerate(self.neurons[self.last_layer_ind]):
+        for i, neuron in enumerate(self.neurons[self.layers["last_index"]]):
             neuron.miss = data_target[i] - neuron.value
             match self.loss_mode:
                 case self.AVG:
@@ -47,7 +52,7 @@ class Propagation(Initialization):
                 case self.MSE | self.RMSE | _:
                     loss += neuron.miss ** 2
 
-        loss /= self.len_output
+        loss /= self.layers["len_output"]
         if self.loss_mode == self.RMSE:
             loss = math.sqrt(loss)
 
@@ -61,20 +66,18 @@ class Propagation(Initialization):
 
     def calc_miss(self) -> None:
         """Calculating the error of neuron in hidden layers."""
-        if self.last_layer_ind > 0:
-            for i in range(self.last_layer_ind - 1, -1, -1):
-                inc = i + 1
-                for j, _ in enumerate(self.neurons[i]):
-                    self.neurons[i][j].miss = 0
-                    for k, _ in enumerate(self.neurons[inc]):
-                        self.neurons[i][j].miss += (
-                                self.neurons[inc][k].miss * self.weights[inc][k][j]
-                        )
+        for i in range(self.layers["prev_index"], -1, -1):
+            inc = i + 1
+            for j, _ in enumerate(self.neurons[i]):
+                self.neurons[i][j].miss = 0
+                for k, _ in enumerate(self.neurons[inc]):
+                    self.neurons[i][j].miss += (
+                            self.neurons[inc][k].miss * self.weights[inc][k][j]
+                    )
 
     def update_weights(self, data_input: list[float]) -> None:
         """Update weights."""
-        _dec, _len = 0, self.len_input
-
+        _dec, _len = 0, self.layers["len_input"]
         if self.weights is not None:
             for i, weight in enumerate(self.weights):
                 if i > 0:
@@ -84,7 +87,9 @@ class Propagation(Initialization):
                 for j, _ in enumerate(weight):
                     self.__get_weight(i, j, _dec, _len, data_input)
 
-    def __get_weight(self, i: int, j: int, _dec: int, _len: int, data_input: list[float]) -> None:
+    def __get_weight(
+            self, i: int, j: int, _dec: int, _len: int, data_input: list[float]
+    ) -> None:
         grad = (
                 self.rate
                 * self.neurons[i][j].miss
@@ -101,6 +106,9 @@ class Propagation(Initialization):
             else:
                 self.weights[i][j][k] += grad
 
+# if __name__ == "__main__":
+#     for i in range(-1, -1, -1):
+#         print(i)
 
 # // calcNeuron.
 # func (nn *NN) calcNeuron() {
