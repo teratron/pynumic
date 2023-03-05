@@ -10,15 +10,12 @@ WeightsType: TypeAlias = list[list[list[float]]]
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    __slots__ = (
-        "_bias",
-        "_hidden_layers",
-        "_activation_mode",
-        "_loss_mode",
-        "_loss_limit",
-        "_rate",
-        "weights",
-    )
+    # __slots__ = (
+    #     "__bias",
+    #     "__hidden_layers",
+    #     "__rate",
+    #     "weights",
+    # )
 
     DEFAULT_RATE: float = 0.3
 
@@ -33,11 +30,9 @@ class Properties(Activation, Loss):
             rate: float = DEFAULT_RATE,
             weights: WeightsType | None = None,
     ) -> None:
-        self._bias: bool = bias
-        self._hidden_layers: list[int] = self.__check_hidden_layers(
-                hidden_layers
-        )
-        self._rate: float = self.__check_rate(rate)
+        self.__bias: bool = bias
+        self.__hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
+        self.__rate: float = self.__check_rate(rate)
 
         if weights is not None:
             self.weights: WeightsType = weights
@@ -49,21 +44,21 @@ class Properties(Activation, Loss):
     @property
     def bias(self) -> bool:
         """The neuron bias, false or true (required field for a config)."""
-        return self._bias
+        return self.__bias
 
     @bias.setter
     def bias(self, value: bool) -> None:
-        self._bias = value
+        self.__bias = value
 
     # Hidden Layers
     @property
     def hidden_layers(self) -> list[int]:
         """List of the number of neuron in each hidden layers."""
-        return self._hidden_layers
+        return self.__hidden_layers
 
     @hidden_layers.setter
     def hidden_layers(self, value: list[int]) -> None:
-        self._hidden_layers = self.__check_hidden_layers(value)
+        self.__hidden_layers = self.__check_hidden_layers(value)
 
     @staticmethod
     def __check_hidden_layers(value: list[int] | None) -> list[int]:
@@ -73,19 +68,17 @@ class Properties(Activation, Loss):
         if isinstance(value, list) and all(list(map(lambda i: i > 0, value))):
             return value
 
-        raise ValueError(
-                f"{__name__}: array of hidden layers incorrectly set {value}"
-        )
+        raise ValueError(f"{__name__}: array of hidden layers incorrectly set {value}")
 
     # Rate
     @property
     def rate(self) -> float:
         """Learning coefficient (greater than 0.0 and less than or equal to 1.0)."""
-        return self._rate
+        return self.__rate
 
     @rate.setter
     def rate(self, value: float) -> None:
-        self._rate = self.__check_rate(value)
+        self.__rate = self.__check_rate(value)
 
     def __check_rate(self, value: float) -> float:
         return self.DEFAULT_RATE if value <= 0 or value > 1 else value

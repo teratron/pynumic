@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
 
     print("++++", pn.rate, pn.__dict__)
-    # print("++++", pn.len_input)
+    # print("++++", pn.__len_input)
 
     # Input dataset.
     # data_input = [0.27, 0.31, 0.52]

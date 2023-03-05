@@ -56,26 +56,25 @@ class Pynumic(Interface):
                 self.config = props["config"]
                 del props["config"]
 
-            if "weights" in props:
-                if props["weights"] is not None:
-                    self.init_from_weight()
+            if "weights" in props and props["weights"] is not None:
+                self._init_from_weight()
 
         if props != {}:
             Properties.__init__(self, **props)
 
-    # def __str__(self) -> str:
-    #     return f"{self.__class__.__name__}.{self.name}"
-    #
-    # def __repr__(self) -> str:
-    #     return f"{self.__str__()}: {self.__dict__}"
-    #
-    # def __dir__(self) -> list[str]:
-    #     """Returns all members and all public methods."""
-    #     return (
-    #             ["__class__", "__doc__", "__module__"]
-    #             + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
-    #             + [m for m in self.__dict__ if m[0] != "_"]
-    #     )
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}.{self.name}"
+
+    def __repr__(self) -> str:
+        return f"{self.__str__()}: {self.__dict__}"
+
+    def __dir__(self) -> list[str]:
+        """Returns all members and all public methods."""
+        return (
+                ["__class__", "__doc__", "__module__"]
+                + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
+                + [m for m in self.__dict__ if m[0] != "_"]
+        )
 
 
 def _get_props_from(reader: str) -> dict[str, Any]:
@@ -83,15 +82,15 @@ def _get_props_from(reader: str) -> dict[str, Any]:
         data: dict[str, Any]
         if os.path.isfile(reader):
             filename = os.path.normpath(reader)
-            _, extension = os.path.splitext(filename)
+            _, ext = os.path.splitext(filename)
 
-            if extension == ".json":
+            if ext == ".json":
                 with open(filename, "r", encoding="utf-8") as handle:
                     data = json.load(handle)
                 data.update(config=filename)
             else:
                 raise FileExistsError(
-                    f"{__name__}: incorrect config file extension: {extension}"
+                        f"{__name__}: incorrect config file extension: {ext}"
                 )
         else:
             data = json.loads(reader)
