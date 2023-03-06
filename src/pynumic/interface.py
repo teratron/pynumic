@@ -82,6 +82,7 @@ class Interface(Propagation):
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self.weights)
+
                 if loss < self.__loss_limit:
                     self.weights = deepcopy(self.__weights)
                     return min_count, min_loss

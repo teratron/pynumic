@@ -31,36 +31,12 @@ class Initialization(Properties):
     __prev_ind: int = 0
 
     def _init_from_new(self, len_input: int, len_target: int) -> bool:
-        # self.layers = [__len_input + int(self._bias)]
-        # self.layers.extend(self.__hidden_layers)
-        # self.layers.append(len_target)
-
-        # self.layers = {
-        #     "len_input":  __len_input,
-        #     "len_output": len_target,
-        #     "last_index": len(self.__hidden_layers),
-        # }
-
-        # self.layers["len_input"] = __len_input
-        # self.layers["len_output"] = len_target
-        # self.layers["last_index"] = len(self.__hidden_layers)
-
-        # if self.layers["last_index"] > 0 and self.__hidden_layers[0] == 0:
-        #     self.layers["last_index"] = 0
-        #
-        # self.layers["prev_index"] = self.layers["last_index"] - 1
-        #
-        # layers: list[int] = self.__hidden_layers.copy()
-        # if self.layers["last_index"] > 0:
-        #     layers.append(len_target)
-        # else:
-        #     layers = [len_target]
-
         self.__len_input = len_input
         self.__len_output = len_target
-        self.__last_ind = len(self.__hidden_layers)
 
-        if self.__last_ind > 0 and self.__hidden_layers[0] == 0:
+        if self.__hidden_layers[0] > 0:
+            self.__last_ind = len(self.__hidden_layers)  # [0], [2], [1, 2, 3]
+        else:
             self.__last_ind = 0
 
         self.__prev_ind = self.__last_ind - 1
@@ -76,10 +52,18 @@ class Initialization(Properties):
         bias_input = self.__len_input + int(self.__bias)
         bias_layer: int = 0  # TODO:
 
+        # self.weights = [
+        #     [
+        #         [0 for _ in w] for w in v
+        #     ] for v in range(len_layers)
+        # ]
+
+        for i, u in enumerate(layers):
+            for j in range(u):
+                pass
+
         # self.weights = make(pkg.Float3Type, len_layers)
         # self.neurons = make([][]*Neuron, len_layers)
-        self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
-
         for i, v in enumerate(layers):
             # self.weights[i] = make(pkg.Float2Type, v)
             # self.neurons[i] = make([] * Neuron, v)
@@ -100,6 +84,7 @@ class Initialization(Properties):
 
             # self.neurons[i][j] = &Neuron{}
 
+        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
         # self.weights = [
         #     [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
         #     for _ in range(len_layers)
