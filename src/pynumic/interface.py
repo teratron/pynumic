@@ -69,6 +69,7 @@ class Interface(Propagation):
         return self.__train(self.__buff_input, data_target)
 
     def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+        max_loss = 1.0
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
@@ -78,6 +79,9 @@ class Interface(Propagation):
                 self.__is_query = False
 
             loss = self._calc_loss(data_target)
+            if loss > max_loss:
+                pass  # TODO:
+
             if loss < min_loss:
                 min_loss = loss
                 min_count = count

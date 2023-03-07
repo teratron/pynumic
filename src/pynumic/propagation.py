@@ -50,6 +50,12 @@ class Propagation(Initialization):
                 case self.MSE | self.RMSE | _:
                     loss += neuron.miss ** 2
 
+        if math.isnan(loss):  # TODO:
+            raise ValueError(f"1 {__name__}: loss not-a-number value")
+
+        if math.isinf(loss):  # TODO:
+            raise ValueError(f"1 {__name__}: loss is infinity")
+
         loss /= self.__len_output
         if self.loss_mode == self.RMSE:
             loss = math.sqrt(loss)

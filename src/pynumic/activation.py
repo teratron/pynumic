@@ -73,9 +73,21 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
             return 0.01 * value if value < 0 else value
         case Activation.TANH:
             value = math.exp(2 * value)
-            return (value - 1) / (value + 1)
+            value = (value - 1) / (value + 1)
+            if math.isnan(value):  # TODO:
+                raise ValueError(f"act {__name__}: loss not-a-number value")
+            if math.isinf(value):  # TODO:
+                raise ValueError(f"act {__name__}: loss is infinity")
+            return value
+            # return (value - 1) / (value + 1)
         case Activation.SIGMOID | _:
-            return 1 / (1 + math.exp(-value))
+            value = 1 / (1 + math.exp(-value))
+            if math.isnan(value):  # TODO:
+                raise ValueError(f"act {__name__}: loss not-a-number value")
+            if math.isinf(value):  # TODO:
+                raise ValueError(f"act {__name__}: loss is infinity")
+            return value
+            # return 1 / (1 + math.exp(-value))
 
 
 def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:

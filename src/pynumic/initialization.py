@@ -44,7 +44,7 @@ class Initialization(Properties):
         # Unread "private" attributes 'python:S4487':
         _ = self.__prev_ind
 
-        layers: list[int] = [self.__len_output]
+        layers: list[int] = [self.__len_output + int(self.__bias)]
         if self.__last_ind > 0:
             layers = self.__hidden_layers + layers
 
@@ -58,9 +58,14 @@ class Initialization(Properties):
         #     ] for v in range(len_layers)
         # ]
 
-        for i, u in enumerate(layers):
-            for j in range(u):
-                pass
+        for i, num in enumerate(layers):
+            if i > 0:
+                bias_layer = layers[i - 1] + int(self.__bias)
+            for j in range(num):
+                if i > 0:
+                    self.weights[i][j] = make(pkg.Float1Type, bias_layer)
+                else:
+                    self.weights[i][j] = make(pkg.Float1Type, bias_input)
 
         # self.weights = make(pkg.Float3Type, len_layers)
         # self.neurons = make([][]*Neuron, len_layers)
