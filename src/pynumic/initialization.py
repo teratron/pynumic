@@ -44,9 +44,26 @@ class Initialization(Properties):
         # Unread "private" attributes 'python:S4487':
         _ = self.__prev_ind
 
-        layers: list[int] = [self.__len_output + int(self.__bias)]
+        layers: list[int] = [self.__len_output]
         if self.__last_ind > 0:
             layers = self.__hidden_layers + layers
+            # layers = list(map(lambda x: x + int(self.__bias), self.__hidden_layers)) + layers
+        # layers = [self.__len_input + int(self.__bias)] + layers
+
+        weights: list[int] = [self.__len_input + int(self.__bias)]
+        if self.__last_ind > 0:
+            weights = list(map(lambda x: x + int(self.__bias), self.__hidden_layers)) + layers
+        weights = [self.__len_input + int(self.__bias)] + weights
+
+        for i, num in enumerate(layers):
+            # if i > 0:
+            for j in range(num):
+                # if i > 0:
+                for k in self.weights[i][j]:
+                    if self.activation_mode == self.LINEAR:
+                        self.weights[i][j][k] = 0.5
+                    else:
+                        self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
 
         len_layers = len(layers)
         bias_input = self.__len_input + int(self.__bias)
@@ -54,18 +71,9 @@ class Initialization(Properties):
 
         # self.weights = [
         #     [
-        #         [0 for _ in w] for w in v
-        #     ] for v in range(len_layers)
+        #         [0 for _ in w] for j in range(num)
+        #     ] for i, num in enumerate(layers)
         # ]
-
-        for i, num in enumerate(layers):
-            if i > 0:
-                bias_layer = layers[i - 1] + int(self.__bias)
-            for j in range(num):
-                if i > 0:
-                    self.weights[i][j] = make(pkg.Float1Type, bias_layer)
-                else:
-                    self.weights[i][j] = make(pkg.Float1Type, bias_input)
 
         # self.weights = make(pkg.Float3Type, len_layers)
         # self.neurons = make([][]*Neuron, len_layers)
@@ -126,6 +134,10 @@ class Initialization(Properties):
         return True
 
 # if __name__ == "__main__":
+#     for i, num in enumerate([1, 3, 7]):
+#         print(i, num)
+#     bias = True
+#     print(list(map(lambda x: x + int(bias), [1, 3, 7])))
 # l = [3]
 # i = [2, 5, 6]
 # # i.reverse()
