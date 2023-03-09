@@ -1,4 +1,5 @@
 """TODO: Initialization."""
+import random
 from dataclasses import dataclass
 
 from src.pynumic.properties import Properties
@@ -34,8 +35,13 @@ class Initialization(Properties):
         self.__len_input = len_input
         self.__len_output = len_target
 
+        weights: list[int] = [self.__len_input + int(self.__bias)]
+        layers: list[int] = [self.__len_output]
+
         if self.__hidden_layers[0] > 0:
-            self.__last_ind = len(self.__hidden_layers)  # [0], [2], [1, 2, 3]
+            self.__last_ind = len(self.__hidden_layers)
+            weights += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
+            layers = self.__hidden_layers + layers
         else:
             self.__last_ind = 0
 
@@ -44,54 +50,43 @@ class Initialization(Properties):
         # Unread "private" attributes 'python:S4487':
         _ = self.__prev_ind
 
-        layers: list[int] = [self.__len_output]
-        if self.__last_ind > 0:
-            layers = self.__hidden_layers + layers
-            # layers = list(map(lambda x: x + int(self.__bias), self.__hidden_layers)) + layers
-        # layers = [self.__len_input + int(self.__bias)] + layers
+        self.weights = [
+            [
+                [random.uniform(-0.5, 0.5) for _ in weights] for j in range(num)
+            ] for i, num in enumerate(layers)
+        ]
 
-        weights: list[int] = [self.__len_input + int(self.__bias)]
-        if self.__last_ind > 0:
-            weights = list(map(lambda x: x + int(self.__bias), self.__hidden_layers)) + layers
-        weights = [self.__len_input + int(self.__bias)] + weights
+        # for i, num in enumerate(layers):
+        #     # if i > 0:
+        #     for j in range(num):
+        #         # if i > 0:
+        #         for k in self.weights[i][j]:
+        #             if self.activation_mode == self.LINEAR:
+        #                 self.weights[i][j][k] = 0.5
+        #             else:
+        #                 self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
 
-        for i, num in enumerate(layers):
-            # if i > 0:
-            for j in range(num):
-                # if i > 0:
-                for k in self.weights[i][j]:
-                    if self.activation_mode == self.LINEAR:
-                        self.weights[i][j][k] = 0.5
-                    else:
-                        self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
-
-        len_layers = len(layers)
-        bias_input = self.__len_input + int(self.__bias)
-        bias_layer: int = 0  # TODO:
-
-        # self.weights = [
-        #     [
-        #         [0 for _ in w] for j in range(num)
-        #     ] for i, num in enumerate(layers)
-        # ]
+        # len_layers = len(layers)
+        # bias_input = self.__len_input + int(self.__bias)
+        # bias_layer: int = 0  # TODO:
 
         # self.weights = make(pkg.Float3Type, len_layers)
         # self.neurons = make([][]*Neuron, len_layers)
-        for i, v in enumerate(layers):
-            # self.weights[i] = make(pkg.Float2Type, v)
-            # self.neurons[i] = make([] * Neuron, v)
-            if i > 0:
-                bias_layer = int(layers[i - 1]) + int(self.__bias)
+        # for i, v in enumerate(layers):
+        #     # self.weights[i] = make(pkg.Float2Type, v)
+        #     # self.neurons[i] = make([] * Neuron, v)
+        #     if i > 0:
+        #         bias_layer = int(layers[i - 1]) + int(self.__bias)
 
-            # for j in range(v):
-            #     if i > 0:
-            #         self.weights[i][j] = make(pkg.Float1Type, bias_layer)
-            #     else:
-            #         self.weights[i][j] = make(pkg.Float1Type, bias_input)
+        # for j in range(v):
+        #     if i > 0:
+        #         self.weights[i][j] = make(pkg.Float1Type, bias_layer)
+        #     else:
+        #         self.weights[i][j] = make(pkg.Float1Type, bias_input)
 
-            #     for k in self.weights[i][j]:
-            #         if self.activation_mode == self.LINEAR:
-            #             self.weights[i][j][k] = 0.5
+        #     for k in self.weights[i][j]:
+        #         if self.activation_mode == self.LINEAR:
+        #             self.weights[i][j][k] = 0.5
             #         else:
             #             self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
 
@@ -133,7 +128,40 @@ class Initialization(Properties):
 
         return True
 
-# if __name__ == "__main__":
+
+# [
+#     [
+#         [0.3310223300922893, -0.31478190967554287],
+#         [0.0711065749008638, 0.38003700979887267],
+#         [0.36511153537599184, 0.2549850586823973]
+#     ],
+#     [
+#         [-0.3614689439495272, 0.3464188667249951]
+#     ]
+# ]
+
+
+# [
+#     [
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0]
+#     ],
+#     [
+#         [0, 0, 0, 0]
+#     ]
+# ]
+
+
+if __name__ == "__main__":
+    weights = [
+        [
+            [
+                0 for _ in range([3, 4][i])
+            ] for _ in range(v)
+        ] for i, v in enumerate([3, 1])
+    ]
+    print(weights)
 #     for i, num in enumerate([1, 3, 7]):
 #         print(i, num)
 #     bias = True
