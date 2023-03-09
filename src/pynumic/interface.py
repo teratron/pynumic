@@ -1,8 +1,10 @@
 """TODO: Interface for neural network."""
 from copy import deepcopy
 
-from src.pynumic.propagation import Propagation
-from src.pynumic.properties import WeightsType
+from pynumic.propagation import Propagation
+
+
+# from src.pynumic.properties import WeightsType
 
 
 # from threading import Lock
@@ -16,7 +18,7 @@ class Interface(Propagation):
 
     # __mutex: Lock = Lock()
     __weights: WeightsType
-    __buff_input: list[float]
+    __inputs: list[float]
     __is_init: bool = False
     __is_query: bool = False
 
@@ -48,7 +50,7 @@ class Interface(Propagation):
             raise ValueError(f"{__name__}: not initialized")
 
         self._calc_neurons(data_input)
-        self.__buff_input = data_input
+        self.__inputs = data_input
         self.__is_query = True
 
         return [n.value for n in self.neurons[self.__last_ind]]
@@ -66,7 +68,7 @@ class Interface(Propagation):
         if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
 
-        return self.__train(self.__buff_input, data_target)
+        return self.__train(self.__inputs, data_target)
 
     def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         max_loss = 1.0

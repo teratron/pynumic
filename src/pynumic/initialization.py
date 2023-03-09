@@ -2,7 +2,7 @@
 import random
 from dataclasses import dataclass
 
-from src.pynumic.properties import Properties
+from pynumic.properties import Properties  # , WeightsType
 
 
 @dataclass
@@ -16,16 +16,8 @@ class Neuron:
 class Initialization(Properties):
     """Initialization neural network."""
 
-    neurons: list[list[Neuron]]
-    # __weight: WeightsType
-    # layers: list[int]
-    # layers: dict[str, int] = {
-    #     "len_input":  0,
-    #     "len_output": 0,
-    #     "last_index": 0,
-    #     "prev_index": 0,
-    # }
-
+    # neurons: list[list[Neuron]]
+    # __weights: WeightsType
     __len_input: int = 0
     __len_output: int = 0
     __last_ind: int = 0
@@ -35,15 +27,12 @@ class Initialization(Properties):
         self.__len_input = len_input
         self.__len_output = len_target
 
-        weights: list[int] = [self.__len_input + int(self.__bias)]
-        layers: list[int] = [self.__len_output]
-
+        __weights2: list[int] = [self.__len_input + int(self.__bias)]
+        __layers: list[int] = [self.__len_output]
         if self.__hidden_layers[0] > 0:
             self.__last_ind = len(self.__hidden_layers)
-            weights += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
-            layers = self.__hidden_layers + layers
-        else:
-            self.__last_ind = 0
+            __weights2 += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
+            __layers = self.__hidden_layers + __layers
 
         self.__prev_ind = self.__last_ind - 1
 
@@ -52,51 +41,15 @@ class Initialization(Properties):
 
         self.weights = [
             [
-                [random.uniform(-0.5, 0.5) for _ in weights] for j in range(num)
-            ] for i, num in enumerate(layers)
+                [
+                    random.uniform(-0.5, 0.5)
+                    if self.activation_mode == self.LINEAR
+                    else 0.5
+                    for _ in range(__weights2[i])
+                ] for _ in range(v)
+            ] for i, v in enumerate(__layers)
         ]
-
-        # for i, num in enumerate(layers):
-        #     # if i > 0:
-        #     for j in range(num):
-        #         # if i > 0:
-        #         for k in self.weights[i][j]:
-        #             if self.activation_mode == self.LINEAR:
-        #                 self.weights[i][j][k] = 0.5
-        #             else:
-        #                 self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
-
-        # len_layers = len(layers)
-        # bias_input = self.__len_input + int(self.__bias)
-        # bias_layer: int = 0  # TODO:
-
-        # self.weights = make(pkg.Float3Type, len_layers)
-        # self.neurons = make([][]*Neuron, len_layers)
-        # for i, v in enumerate(layers):
-        #     # self.weights[i] = make(pkg.Float2Type, v)
-        #     # self.neurons[i] = make([] * Neuron, v)
-        #     if i > 0:
-        #         bias_layer = int(layers[i - 1]) + int(self.__bias)
-
-        # for j in range(v):
-        #     if i > 0:
-        #         self.weights[i][j] = make(pkg.Float1Type, bias_layer)
-        #     else:
-        #         self.weights[i][j] = make(pkg.Float1Type, bias_input)
-
-        #     for k in self.weights[i][j]:
-        #         if self.activation_mode == self.LINEAR:
-        #             self.weights[i][j][k] = 0.5
-            #         else:
-            #             self.weights[i][j][k] = random.uniform(-0.5, 0.5)  # params.GetRandFloat()
-
-            # self.neurons[i][j] = &Neuron{}
-
-        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
-        # self.weights = [
-        #     [[random.uniform(-0.5, 0.5) for _ in range(5)] for _ in range(5)]
-        #     for _ in range(len_layers)
-        # ]
+        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in __layers]
 
         return True
 
@@ -115,10 +68,10 @@ class Initialization(Properties):
             self.__hidden_layers = [
                 len(self.weights[i]) for i, _ in enumerate(self.__hidden_layers)
             ]
-        else:
-            self.__hidden_layers = [0]
+        # else:
+        #     self.__hidden_layers = [0]
 
-        self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
+        # self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
         # self.__weights = [[[0 for _ in w] for w in v] for v in self.weights]
 
         # Unread "private" attributes 'python:S4487':
@@ -152,16 +105,18 @@ class Initialization(Properties):
 #     ]
 # ]
 
-
-if __name__ == "__main__":
-    weights = [
-        [
-            [
-                0 for _ in range([3, 4][i])
-            ] for _ in range(v)
-        ] for i, v in enumerate([3, 1])
-    ]
-    print(weights)
+# if __name__ == "__main__":
+#     mode = 2
+#     weights = [
+#         [
+#             [
+#                 random.uniform(-0.5, 0.5)
+#                 if mode == 0
+#                 else 0.5 for _ in range([3, 4][i])
+#             ] for _ in range(v)
+#         ] for i, v in enumerate([3, 1])
+#     ]
+#     print(weights)
 #     for i, num in enumerate([1, 3, 7]):
 #         print(i, num)
 #     bias = True

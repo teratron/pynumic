@@ -7,6 +7,8 @@ from src.pynumic.initialization import Initialization
 class Propagation(Initialization):
     """Propagation."""
 
+    neurons: list[list[Neuron]]
+
     def _calc_neurons(self, data_input: list[float]) -> None:
         """Calculating neurons."""
         _dec, _len = 0, self.__len_input  # self.layers["len_input"]
