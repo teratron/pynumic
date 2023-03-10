@@ -3,8 +3,8 @@ import json
 import os
 from typing import Any
 
-from src.pynumic.interface import Interface
-from src.pynumic.properties import Properties
+from pynumic.interface import Interface
+from pynumic.properties import Properties
 
 
 class Pynumic(Interface):
@@ -58,11 +58,11 @@ class Pynumic(Interface):
 
             print(props)
             # print(self.__dict__)
-            if "weights" in props and props["weights"] is not None:
-                self._init_from_weight()
+            # if "weights" in props and props["weights"] is not None:
+            #     self._init_from_weight()
 
-        # if props != {}:
-        Properties.__init__(self, **props)
+        if props != {}:
+            Properties.__init__(self, **props)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"

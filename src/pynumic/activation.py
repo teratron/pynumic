@@ -14,7 +14,7 @@ class Activation:
     * TANH -- TanH (hyperbolic tangent) (4).
     """
 
-    # __slots__ = "__activation_mode"
+    # __slots__ = "_activation_mode"
 
     LINEAR: int = 0
     """LINEAR -- Linear/identity (0)."""
@@ -35,16 +35,16 @@ class Activation:
     DEFAULT_ACTIVATION_LIMIT: float = 0.1e-3
 
     def __init__(self, activation_mode: int) -> None:
-        self.__activation_mode: int = self.__check_activation_mode(activation_mode)
+        self._activation_mode: int = self.__check_activation_mode(activation_mode)
 
     @property
     def activation_mode(self) -> int:
         """Activation function mode."""
-        return self.__activation_mode
+        return self._activation_mode
 
     @activation_mode.setter
     def activation_mode(self, value: int) -> None:
-        self.__activation_mode = self.__check_activation_mode(value)
+        self._activation_mode = self.__check_activation_mode(value)
 
     def __check_activation_mode(self, value: int) -> int:
         return (
@@ -55,11 +55,11 @@ class Activation:
 
     def get_activation(self, value: float) -> float:
         """Activation function."""
-        return get_activation(value, self.__activation_mode)
+        return get_activation(value, self._activation_mode)
 
     def get_derivative(self, value: float) -> float:
         """Derivative activation function."""
-        return get_derivative(value, self.__activation_mode)
+        return get_derivative(value, self._activation_mode)
 
 
 def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:

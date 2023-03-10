@@ -1,8 +1,8 @@
 """TODO: Properties of neural network."""
 from typing import TypeAlias
 
-from src.pynumic.activation import Activation
-from src.pynumic.loss import Loss
+from pynumic.activation import Activation
+from pynumic.loss import Loss
 
 WeightsType: TypeAlias = list[list[list[float]]]
 
@@ -11,9 +11,9 @@ class Properties(Activation, Loss):
     """Properties of neural network."""
 
     # __slots__ = (
-    #     "__bias",
-    #     "__hidden_layers",
-    #     "__rate",
+    #     "_bias",
+    #     "_hidden_layers",
+    #     "_rate",
     #     "weights",
     # )
 
@@ -30,12 +30,12 @@ class Properties(Activation, Loss):
             rate: float = DEFAULT_RATE,
             weights: WeightsType | None = None,
     ) -> None:
-        self.__bias: bool = bias
-        self.__hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
-        self.__rate: float = self.__check_rate(rate)
-
+        self._bias: bool = bias
+        self._hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
+        self._rate: float = self.__check_rate(rate)
+        self.weights: WeightsType = []
         if weights is not None:
-            self.weights: WeightsType = weights
+            self.weights = weights
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
@@ -44,26 +44,26 @@ class Properties(Activation, Loss):
     @property
     def bias(self) -> bool:
         """The neuron bias, false or true (required field for a config)."""
-        return self.__bias
+        return self._bias
 
     @bias.setter
     def bias(self, value: bool) -> None:
-        self.__bias = value
+        self._bias = value
 
     # Hidden Layers
     @property
     def hidden_layers(self) -> list[int]:
         """List of the number of neuron in each hidden layers."""
-        return self.__hidden_layers
+        return self._hidden_layers
 
     @hidden_layers.setter
     def hidden_layers(self, value: list[int]) -> None:
-        self.__hidden_layers = self.__check_hidden_layers(value)
+        self._hidden_layers = self.__check_hidden_layers(value)
 
     @staticmethod
     def __check_hidden_layers(value: list[int] | None) -> list[int]:
-        if value is None or value == [] or value == [0]:
-            return [0]
+        if value or value is None or value == [0]:
+            return []
 
         if isinstance(value, list) and all(list(map(lambda i: i > 0, value))):
             return value
@@ -74,11 +74,11 @@ class Properties(Activation, Loss):
     @property
     def rate(self) -> float:
         """Learning coefficient (greater than 0.0 and less than or equal to 1.0)."""
-        return self.__rate
+        return self._rate
 
     @rate.setter
     def rate(self, value: float) -> None:
-        self.__rate = self.__check_rate(value)
+        self._rate = self.__check_rate(value)
 
     def __check_rate(self, value: float) -> float:
         return self.DEFAULT_RATE if value <= 0 or value > 1 else value

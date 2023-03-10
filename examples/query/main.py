@@ -2,8 +2,7 @@
 
 from pynumic import Pynumic
 
-# TODO: "name": "perceptron",
-json_stream = """
+JSON_STREAM = """
 {
     "bias": true,
     "activation_mode": 3,
@@ -33,14 +32,13 @@ json_stream = """
 
 if __name__ == "__main__":
     # Returns a new neural network instance from config.
-
     # pn = Pynumic()
-    pn = Pynumic(json_stream)
+    pn = Pynumic(JSON_STREAM)
     # pn = Pynumic(json_stream, **{"name": "perceptron"})
     # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
 
     # print("++++", pn.rate, pn.__dict__)
-    # print("++++", pn.__len_input)
+    # print("++++", pn._len_input)
 
     # Input dataset.
     data_input = [0.27, 0.31, 0.52]

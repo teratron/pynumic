@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 from pynumic.propagation import Propagation
-from src.pynumic.properties import WeightsType
+from pynumic.properties import WeightsType
 
 
 # from threading import Lock
@@ -20,13 +20,10 @@ class Interface(Propagation):
     __is_init: bool = False
     __is_query: bool = False
 
-    # def __init__(self) -> None:
-    #     super().__init__()
-
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
         if not self.__is_init:
-            if self._init_from_new(len(data_input), len(data_target)):
+            if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
         # self.__mutex.acquire()
@@ -44,19 +41,23 @@ class Interface(Propagation):
 
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""
+        # if not self.__is_init:
+        #     raise ValueError(f"{__name__}: not initialized")
+
         if not self.__is_init:
-            raise ValueError(f"{__name__}: not initialized")
+            if self._init():
+                self.__is_init = True
 
         self._calc_neurons(data_input)
         self.__inputs = data_input
         self.__is_query = True
 
-        return [n.value for n in self.neurons[self.__last_ind]]
+        return [n.value for n in self.neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
         if not self.__is_init:
-            if self._init_from_new(len(data_input), len(data_target)):
+            if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
         return self.__train(data_input, data_target)
@@ -87,7 +88,7 @@ class Interface(Propagation):
                 min_count = count
                 self.__weights = deepcopy(self.weights)
 
-                if loss < self.__loss_limit:
+                if loss < self._loss_limit:
                     self.weights = deepcopy(self.__weights)
                     return min_count, min_loss
 

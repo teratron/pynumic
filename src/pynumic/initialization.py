@@ -1,46 +1,49 @@
 """TODO: Initialization."""
 import random
+from dataclasses import dataclass
 
 from pynumic.properties import Properties  # , WeightsType
 
 
-# from dataclasses import dataclass
+@dataclass
+class Neuron:
+    """Neuron."""
 
-
-# @dataclass
-# class Neuron:
-#     """Neuron."""
-#
-#     value: float
-#     miss: float
+    value: float
+    miss: float
 
 
 class Initialization(Properties):
-    """Initialization neural network."""
+    """initialization neural network."""
 
-    # neurons: list[list[Neuron]]
+    neurons: list[list[Neuron]]
     # __weights: WeightsType
-    __len_input: int = 0
-    __len_output: int = 0
-    __last_ind: int = 0
-    __prev_ind: int = 0
+    _len_input: int = 0
+    _len_output: int = 0
+    _last_ind: int = 0
+    _prev_ind: int = 0
 
-    def _init_from_new(self, len_input: int, len_target: int) -> bool:
-        self.__len_input = len_input
-        self.__len_output = len_target
+    def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
+        is_init: bool = False
+        if self.weights:
+            is_init = self.__init_from_weight()
+        elif len_input > 0 and len_target > 0:
+            is_init = self.__init_from_new(len_input, len_target)
 
-        weights: list[int] = [self.__len_input + int(self.__bias)]
-        layers: list[int] = [self.__len_output]
-        if self.__hidden_layers[0] > 0:
-            self.__last_ind = len(self.__hidden_layers)
-            weights += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
-            layers = self.__hidden_layers + layers
+        return is_init
 
-        self.__prev_ind = self.__last_ind - 1
+    def __init_from_new(self, len_input: int, len_target: int) -> bool:
+        self._len_input = len_input
+        self._len_output = len_target
 
-        # Unread "private" attributes 'python:S4487':
-        _ = self.__prev_ind
+        weights: list[int] = [self._len_input + int(self._bias)]
+        layers: list[int] = [self._len_output]
+        if self._hidden_layers:
+            self._last_ind = len(self._hidden_layers)
+            weights += list(map(lambda x: x + int(self._bias), self._hidden_layers))
+            layers = self._hidden_layers + layers
 
+        self._prev_ind = self._last_ind - 1
         self.weights = [
             [
                 [
@@ -51,35 +54,29 @@ class Initialization(Properties):
                 ] for _ in range(v)
             ] for i, v in enumerate(layers)
         ]
-        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+        self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+        del weights, layers
 
         return True
 
-    def _init_from_weight(self) -> bool:
+    def __init_from_weight(self) -> bool:
         length = len(self.weights)
-        self.__last_ind = length - 1
-        self.__prev_ind = self.__last_ind - 1
-        self.__len_input = len(self.weights[0][0])
-        self.__len_output = len(self.weights[self.__last_ind])
+        self._last_ind = length - 1
+        self._prev_ind = self._last_ind - 1
+        self._len_input = len(self.weights[0][0])
+        self._len_output = len(self.weights[self._last_ind])
 
         if length > 1 and len(self.weights[0]) + 1 == len(self.weights[1][0]):
-            self.__bias = True
-            self.__len_input -= 1
+            self._bias = True
+            self._len_input -= 1
 
-        if self.__last_ind > 0:
-            self.__hidden_layers = [
-                len(self.weights[i]) for i, _ in enumerate(self.__hidden_layers)
+        if self._last_ind > 0:
+            self._hidden_layers = [
+                len(self.weights[i]) for i, _ in enumerate(self._hidden_layers)
             ]
-        # else:
-        #     self.__hidden_layers = [0]
 
-        # self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
+        self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
         # self.__weights = [[[0 for _ in w] for w in v] for v in self.weights]
-
-        # Unread "private" attributes 'python:S4487':
-        _ = self.__prev_ind
-        _ = self.__len_input
-        _ = self.__len_output
 
         return True
 
@@ -270,11 +267,11 @@ class Initialization(Properties):
 # }
 
 
-# def _init_from_new(__len_input: int, len_target: int) -> None:
-#     __hidden_layers = [42, 21]
+# def _init_from_new(_len_input: int, len_target: int) -> None:
+#     _hidden_layers = [42, 21]
 #     _bias: bool = False
-#     layers = [__len_input + int(_bias)]
-#     layers.extend(__hidden_layers)
+#     layers = [_len_input + int(_bias)]
+#     layers.extend(_hidden_layers)
 #     layers.append(len_target)
 #     print(layers)
 #
