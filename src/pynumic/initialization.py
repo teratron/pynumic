@@ -1,16 +1,18 @@
 """TODO: Initialization."""
 import random
-from dataclasses import dataclass
 
 from pynumic.properties import Properties  # , WeightsType
 
 
-@dataclass
-class Neuron:
-    """Neuron."""
+# from dataclasses import dataclass
 
-    value: float
-    miss: float
+
+# @dataclass
+# class Neuron:
+#     """Neuron."""
+#
+#     value: float
+#     miss: float
 
 
 class Initialization(Properties):
@@ -27,12 +29,12 @@ class Initialization(Properties):
         self.__len_input = len_input
         self.__len_output = len_target
 
-        __weights2: list[int] = [self.__len_input + int(self.__bias)]
-        __layers: list[int] = [self.__len_output]
+        weights: list[int] = [self.__len_input + int(self.__bias)]
+        layers: list[int] = [self.__len_output]
         if self.__hidden_layers[0] > 0:
             self.__last_ind = len(self.__hidden_layers)
-            __weights2 += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
-            __layers = self.__hidden_layers + __layers
+            weights += list(map(lambda x: x + int(self.__bias), self.__hidden_layers))
+            layers = self.__hidden_layers + layers
 
         self.__prev_ind = self.__last_ind - 1
 
@@ -45,11 +47,11 @@ class Initialization(Properties):
                     random.uniform(-0.5, 0.5)
                     if self.activation_mode == self.LINEAR
                     else 0.5
-                    for _ in range(__weights2[i])
+                    for _ in range(weights[i])
                 ] for _ in range(v)
-            ] for i, v in enumerate(__layers)
+            ] for i, v in enumerate(layers)
         ]
-        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in __layers]
+        # self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
 
         return True
 

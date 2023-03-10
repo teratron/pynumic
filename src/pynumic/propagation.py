@@ -1,7 +1,16 @@
 """TODO: Propagation"""
 import math
+from dataclasses import dataclass
 
 from src.pynumic.initialization import Initialization
+
+
+@dataclass
+class Neuron:
+    """Neuron."""
+
+    value: float
+    miss: float
 
 
 class Propagation(Initialization):

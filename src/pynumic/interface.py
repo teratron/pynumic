@@ -2,9 +2,7 @@
 from copy import deepcopy
 
 from pynumic.propagation import Propagation
-
-
-# from src.pynumic.properties import WeightsType
+from src.pynumic.properties import WeightsType
 
 
 # from threading import Lock
