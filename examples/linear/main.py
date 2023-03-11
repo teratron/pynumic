@@ -9,7 +9,7 @@ if __name__ == "__main__":
     pn = Pynumic()
 
     # Properties.
-    pn.hidden_layers = [3, 2]
+    pn(bias=True, hidden_layers=[3, 2])
     pn.activation_mode = pn.LINEAR
     pn.loss_mode = pn.MSE
     pn.loss_limit = 0.0001

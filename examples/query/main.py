@@ -30,7 +30,9 @@ JSON_STREAM = """
 }
 """
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """TODO:"""
     # Returns a new neural network instance from config.
     # pn = Pynumic()
     pn = Pynumic(JSON_STREAM)
@@ -46,3 +48,7 @@ if __name__ == "__main__":
     # Getting the results of the trained network.
     data_output = pn.query(data_input)
     print(data_output)
+
+
+if __name__ == "__main__":
+    main()

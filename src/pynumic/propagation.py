@@ -1,7 +1,7 @@
 """TODO: Propagation"""
 import math
 
-from pynumic.initialization import Initialization
+from pynumic._initialization import _Initialization
 
 
 # from dataclasses import dataclass
@@ -15,7 +15,7 @@ from pynumic.initialization import Initialization
 #     miss: float
 
 
-class Propagation(Initialization):
+class Propagation(_Initialization):
     """Propagation."""
 
     # neurons: list[list[Neuron]]

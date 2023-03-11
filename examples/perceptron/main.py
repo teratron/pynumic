@@ -3,17 +3,19 @@ import time
 
 from pynumic import Pynumic
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """TODO:"""
     # Returns a new neural network
     # instance with the default parameters
     # for Perceptron neural network.
     pn = Pynumic(
             bias=True,
-            hidden_layers=[5, 3, 7, 4],
+            hidden_layers=[5, 3],
             activation_mode=Pynumic.TANH,
             loss_mode=Pynumic.MSE,
-            loss_limit=1e-11,
-            rate=0.378,
+            loss_limit=1e-6,
+            rate=0.3,
     )
 
     # print(f"{pn.hidden_layers = }")
@@ -36,9 +38,9 @@ if __name__ == "__main__":
 
     # Training.
     len_data = len(dataset) - len_output + 1
-    for epoch in range(10_000):
+    for _ in range(10_000):
         for i in range(len_input, len_data):
-            a, b = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
+            _, b = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
 
         # Verifying.
         _sum = _num = 0.0
@@ -58,3 +60,7 @@ if __name__ == "__main__":
 
     # Check the trained data, the result should be about [-0.13 0.2].
     print(pn.query([-0.52, 0.66, 0.81]))
+
+
+if __name__ == "__main__":
+    main()
