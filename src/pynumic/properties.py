@@ -82,11 +82,3 @@ class Properties(Activation, Loss):
 
     def __check_rate(self, value: float) -> float:
         return self.DEFAULT_RATE if value <= 0 or value > 1 else value
-
-# if __name__ == "__main__":
-#     _value = [1, 3, -4, 9, 1]
-#     print(all(_value))
-#     v = list(filter(lambda i: i > 0, _value))
-#     print(v)
-#     v = list(map(lambda i: i > 0, [0]))
-#     print(v, all(v))
