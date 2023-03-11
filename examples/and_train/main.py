@@ -1,9 +1,9 @@
 """TODO:"""
+from typing import Any
 
 from pynumic import Pynumic
 
-props = {
-    "name":            "perceptron",
+props: dict[str, Any] = {
     "bias":            True,
     "activation_mode": 3,
     "loss_mode":       0,
@@ -28,10 +28,11 @@ props = {
     ],
 }
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """TODO:"""
     # Returns a new neural network instance from config.
     pn = Pynumic(**props)
-    # pn = Pynumic(**{"name": "perceptron"})
 
     # Dataset:
     data_input = [0.27, 0.31, 0.52]  # input dataset.
@@ -39,11 +40,15 @@ if __name__ == "__main__":
 
     # Getting the results of the trained network.
     data_output = pn.query(data_input)
-    print(data_output)
+    print("Query:", data_output)
 
     # If there is target data, then we can train the received output data.
     count, loss = pn.and_train(data_target)
-    print(count, loss)
+    print("And Train:", count, loss)
 
     # Check the trained data, the result should be about [0.7 0.1].
-    print(pn.query(data_input))
+    print("Check:", pn.query(data_input))
+
+
+if __name__ == "__main__":
+    main()

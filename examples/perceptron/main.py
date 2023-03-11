@@ -40,7 +40,7 @@ def main() -> None:
     len_data = len(dataset) - len_output + 1
     for _ in range(10_000):
         for i in range(len_input, len_data):
-            _, b = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
+            _, _ = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
 
         # Verifying.
         _sum = _num = 0.0
@@ -59,7 +59,7 @@ def main() -> None:
     # pn.write(config="perceptron.json", weights="perceptron_weights.json")
 
     # Check the trained data, the result should be about [-0.13 0.2].
-    print(pn.query([-0.52, 0.66, 0.81]))
+    print("Check:", pn.query([-0.52, 0.66, 0.81]))
 
 
 if __name__ == "__main__":

@@ -1,8 +1,9 @@
 """TODO:"""
-
 from pynumic import Pynumic
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """TODO:"""
     # Returns a new neural network
     # instance with the default parameters,
     # same n = nn.New("perceptron").
@@ -19,7 +20,11 @@ if __name__ == "__main__":
     data_target = [5, -50.3]
 
     # Training dataset.
-    print(pn.train(data_input, data_target))
+    print("Train:", *pn.train(data_input, data_target))
 
     # Check the trained data, the result should be about [5 -50.3].
-    print(pn.query(data_input))
+    print("Check:", pn.query(data_input))
+
+
+if __name__ == "__main__":
+    main()

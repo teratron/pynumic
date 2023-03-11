@@ -27,7 +27,7 @@ class Loss:
     """AVG -- Average Error (3)."""
 
     DEFAULT_LOSS_MODE: int = MSE
-    DEFAULT_LOSS_LIMIT: float = 0.1e-3
+    DEFAULT_LOSS_LIMIT: float = 0.01
 
     def __init__(self, loss_mode: int, loss_limit: float) -> None:
         self._loss_mode: int = self.__check_loss_mode(loss_mode)

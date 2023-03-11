@@ -1,5 +1,4 @@
 """TODO:"""
-
 from pynumic import Pynumic
 
 JSON_STREAM = """
@@ -34,20 +33,16 @@ JSON_STREAM = """
 def main() -> None:
     """TODO:"""
     # Returns a new neural network instance from config.
-    # pn = Pynumic()
-    pn = Pynumic(JSON_STREAM)
     # pn = Pynumic(json_stream, **{"name": "perceptron"})
     # pn = Pynumic("-perceptron", **{"-name": "perceptron"})
-
-    # print("++++", pn.rate, pn.__dict__)
-    # print("++++", pn._len_input)
+    pn = Pynumic(JSON_STREAM)
 
     # Input dataset.
     data_input = [0.27, 0.31, 0.52]
 
     # Getting the results of the trained network.
     data_output = pn.query(data_input)
-    print(data_output)
+    print("Query:", data_output)
 
 
 if __name__ == "__main__":

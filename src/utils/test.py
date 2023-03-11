@@ -34,18 +34,15 @@ def dict_compare(
         d1: dict[str, Any],
         d2: dict[str, Any]
 ) -> tuple[set[Any], set[Any], dict[str, Any], set[Any]]:
-    print("&keys", set(d1.keys()) & set(d2.keys()))
-    print("&items", set(d1.items()) & set(d2.items()))
-
-    print("^keys", set(d2.keys()) ^ set(d1.keys()))
-    print("^items", set(d2.items()) ^ set(d1.items()))
-
-    print("|keys", set(d2.keys()) | set(d1.keys()))
-    print("|items", set(d2.items()) | set(d1.items()))
+    print("&keys", d1.keys() & d2.keys(), "\t\t&items", d1.items() & d2.items())
+    print("^keys", d2.keys() ^ d1.keys(), "\t\t\t\t^items", d2.items() ^ d1.items())
+    print("|keys", d2.keys() | d1.keys(), "\t|items", d2.items() | d1.items())
 
     d1_keys = set(d1.keys())
     d2_keys = set(d2.keys())
+
     shared_keys = d1_keys.intersection(d2_keys)
+
     _added = d1_keys - d2_keys
     _removed = d2_keys - d1_keys
     _modified = {i: (d1[i], d2[i]) for i in shared_keys if d1[i] != d2[i]}
@@ -58,7 +55,8 @@ if __name__ == "__main__":
     x = dict(a=1, b=2, c=5, d=3)
     y = dict(a=2, b=2, d=0)
     added, removed, modified, same = dict_compare(x, y)
-    print(added, removed, modified, same)
+    print()
+    print(f"{added = }\n{removed = }\n{modified = }\n{same = }")
 
 ####################################################################################
 

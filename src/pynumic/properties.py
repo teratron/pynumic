@@ -10,12 +10,12 @@ WeightsType: TypeAlias = list[list[list[float]]]
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    # __slots__ = (
-    #     "_bias",
-    #     "_hidden_layers",
-    #     "_rate",
-    #     "weights",
-    # )
+    __slots__ = (
+        "_bias",
+        "_hidden_layers",
+        "_rate",
+        "weights",
+    )
 
     DEFAULT_RATE: float = 0.3
 

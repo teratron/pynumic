@@ -1,10 +1,11 @@
 """TODO:"""
-
 import os
 
 from pynumic import Pynumic
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """TODO:"""
     # Returns a new neural network instance from config.
     pn = Pynumic(os.path.join("config", "perceptron.json"))
 
@@ -17,3 +18,7 @@ if __name__ == "__main__":
 
     # Writing weights to a file.
     pn.write(weights="perceptron_weights.json")
+
+
+if __name__ == "__main__":
+    main()
