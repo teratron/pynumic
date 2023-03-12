@@ -46,18 +46,29 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
+        # self.__call__(reader, **props)
+        if reader != "":
+            props = _get_props_from(reader)
+
+            if "config" in props:
+                self.config = props["config"]
+                del props["config"]
+
+        # if props != {}:
         super().__init__()
-        self.__call__(reader, **props)
+        Properties.__init__(self, **props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         if reader != "":
             props = _get_props_from(reader)
+
             if "config" in props:
                 self.config = props["config"]
                 del props["config"]
 
         if props != {}:
             Properties.__init__(self, **props)
+        #print(self.weights)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"
