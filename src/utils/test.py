@@ -35,8 +35,8 @@ def dict_compare(
         d2: dict[str, Any]
 ) -> tuple[set[Any], set[Any], dict[str, Any], set[Any]]:
     print("&keys", d1.keys() & d2.keys(), "\t\t&items", d1.items() & d2.items())
-    print("^keys", d2.keys() ^ d1.keys(), "\t\t\t\t^items", d2.items() ^ d1.items())
-    print("|keys", d2.keys() | d1.keys(), "\t|items", d2.items() | d1.items())
+    print("^keys", d1.keys() ^ d2.keys(), "\t\t\t\t^items", d1.items() ^ d2.items())
+    print("|keys", d1.keys() | d2.keys(), "\t|items", d1.items() | d2.items())
 
     d1_keys = set(d1.keys())
     d2_keys = set(d2.keys())

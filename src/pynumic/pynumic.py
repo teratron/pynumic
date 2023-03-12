@@ -54,7 +54,6 @@ class Pynumic(Interface):
                 self.config = props["config"]
                 del props["config"]
 
-        # if props != {}:
         super().__init__()
         Properties.__init__(self, **props)
 
@@ -67,7 +66,19 @@ class Pynumic(Interface):
                 del props["config"]
 
         if props != {}:
-            Properties.__init__(self, **props)
+            print(props, self.__dict__, self.__dir__())
+            for i in props.keys():
+                if i in self.__dir__():
+                    self.__dict__["_" + i] = props[i]
+
+            # props = {props[i] for i in props}
+            # props = list(filter(lambda x: x, props.keys()))
+            # print(props)
+            print(props, self.__dict__, self.__dir__())
+            # self.bias = props["bias"]
+            # print(props, self.__dict__)
+            # Properties.__init__(self, **props)
+            # print(props.items() ^ self.__dict__.items())
         #print(self.weights)
 
     def __str__(self) -> str:

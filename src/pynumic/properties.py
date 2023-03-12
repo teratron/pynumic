@@ -10,12 +10,12 @@ WeightsType: TypeAlias = list[list[list[float]]]
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    __slots__ = (
-        "_bias",
-        "_hidden_layers",
-        "_rate",
-        "weights",
-    )
+    # __slots__ = (
+    #     "_bias",
+    #     "_hidden_layers",
+    #     "_rate",
+    #     "weights",
+    # )
 
     DEFAULT_RATE: float = 0.3
 
@@ -33,6 +33,7 @@ class Properties(Activation, Loss):
         self._bias: bool = bias
         self._hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
+
         self.weights: WeightsType = []
         if weights is not None:
             self.weights = weights
