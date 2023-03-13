@@ -79,6 +79,7 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
             if math.isinf(value):  # TODO:
                 raise ValueError(f"act {__name__}: loss is infinity")
             return value
+            # value = math.exp(2 * value)
             # return (value - 1) / (value + 1)
         case Activation.SIGMOID | _:
             value = 1 / (1 + math.exp(-value))

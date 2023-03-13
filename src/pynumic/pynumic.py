@@ -51,13 +51,14 @@ class Pynumic(Interface):
         Properties.__init__(self, **props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
+        # print(props, self.__dict__)
         props = self.__get_props(reader, **props)
         if props != {}:
-            ### print(props, self.__dict__)
             for key in props.keys():
                 if key in self.__dir__():
                     setattr(self, key, props[key])
-            ### print(props, self.__dict__)
+
+        # print(props, self.__dict__)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"
@@ -75,11 +76,13 @@ class Pynumic(Interface):
 
     def __get_props(self, reader: str, **props: Any) -> dict[str, Any]:
         if reader != "":
-            props = _get_props_from(reader)
+            args = _get_props_from(reader)
 
             if "config" in props:
                 self.config = props["config"]
                 del props["config"]
+
+            props |= args
 
         return props
 
