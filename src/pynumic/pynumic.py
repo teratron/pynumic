@@ -46,40 +46,18 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
-        # self.__call__(reader, **props)
-        if reader != "":
-            props = _get_props_from(reader)
-
-            if "config" in props:
-                self.config = props["config"]
-                del props["config"]
-
+        props = self.__get_props(reader, **props)
         super().__init__()
         Properties.__init__(self, **props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
-        if reader != "":
-            props = _get_props_from(reader)
-
-            if "config" in props:
-                self.config = props["config"]
-                del props["config"]
-
+        props = self.__get_props(reader, **props)
         if props != {}:
-            print(props, self.__dict__, self.__dir__())
-            for i in props.keys():
-                if i in self.__dir__():
-                    self.__dict__["_" + i] = props[i]
-
-            # props = {props[i] for i in props}
-            # props = list(filter(lambda x: x, props.keys()))
-            # print(props)
-            print(props, self.__dict__, self.__dir__())
-            # self.bias = props["bias"]
-            # print(props, self.__dict__)
-            # Properties.__init__(self, **props)
-            # print(props.items() ^ self.__dict__.items())
-        #print(self.weights)
+            ### print(props, self.__dict__)
+            for key in props.keys():
+                if key in self.__dir__():
+                    setattr(self, key, props[key])
+            ### print(props, self.__dict__)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"
@@ -94,6 +72,16 @@ class Pynumic(Interface):
                 + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
                 + [m for m in self.__dict__ if m[0] != "_"]
         )
+
+    def __get_props(self, reader: str, **props: Any) -> dict[str, Any]:
+        if reader != "":
+            props = _get_props_from(reader)
+
+            if "config" in props:
+                self.config = props["config"]
+                del props["config"]
+
+        return props
 
 
 def _get_props_from(reader: str) -> dict[str, Any]:

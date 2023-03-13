@@ -7,7 +7,7 @@ def main() -> None:
     print(pn.weights)
 
     # pn(weights=[2.3])
-    pn(bias=True, rate=0.91)
+    pn(bias=True, rate=0.91, activation_mode=1)
     print(pn.weights)
 
 
