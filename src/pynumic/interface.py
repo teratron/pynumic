@@ -17,14 +17,14 @@ class Interface(Propagation):
     # __mutex: Lock = Lock()
     __weights: WeightsType
     __inputs: list[float]
-    _is_init: bool = False
-    _is_query: bool = False
+    __is_init: bool = False
+    __is_query: bool = False
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
-        if not self._is_init:
+        if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
-                self._is_init = True
+                self.__is_init = True
 
         # self.__mutex.acquire()
         # self.__mutex.release()
@@ -41,43 +41,43 @@ class Interface(Propagation):
 
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""
-        # if not self._is_init:
+        # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
 
-        if not self._is_init:
+        if not self.__is_init:
             if self._init():
-                self._is_init = True
+                self.__is_init = True
 
         self._calc_neurons(data_input)
         self.__inputs = data_input
-        self._is_query = True
+        self.__is_query = True
 
         return [n.value for n in self.neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
-        if not self._is_init:
+        if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
-                self._is_init = True
+                self.__is_init = True
 
         return self.__train(data_input, data_target)
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
-        if not self._is_init:
+        if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
 
         return self.__train(self.__inputs, data_target)
 
     def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-        # max_loss = 1.0
+        # max_loss = 0.0
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
-            if not self._is_query:
+            if not self.__is_query:
                 self._calc_neurons(data_input)
             else:
-                self._is_query = False
+                self.__is_query = False
 
             loss = self._calc_loss(data_target)
             # if loss > max_loss:

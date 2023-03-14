@@ -1,4 +1,4 @@
-"""TODO: _Initialization."""
+"""TODO: Initialization."""
 import random
 from dataclasses import dataclass
 
@@ -13,7 +13,7 @@ class Neuron:
     miss: float
 
 
-class _Initialization(Properties):
+class Initialization(Properties):
     """initialization neural network."""
 
     neurons: list[list[Neuron]]
@@ -130,7 +130,7 @@ class _Initialization(Properties):
 # l = i + l
 # print(l)
 
-#     inz = _Initialization()
+#     inz = Initialization()
 #     print(inz.__dict__)
 
 # // Init initialize.

@@ -53,11 +53,11 @@ class Activation:
             else value
         )
 
-    def get_activation(self, value: float) -> float:
+    def _get_activation(self, value: float) -> float:
         """Activation function."""
         return get_activation(value, self._activation_mode)
 
-    def get_derivative(self, value: float) -> float:
+    def _get_derivative(self, value: float) -> float:
         """Derivative activation function."""
         return get_derivative(value, self._activation_mode)
 
