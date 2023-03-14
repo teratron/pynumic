@@ -55,7 +55,7 @@ class Initialization(Properties):
             ] for i, v in enumerate(layers)
         ]
         self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
-        del weights, layers
+        # del weights, layers
 
         return True
 
@@ -80,29 +80,6 @@ class Initialization(Properties):
 
         return True
 
-
-# [
-#     [
-#         [0.3310223300922893, -0.31478190967554287],
-#         [0.0711065749008638, 0.38003700979887267],
-#         [0.36511153537599184, 0.2549850586823973]
-#     ],
-#     [
-#         [-0.3614689439495272, 0.3464188667249951]
-#     ]
-# ]
-
-
-# [
-#     [
-#         [0, 0, 0],
-#         [0, 0, 0],
-#         [0, 0, 0]
-#     ],
-#     [
-#         [0, 0, 0, 0]
-#     ]
-# ]
 
 # if __name__ == "__main__":
 #     mode = 2

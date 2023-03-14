@@ -11,7 +11,7 @@ def main() -> None:
 
     # Properties.
     pn(bias=True, hidden_layers=[3, 2])
-    pn.activation_mode = pn.TANH
+    pn.activation_mode = pn.LINEAR
     pn.loss_mode = pn.MSE
     pn.loss_limit = 0.0001
 
