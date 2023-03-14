@@ -14,7 +14,7 @@ def main() -> None:
     data_target = [0.0]
 
     # Training dataset.
-    _, _ = pn.train(data_input, data_target)
+    print("Train:", *pn.train(data_input, data_target))
 
     # Writing weights to a file.
     pn.write(weights="perceptron_weights.json")

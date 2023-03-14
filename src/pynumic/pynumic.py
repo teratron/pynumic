@@ -76,13 +76,13 @@ class Pynumic(Interface):
 
     def __get_props(self, reader: str, **props: Any) -> dict[str, Any]:
         if reader != "":
-            args = _get_props_from(reader)
+            kwargs = _get_props_from(reader)
 
-            if "config" in props:
-                self.config = props["config"]
-                del props["config"]
+            if "config" in kwargs:
+                self.config = kwargs["config"]
+                del kwargs["config"]
 
-            props |= args
+            props |= kwargs
 
         return props
 

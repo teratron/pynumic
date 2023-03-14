@@ -14,7 +14,7 @@ class Properties(Activation, Loss):
     #     "_bias",
     #     "_hidden_layers",
     #     "_rate",
-    #     "weights",
+    #     "_weights",
     # )
 
     DEFAULT_RATE: float = 0.3
@@ -33,10 +33,7 @@ class Properties(Activation, Loss):
         self._bias: bool = bias
         self._hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
-
-        self.weights: WeightsType = []
-        if weights is not None:
-            self.weights = weights
+        self._weights: WeightsType = self.__check_weights(weights)
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
@@ -63,7 +60,7 @@ class Properties(Activation, Loss):
 
     @staticmethod
     def __check_hidden_layers(value: list[int] | None) -> list[int]:
-        if value or value is None or value == [0]:
+        if not value or value is None or value == [0]:
             return []
 
         if isinstance(value, list) and all(list(map(lambda i: i > 0, value))):
@@ -83,3 +80,23 @@ class Properties(Activation, Loss):
 
     def __check_rate(self, value: float) -> float:
         return self.DEFAULT_RATE if value <= 0 or value > 1 else value
+
+    # Weights
+    @property
+    def weights(self) -> WeightsType:
+        """TODO:"""
+        return self._weights
+
+    @weights.setter
+    def weights(self, value: WeightsType) -> None:
+        self._weights = self.__check_weights(value)
+
+    @staticmethod
+    def __check_weights(value: WeightsType | None) -> WeightsType:
+        if not value or value is None or value == [0]:
+            return []
+
+        if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
+            return value
+
+        raise ValueError(f"{__name__}: array of weights incorrectly set {value}")

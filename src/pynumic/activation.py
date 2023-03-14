@@ -101,6 +101,6 @@ def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:
         case Activation.LEAKY_RELU:
             return 0.01 if value < 0 else 1
         case Activation.TANH:
-            return 1 - value**2
+            return 1 - value ** 2
         case Activation.SIGMOID | _:
             return value * (1 - value)

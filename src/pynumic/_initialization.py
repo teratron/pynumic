@@ -25,7 +25,7 @@ class _Initialization(Properties):
 
     def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
         is_init: bool = False
-        if self.weights:
+        if self._weights:
             is_init = self.__init_from_weight()
         elif len_input > 0 and len_target > 0:
             is_init = self.__init_from_new(len_input, len_target)
@@ -44,7 +44,7 @@ class _Initialization(Properties):
             layers = self._hidden_layers + layers
 
         self._prev_ind = self._last_ind - 1
-        self.weights = [
+        self._weights = [
             [
                 [
                     random.uniform(-0.5, 0.5)
@@ -60,23 +60,23 @@ class _Initialization(Properties):
         return True
 
     def __init_from_weight(self) -> bool:
-        length = len(self.weights)
+        length = len(self._weights)
         self._last_ind = length - 1
         self._prev_ind = self._last_ind - 1
-        self._len_input = len(self.weights[0][0])
-        self._len_output = len(self.weights[self._last_ind])
+        self._len_input = len(self._weights[0][0])
+        self._len_output = len(self._weights[self._last_ind])
 
-        if length > 1 and len(self.weights[0]) + 1 == len(self.weights[1][0]):
+        if length > 1 and len(self._weights[0]) + 1 == len(self._weights[1][0]):
             self._bias = True
             self._len_input -= 1
 
         if self._last_ind > 0:
             self._hidden_layers = [
-                len(self.weights[i]) for i, _ in enumerate(self._hidden_layers)
+                len(self._weights[i]) for i, _ in enumerate(self._hidden_layers)
             ]
 
-        self.neurons = [[Neuron(0, 0) for _ in v] for v in self.weights]
-        # self.__weights = [[[0 for _ in w] for w in v] for v in self.weights]
+        self.neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
+        # self.__weights = [[[0 for _ in w] for w in v] for v in self._weights]
 
         return True
 
@@ -106,7 +106,7 @@ class _Initialization(Properties):
 
 # if __name__ == "__main__":
 #     mode = 2
-#     weights = [
+#     _weights = [
 #         [
 #             [
 #                 random.uniform(-0.5, 0.5)
@@ -115,7 +115,7 @@ class _Initialization(Properties):
 #             ] for _ in range(v)
 #         ] for i, v in enumerate([3, 1])
 #     ]
-#     print(weights)
+#     print(_weights)
 #     for i, num in enumerate([1, 3, 7]):
 #         print(i, num)
 #     bias = True
@@ -191,11 +191,11 @@ class _Initialization(Properties):
 # 	var biasLayer int
 #
 # 	nn.Weights = make(pkg.Float3Type, lenLayer)
-# 	nn.weights = make(pkg.Float3Type, lenLayer)
+# 	nn._weights = make(pkg.Float3Type, lenLayer)
 # 	nn.neuron = make([][]*neuron, lenLayer)
 # 	for i, v := range layer {
 # 		nn.Weights[i] = make(pkg.Float2Type, v)
-# 		nn.weights[i] = make(pkg.Float2Type, v)
+# 		nn._weights[i] = make(pkg.Float2Type, v)
 # 		nn.neuron[i] = make([]*neuron, v)
 # 		if i > 0 {
 # 			biasLayer = int(layer[i-1]) + bias
@@ -204,12 +204,12 @@ class _Initialization(Properties):
 # 		for j := 0; j < int(v); j++ {
 # 			if i > 0 {
 # 				nn.Weights[i][j] = make(pkg.Float1Type, biasLayer)
-# 				nn.weights[i][j] = make(pkg.Float1Type, biasLayer)
+# 				nn._weights[i][j] = make(pkg.Float1Type, biasLayer)
 # 			} else {
 # 				nn.Weights[i][j] = make(pkg.Float1Type, biasInput)
-# 				nn.weights[i][j] = make(pkg.Float1Type, biasInput)
+# 				nn._weights[i][j] = make(pkg.Float1Type, biasInput)
 # 			}
-# 			for k := range nn.weights[i][j] {
+# 			for k := range nn._weights[i][j] {
 # 				if nn.ActivationMode == params.LINEAR {
 # 					nn.Weights[i][j][k] = .5
 # 				} else {
@@ -245,14 +245,14 @@ class _Initialization(Properties):
 # 		nn.HiddenLayer = []uint{0}
 # 	}
 #
-# 	nn.weights = make(pkg.Float3Type, length)
+# 	nn._weights = make(pkg.Float3Type, length)
 # 	nn.neuron = make([][]*neuron, length)
 # 	for i, v := range nn.Weights {
 # 		length = len(v)
-# 		nn.weights[i] = make(pkg.Float2Type, length)
+# 		nn._weights[i] = make(pkg.Float2Type, length)
 # 		nn.neuron[i] = make([]*neuron, length)
 # 		for j, w := range v {
-# 			nn.weights[i][j] = make(pkg.Float1Type, len(w))
+# 			nn._weights[i][j] = make(pkg.Float1Type, len(w))
 # 			nn.neuron[i][j] = &neuron{}
 # 		}
 # 	}
