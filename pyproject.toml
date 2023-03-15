@@ -75,6 +75,11 @@ line-length = 88
 target-version = ['py310', 'py311']
 include = '\.pyi?$'
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
