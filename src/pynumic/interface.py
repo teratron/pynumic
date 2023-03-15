@@ -11,7 +11,7 @@ from pynumic.properties import WeightsType
 class Interface(Propagation):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_000_000
+    MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     # __mutex: Lock = Lock()
@@ -81,16 +81,20 @@ class Interface(Propagation):
 
             loss = self._calc_loss(data_target)
             # if loss > max_loss:
+            #     max_loss = loss
             #     pass  # TODO:
 
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-
+                print("---------", count, loss)
                 if loss < self._loss_limit:
                     self._weights = deepcopy(self.__weights)
                     return min_count, min_loss
+
+            if count % 10000 == 0:
+                print(count, loss, self.neurons[0][0], self._weights[0][0][0])
 
             self._calc_miss()
             self._update_weights(data_input)

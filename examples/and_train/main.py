@@ -35,8 +35,8 @@ def main() -> None:
     pn = Pynumic(**props)
 
     # Dataset:
-    data_input = [0.27, 0.31, 0.52]  # input dataset.
-    data_target = [0.7, 0.1]  # target dataset.
+    data_input = [0.27, 0.31, 0.52]
+    data_target = [0.7, 0.1]
 
     # Getting the results of the trained network.
     data_output = pn.query(data_input)

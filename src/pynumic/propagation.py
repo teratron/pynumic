@@ -52,9 +52,9 @@ class Propagation(Initialization):
         if self._activation_mode == self.LINEAR:
             if k > 0:
                 self.neurons[i][j].value /= k
-            # self.neurons[i][j].value /= k if k > 0 else 1
         else:
             self.neurons[i][j].value = self._get_activation(self.neurons[i][j].value)
+        # self.neurons[i][j].value = self._get_activation(self.neurons[i][j].value)
 
     def _calc_loss(self, data_target: list[float]) -> float:
         """Calculating and return the total error of the output neurons."""
@@ -86,30 +86,6 @@ class Propagation(Initialization):
             raise ValueError(f"{__name__}: loss is infinity")
 
         return loss
-
-    # // calcLoss calculating the error of the output neuron.
-    # func (nn *NN) calcLoss() (loss float64) {
-    # 	for i, n := range nn.neuron[nn.lastLayerIndex] {
-    # 		n.miss = nn.target[i] - n.value
-    # 		switch nn.LossMode {
-    # 		default:
-    # 			fallthrough
-    # 		case params.MSE, params.RMSE:
-    # 			loss += math.Pow(float64(n.miss), 2)
-    # 		case params.ARCTAN:
-    # 			loss += math.Pow(math.Atan(float64(n.miss)), 2)
-    # 		case params.AVG:
-    # 			loss += math.Abs(float64(n.miss))
-    # 		}
-    # 	}
-    #
-    # 	loss /= float64(nn.lenOutput)
-    # 	if nn.LossMode == params.RMSE {
-    # 		loss = math.Sqrt(loss)
-    # 	}
-    #
-    # 	return
-    # }
 
     def _calc_miss(self) -> None:
         """Calculating the error of neuron in hidden layers."""
@@ -151,6 +127,7 @@ class Propagation(Initialization):
                     # self._weights[i][j][k] += grad / value if value != 0 else 0
                 else:
                     self._weights[i][j][k] += grad * value
+                #self._weights[i][j][k] += grad * value
             else:
                 self._weights[i][j][k] += grad
 
