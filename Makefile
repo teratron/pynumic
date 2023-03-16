@@ -5,20 +5,18 @@
 VENV     = .venv
 VENV_BIN = $(VENV)/$(shell ls -A $(VENV) | grep -E "bin|Scripts")
 
-setup: ## setup virtual environment and poetry
-	@python -m venv $(VENV)
-	@make install
-
-install: ## install poetry
+install: ## install and setup virtual environment and poetry
 ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@$(VENV_BIN)/pip install -U pip setuptools
 	@$(VENV_BIN)/pip install poetry
+	@poetry shell
 	@poetry check
 	@poetry lock
 	@poetry install
 	@make dev
 else
+	@python -m venv $(VENV)
 	@make install
 endif
 
@@ -27,8 +25,8 @@ dev: ## dev
 
 update: ## update dependency
 	@$(VENV_BIN)/python -m pip install --upgrade pip
-	@make dev
 	@poetry update
+	@make dev
 
 poetry-update: ## update poetry
 	@poetry self update
