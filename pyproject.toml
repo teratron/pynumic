@@ -77,7 +77,7 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
+addopts = "-v -ra -q --tb=short"
 testpaths = ["tests"]
 
 [build-system]
