@@ -1,86 +1,45 @@
-# class Activation:
+import pytest
+
+# class TestActivation:
 #     def test_activation(self):
 #         assert False
+from pynumic.activation import Activation, get_activation, get_derivative
 
 
-def test_get_activation() -> None:
-    assert False
+# from pynumic.activation import Activation, get_activation, get_derivative
 
 
-def test_get_derivative() -> None:
-    assert False
+@pytest.mark.parametrize(
+        "value, mode, result", [
+            (0.1, Activation.LINEAR, 0.1),
+            (0.1, Activation.RELU, 0.1),
+            (-0.1, Activation.RELU, 0),
+            (0.1, Activation.LEAKY_RELU, 0.1),
+            (-0.1, Activation.LEAKY_RELU, -0.001),
+            (0.1, Activation.SIGMOID, 0.52497918747894),
+            (0.1, Activation.TANH, 0.09966799462495583),
+            (0.1, 255, 0.52497918747894)
+        ]
+        )
+def test_get_activation(value: float, mode: int, result: float) -> None:
+    assert get_activation(value, mode) == result
 
-# func TestActivation(t *testing.T) {
-# 	type args struct {
-# 		value pkg.FloatType
-# 		mode  uint8
-# 	}
-# 	tests := []struct {
-# 		name string
-# 		args
-# 		want pkg.FloatType
-# 	}{
-# 		{
-# 			name: "#1_LINEAR",
-# 			args: args{.1, LINEAR},
-# 			want: .1,
-# 		},
-# 		{
-# 			name: "#2_RELU",
-# 			args: args{.1, RELU},
-# 			want: .1,
-# 		},
-# 		{
-# 			name: "#3_RELU",
-# 			args: args{-.1, RELU},
-# 			want: 0,
-# 		},
-# 		{
-# 			name: "#4_LEAKYRELU",
-# 			args: args{.1, LEAKYRELU},
-# 			want: .1,
-# 		},
-# 		{
-# 			name: "#5_LEAKYRELU",
-# 			args: args{-.1, LEAKYRELU},
-# 			want: -.001,
-# 		},
-# 		{
-# 			name: "#6_SIGMOID",
-# 			args: args{.1, SIGMOID},
-# 			want: .52497918747894,
-# 		},
-# 		{
-# 			name: "#7_TANH",
-# 			args: args{.1, TANH},
-# 			want: .099668,
-# 		},
-# 		{
-# 			name: "#8_default",
-# 			args: args{.1, 255},
-# 			want: .52497918747894,
-# 		},
-# 	}
-#
-# 	for _, tt := range tests {
-# 		t.Run(tt.name, func(t *testing.T) {
-# 			if got := Activation(tt.value, tt.mode); got != tt.want {
-# 				t.Errorf("Activation() = %g, want %g", got, tt.want)
-# 			}
-# 		})
-# 	}
-# }
-#
-# func TestDerivative(t *testing.T) {
-# 	type args struct {
-# 		value pkg.FloatType
-# 		mode  uint8
-# 	}
-# 	tests := []struct {
-# 		name string
-# 		args
-# 		want pkg.FloatType
-# 	}{
+
+@pytest.mark.parametrize(
+        "value, mode, result", [
+            (0.1, Activation.LINEAR, 1),
+            (0.1, Activation.RELU, 1),
+            (-0.1, Activation.RELU, 0),
+            (0.1, Activation.LEAKY_RELU, 1),
+            (-0.1, Activation.LEAKY_RELU, 0.01),
+            (0.1, Activation.SIGMOID, 0.09000000000000001),
+            (0.1, Activation.TANH, 0.99),
+            (0.1, 255, 0.09000000000000001)
+        ]
+        )
+def test_get_derivative(value: float, mode: int, result: float) -> None:
+    assert get_derivative(value, mode) == result
+
 # 		{
 # 			name: "#1_LINEAR",
 # 			args: args{.1, LINEAR},
@@ -121,13 +80,3 @@ def test_get_derivative() -> None:
 # 			args: args{.1, 255},
 # 			want: .089999996,
 # 		},
-# 	}
-#
-# 	for _, tt := range tests {
-# 		t.Run(tt.name, func(t *testing.T) {
-# 			if got := Derivative(tt.value, tt.mode); got != tt.want {
-# 				t.Errorf("Derivative() = %g, want %g", got, tt.want)
-# 			}
-# 		})
-# 	}
-# }

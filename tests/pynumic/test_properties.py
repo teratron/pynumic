@@ -1,4 +1,4 @@
-# class Properties:
+# class TestProperties:
 #     def test_bias(self):
 #         assert False
 #

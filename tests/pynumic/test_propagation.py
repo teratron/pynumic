@@ -1,4 +1,4 @@
-# class Propagation:
+# class TestPropagation:
 #     def test__calc_neurons(self):
 #         assert False
 #

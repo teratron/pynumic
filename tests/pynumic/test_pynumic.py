@@ -1,4 +1,4 @@
-# class Pynumic:
+# class TestPynumic:
 #     def test_pynumic(self):
 #         assert False
 #
