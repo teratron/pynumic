@@ -19,8 +19,12 @@ class Propagation(Initialization):
     """Propagation."""
 
     # neurons: list[list[Neuron]]
+    _data_input: list[float]
+    _data_output: list[float]
+    _data_target: list[float]
 
-    def _calc_neurons(self, data_input: list[float]) -> None:
+    # def _calc_neurons(self, data_input: list[float]) -> None:
+    def _calc_neurons(self) -> None:
         """Calculating neurons."""
         dec, length = 0, self._len_input  # self.layers["len_input"]
         for i, layer in enumerate(self.neurons):
@@ -29,10 +33,11 @@ class Propagation(Initialization):
                 length = len(self.neurons[dec])
 
             for j, _ in enumerate(layer):
-                self.__get_neuron(i, j, dec, length, data_input)
+                # self.__get_neuron(i, j, dec, length, self._data_input)
+                self.__get_neuron(i, j, dec, length)
 
     def __get_neuron(
-            self, i: int, j: int, dec: int, length: int, data_input: list[float]
+            self, i: int, j: int, dec: int, length: int  # , data_input: list[float]
     ) -> None:
         k = self.neurons[i][j].value = 0
         for k, weight in enumerate(self._weights[i][j]):
@@ -45,7 +50,7 @@ class Propagation(Initialization):
                 if i > 0:
                     self.neurons[i][j].value += self.neurons[dec][k].value * weight
                 else:
-                    self.neurons[i][j].value += data_input[k] * weight
+                    self.neurons[i][j].value += self._data_input[k] * weight
             else:
                 self.neurons[i][j].value += weight
 

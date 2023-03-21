@@ -22,6 +22,10 @@ class Interface(Propagation):
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
+
+        self._data_input = data_input
+        self._data_target = data_target
+
         if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
@@ -35,9 +39,11 @@ class Interface(Propagation):
         # finally:
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
 
-        self._calc_neurons(data_input)
+        # self._calc_neurons(data_input)
+        self._calc_neurons()
 
-        return self._calc_loss(data_target)
+        # return self._calc_loss(data_target)
+        return self._calc_loss(self._data_target)
 
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""

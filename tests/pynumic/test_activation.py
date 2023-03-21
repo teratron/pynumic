@@ -5,8 +5,13 @@ from pynumic.activation import Activation, get_activation, get_derivative
 
 
 # class TestActivation:
-#     def test_activation(self):
-#         assert False
+#   def test_activation(self):
+#       assert False
+
+
+# def test___check_activation_mode(mode: int, result: float) -> None:
+#     # active = Activation(mode)
+#     assert Activation._Activation__check_activation_mode(mode) == result
 
 
 @pytest.mark.parametrize(
@@ -22,6 +27,7 @@ from pynumic.activation import Activation, get_activation, get_derivative
         ]
 )
 def test_get_activation(value: float, mode: int, result: float) -> None:
+    """TODO:"""
     assert get_activation(value, mode) == result
 
 
@@ -38,4 +44,5 @@ def test_get_activation(value: float, mode: int, result: float) -> None:
         ]
 )
 def test_get_derivative(value: float, mode: int, result: float) -> None:
+    """TODO:"""
     assert round(get_derivative(value, mode), 2) == result
