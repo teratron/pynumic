@@ -11,7 +11,7 @@ from pynumic.properties import WeightsType
 class Interface(Propagation):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_000
+    MAX_ITERATION: int = 1_000_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     # __mutex: Lock = Lock()
@@ -42,7 +42,7 @@ class Interface(Propagation):
         self._data_target = data_target
         self._calc_neurons()
 
-        return self._calc_loss(self._data_target)
+        return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""
@@ -51,6 +51,7 @@ class Interface(Propagation):
 
         if not self.__is_init:
             if self._init():
+                # self._data_output = [0 for _ in range(self._len_output)]
                 self.__is_init = True
 
         # self.__inputs = data_input
@@ -60,6 +61,7 @@ class Interface(Propagation):
         self._calc_neurons()
         self.__is_query = True
 
+        # return self._data_output
         return [n.value for n in self.neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
