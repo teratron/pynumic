@@ -16,15 +16,12 @@ class Interface(Propagation):
 
     # __mutex: Lock = Lock()
     __weights: WeightsType
-    __inputs: list[float]
+    # __inputs: list[float]
     __is_init: bool = False
     __is_query: bool = False
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
-
-        self._data_input = data_input
-        self._data_target = data_target
 
         if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
@@ -40,9 +37,11 @@ class Interface(Propagation):
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
 
         # self._calc_neurons(data_input)
+        # return self._calc_loss(data_target)
+        self._data_input = data_input
+        self._data_target = data_target
         self._calc_neurons()
 
-        # return self._calc_loss(data_target)
         return self._calc_loss(self._data_target)
 
     def query(self, data_input: list[float]) -> list[float]:
@@ -54,8 +53,11 @@ class Interface(Propagation):
             if self._init():
                 self.__is_init = True
 
-        self._calc_neurons(data_input)
-        self.__inputs = data_input
+        # self.__inputs = data_input
+        # self._calc_neurons(data_input)
+
+        self._data_input = data_input
+        self._calc_neurons()
         self.__is_query = True
 
         return [n.value for n in self.neurons[self._last_ind]]
@@ -66,26 +68,36 @@ class Interface(Propagation):
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
-        return self.__train(data_input, data_target)
+        self._data_input = data_input
+        self._data_target = data_target
+
+        return self.__train()
+        # return self.__train(data_input, data_target)
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
         if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
 
-        return self.__train(self.__inputs, data_target)
+        self._data_target = data_target
 
-    def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+        return self.__train()
+        # return self.__train(self.__inputs, data_target)
+
+    # def __train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+    def __train(self) -> tuple[int, float]:
         # max_loss = 0.0
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
-                self._calc_neurons(data_input)
+                self._calc_neurons()
+                # self._calc_neurons(data_input)
             else:
                 self.__is_query = False
 
-            loss = self._calc_loss(data_target)
+            loss = self._calc_loss()
+            # loss = self._calc_loss(data_target)
             # if loss > max_loss:
             #     max_loss = loss
             #     pass  # TODO:
@@ -103,7 +115,8 @@ class Interface(Propagation):
                 print(count, loss, self.neurons[0][0], self._weights[0][0][0])
 
             self._calc_miss()
-            self._update_weights(data_input)
+            self._update_weights()
+            # self._update_weights(data_input)
 
         if min_count > 0:
             self._weights = deepcopy(self.__weights)
