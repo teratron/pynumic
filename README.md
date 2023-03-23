@@ -99,14 +99,13 @@ More documentation is available at the [pynumic website](https://zigenzoog.githu
 
 ## Examples
 
+You can find examples of neural networks in the [example's directory](examples).
+
 - [perceptron](examples/perceptron)
 - [linear](examples/linear)
 - [query](examples/query)
 - [and_train](examples/and_train)
 - [json](examples/json)
-
-You can find examples of neural networks in the
-[example's directory](examples).
 
 ## Support
 
