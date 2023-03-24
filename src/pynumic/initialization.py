@@ -46,8 +46,8 @@ class Initialization(Properties):
         self._weights = [
             [
                 [
-                    0.5 if self._activation_mode == self.LINEAR
-                    else random.uniform(-0.5, 0.5)
+                    -0.5 if self._activation_mode == self.LINEAR
+                    else round(random.uniform(-0.5, 0.5), 3)
                     for _ in range(weights[i])
                 ] for _ in range(v)
             ] for i, v in enumerate(layers)
@@ -74,6 +74,5 @@ class Initialization(Properties):
             ]
 
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
-        # self.__weights = [[[0 for _ in w] for w in v] for v in self._weights]
 
         return True

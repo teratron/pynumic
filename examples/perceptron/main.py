@@ -2,8 +2,10 @@
 import time
 
 from pynumic import Pynumic
+from utils.benchmark import benchmark
 
 
+@benchmark(repeat=1)
 def main() -> None:
     """TODO:"""
     # Returns a new neural network

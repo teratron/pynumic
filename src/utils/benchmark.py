@@ -22,7 +22,8 @@ def benchmark(repeat: int = 1000, epoch: int = 100) -> _OuterType:
                 start: float = time()
 
                 for _ in range(repeat):
-                    _ = func(*args, **kwargs)
+                    # _ = func(*args, **kwargs)
+                    func(*args, **kwargs)
 
                 sum_time += time() - start
 
