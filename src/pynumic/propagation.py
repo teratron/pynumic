@@ -4,21 +4,9 @@ import math
 from pynumic.initialization import Initialization
 
 
-# from dataclasses import dataclass
-
-
-# @dataclass
-# class Neuron:
-#     """Neuron."""
-#
-#     value: float
-#     miss: float
-
-
 class Propagation(Initialization):
     """Propagation."""
 
-    # neurons: list[list[Neuron]]
     _data_input: list[float]
     _data_target: list[float]
 
@@ -33,27 +21,20 @@ class Propagation(Initialization):
             for j, _ in enumerate(layer):
                 self.__get_neuron(i, j, dec, length)
 
-    def __get_neuron(
-            self, i: int, j: int, dec: int, length: int
-    ) -> None:
+    def __get_neuron(self, i: int, j: int, dec: int, length: int) -> None:
         k = self.neurons[i][j].value = 0
         for k, weight in enumerate(self._weights[i][j]):
             if k < length:
-                # self.neurons[i][j].value += (
-                #     self.neurons[dec][k].value * weight
-                #     if i > 0
-                #     else data_input[k] * weight
-                # )
-                if i > 0:
-                    self.neurons[i][j].value += self.neurons[dec][k].value * weight
-                else:
-                    self.neurons[i][j].value += self._data_input[k] * weight
+                self.neurons[i][j].value += (
+                    self.neurons[dec][k].value * weight
+                    if i > 0
+                    else self._data_input[k] * weight
+                )
             else:
                 self.neurons[i][j].value += weight
 
         if self._activation_mode == self.LINEAR:
-            if k > 0:
-                self.neurons[i][j].value /= k
+            self.neurons[i][j].value /= k if k > 0 else 1
         else:
             self.neurons[i][j].value = self._get_activation(self.neurons[i][j].value)
 
@@ -70,10 +51,10 @@ class Propagation(Initialization):
                 case self.MSE | self.RMSE | _:
                     loss += neuron.miss ** 2
 
-        if math.isnan(loss):  # TODO:
+        if math.isnan(loss):
             raise ValueError(f"{__name__}: loss not-a-number value")
 
-        if math.isinf(loss):  # TODO:
+        if math.isinf(loss):
             raise ValueError(f"{__name__}: loss is infinity")
 
         loss /= self._len_output
@@ -104,9 +85,7 @@ class Propagation(Initialization):
             for j, _ in enumerate(weight):
                 self.__get_weight(i, j, dec, length)
 
-    def __get_weight(
-            self, i: int, j: int, dec: int, length: int
-    ) -> None:
+    def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
         grad = (
                 self._rate
                 * self.neurons[i][j].miss
@@ -115,110 +94,9 @@ class Propagation(Initialization):
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:
                 value = self.neurons[dec][k].value if i > 0 else self._data_input[k]
-
                 if self._activation_mode == self.LINEAR:
-                    if value != 0:
-                        self._weights[i][j][k] += grad / value
-                    # self._weights[i][j][k] += grad / value if value != 0 else 0
+                    self._weights[i][j][k] += grad / value if value != 0 else 0
                 else:
                     self._weights[i][j][k] += grad * value
             else:
                 self._weights[i][j][k] += grad
-
-# if __name__ == "__main__":
-#     ner = [1, 2, 3, 4]
-#     for i, n in enumerate(ner):
-#         print(i, n)
-
-# // calcNeuron.
-# func (nn *NN) calcNeuron() {
-# 	var length, dec int
-# 	for i, v := range nn.neuron {
-# 		if i > 0 {
-# 			dec = i - 1
-# 			length = len(nn.neuron[dec])
-# 		} else {
-# 			length = nn.lenInput
-# 		}
-#
-# 		for j, n := range v {
-# 			var num pkg.FloatType = 0
-# 			n.value = 0
-# 			for k, w := range nn.weights[i][j] {
-# 				if k < length {
-# 					if i > 0 {
-# 						n.value += nn.neuron[dec][k].value * w
-# 					} else {
-# 						n.value += nn.input[k] * w
-# 					}
-# 				} else {
-# 					n.value += w
-# 				}
-# 				num++
-# 			}
-#
-# 			switch nn.ActivationMode {
-# 			case params.LINEAR:
-# 				if num > 0 {
-# 					n.value /= num
-# 				}
-# 			default:
-# 				n.value = params.Activation(n.value, nn.ActivationMode)
-# 			}
-# 		}
-# 	}
-# }
-#
-# // calcMiss calculating the error of neuron in hidden layers.
-# func (nn *NN) calcMiss() {
-# 	if nn.lastLayerIndex > 0 {
-# 		for i := nn.lastLayerIndex - 1; i >= 0; i-- {
-# 			inc := i + 1
-# 			for j, n := range nn.neuron[i] {
-# 				n.miss = 0
-# 				for k, m := range nn.neuron[inc] {
-# 					n.miss += m.miss * nn.weights[inc][k][j]
-# 				}
-# 			}
-# 		}
-# 	}
-# }
-#
-# // updateWeight update weights.
-# func (nn *NN) updateWeight() {
-# 	var length, dec int
-# 	for i, v := range nn.weights {
-# 		if i > 0 {
-# 			dec = i - 1
-# 			length = len(nn.neuron[dec])
-# 		} else {
-# 			length = nn.lenInput
-# 		}
-#
-# 		for j, w := range v {
-# 			grad := nn.Rate * nn.neuron[i][j].miss * \
-# 			params.Derivative(nn.neuron[i][j].value, nn.ActivationMode)
-# 			for k := range w {
-# 				if k < length {
-# 					var value pkg.FloatType
-# 					if i > 0 {
-# 						value = nn.neuron[dec][k].value
-# 					} else {
-# 						value = nn.input[k]
-# 					}
-#
-# 					switch nn.ActivationMode {
-# 					case params.LINEAR:
-# 						if value != 0 {
-# 							nn.weights[i][j][k] += grad / value
-# 						}
-# 					default:
-# 						nn.weights[i][j][k] += grad * value
-# 					}
-# 				} else {
-# 					nn.weights[i][j][k] += grad
-# 				}
-# 			}
-# 		}
-# 	}
-# }

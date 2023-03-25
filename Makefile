@@ -63,7 +63,7 @@ lint: ## lint project
 	@black src
 	@pylint src
 
-env-prepare: # создать .env-файл для секретов
+env-prepare: ## создать .env-файл для секретов
 	@cp -n .env.sample .env || true
 
 #################################################
@@ -108,7 +108,7 @@ endif
 set-url: ## git remote set-url origin git@github.com:login/repo.git
 	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
 
-git-hooks:
+git-hooks: ## git-hooks
 	@mkdir .githooks || true
 ifeq ($(shell git config --get core.hooksPath), .githooks)
 	@git config --global --unset-all core.hooksPath

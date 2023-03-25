@@ -2,7 +2,7 @@
 import random
 from dataclasses import dataclass
 
-from pynumic.properties import Properties  # , WeightsType
+from pynumic.properties import Properties
 
 
 @dataclass
@@ -21,6 +21,11 @@ class Initialization(Properties):
     _len_output: int = 0
     _last_ind: int = 0
     _prev_ind: int = 0
+
+    # _layer: dict[str, int] = {
+    #     last_ind: 0,
+    #     prev_ind: 0
+    # }
 
     def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
         is_init: bool = False
@@ -54,7 +59,6 @@ class Initialization(Properties):
         ]
         self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
         del weights, layers
-
         return True
 
     def __init_from_weight(self) -> bool:
@@ -74,5 +78,4 @@ class Initialization(Properties):
             ]
 
         self.neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
-
         return True

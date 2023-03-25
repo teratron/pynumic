@@ -2,10 +2,8 @@
 import time
 
 from pynumic import Pynumic
-from utils.benchmark import benchmark
 
 
-@benchmark(repeat=1)
 def main() -> None:
     """TODO:"""
     # Returns a new neural network
@@ -19,17 +17,6 @@ def main() -> None:
             loss_limit=1e-6,
             rate=0.3,
     )
-
-    # print(f"{pn.hidden_layers = }")
-    # print(pn.rate)
-    #
-    # pn(hidden_layers=[5, 42])
-    # print(pn.hidden_layers)
-
-    # pn.query([0.1, 0.2])
-    # pn.rate = 0.73
-    # print(pn.rate, pn.TANH, pn.RMSE)
-    # pn.calc_neurons()
 
     # Dataset.
     dataset = [0.27, -0.31, -0.52, 0.66, 0.81, -0.13, 0.2, 0.49, 0.11, -0.73, 0.28]

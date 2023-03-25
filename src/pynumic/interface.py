@@ -52,7 +52,6 @@ class Interface(Propagation):
         self._data_input = data_input
         self._calc_neurons()
         self.__is_query = True
-
         return [n.value for n in self.neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
@@ -63,7 +62,6 @@ class Interface(Propagation):
 
         self._data_input = data_input
         self._data_target = data_target
-
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
@@ -72,7 +70,6 @@ class Interface(Propagation):
             raise ValueError(f"{__name__}: not initialized")
 
         self._data_target = data_target
-
         return self.__train()
 
     def __train(self) -> tuple[int, float]:
