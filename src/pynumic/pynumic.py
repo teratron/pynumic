@@ -51,14 +51,11 @@ class Pynumic(Interface):
         Properties.__init__(self, **props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
-        # print(props, self.__dict__)
         props = self.__get_props(reader, **props)
         if props != {}:
             for key in props.keys():
                 if key in self.__dir__():
                     setattr(self, key, props[key])
-
-        # print(props, self.__dict__)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"
@@ -67,7 +64,6 @@ class Pynumic(Interface):
         return f"{self.__str__()}: {self.__dict__}"
 
     def __dir__(self) -> list[str]:
-        """Returns all members and all public methods."""
         return (
                 ["__class__", "__doc__", "__module__"]
                 + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]

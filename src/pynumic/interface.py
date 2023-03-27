@@ -1,4 +1,5 @@
 """TODO: Interface for neural network."""
+import json
 from copy import deepcopy
 
 from pynumic.propagation import Propagation
@@ -131,7 +132,9 @@ class Interface(Propagation):
         * Writes 2 files, configuration separately and weights separately:
         write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        pass
+        # if filename is None:
+        with open("perceptron.json", "w", newline="\n") as handle:
+            json.dump(self._weights, handle, skipkeys=True, indent="\t")
 
 # // WriteConfig writes the configuration and weights to the Filer interface object.
 # func (nn *NN) WriteConfig(name ...string) (err error) {
