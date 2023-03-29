@@ -4,7 +4,6 @@ import os
 from typing import Any
 
 from pynumic.interface import Interface
-from pynumic.properties import Properties
 
 
 class Pynumic(Interface):
@@ -32,8 +31,6 @@ class Pynumic(Interface):
     """
 
     name: str = "pynumic"
-    type: str = "Pynumic"
-    config: str | None = None
 
     def __init__(self, reader: str = "", **props: Any) -> None:
         """Returns a new neural network instance of one of the architectures.
@@ -47,8 +44,9 @@ class Pynumic(Interface):
         :rtype:
         """
         props = self.__get_props(reader, **props)
-        super().__init__()
-        Properties.__init__(self, **props)
+        # super().__init__()
+        # Properties.__init__(self, **props)
+        super().__init__(**props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         props = self.__get_props(reader, **props)

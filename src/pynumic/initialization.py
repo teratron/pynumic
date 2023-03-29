@@ -22,6 +22,13 @@ class Initialization(Properties):
     _last_ind: int = 0
     _prev_ind: int = 0
 
+    # __slots__ = (
+    #     "neurons",
+    #     "_len_input",
+    #     "_len_output",
+    #     "_weights",
+    # )
+
     # _layer: dict[str, int] = {
     #     last_ind: 0,
     #     prev_ind: 0

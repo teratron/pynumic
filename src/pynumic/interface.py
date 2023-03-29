@@ -1,13 +1,20 @@
 """TODO: Interface for neural network."""
-import json
 from copy import deepcopy
 from typing import overload
 
+# from dataclasses import dataclass
 from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
 
 
 # from threading import Lock
+
+# @dataclass
+# class Config:
+#     """TODO:"""
+#
+#     filename: str | None
+#     flag: str | None
 
 
 class Interface(Propagation):
@@ -16,6 +23,7 @@ class Interface(Propagation):
     MAX_ITERATION: int = 1_000_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
+    _config: str | None = None
     # __mutex: Lock = Lock()
     __weights: WeightsType
     __is_init: bool = False
@@ -126,60 +134,37 @@ class Interface(Propagation):
     ) -> None:
         """Writes the configuration and/or weights to a file.
 
-        * Writes configuration and weights to one file:
-            write()
-            write("perceptron.json")
-            write(config="perceptron.json", weights="perceptron.json")
+        Writes configuration and weights to one file:
 
-        * Writes configuration only:
-            write(config="perceptron.json")
-            write("perceptron.json", flag="config")
+        - write()
+        - write("perceptron.json")
+        - write(config="perceptron.json", weights="perceptron.json")
 
-        * Writes only weights:
-            write(weights="perceptron_weights.json")
-            write("perceptron.json", flag="weights")
+        Writes configuration only:
 
-        * Writes 2 files, configuration separately and weights separately:
-            write(config="perceptron.json", weights="perceptron_weights.json")
+        - write(config="perceptron.json")
+        - write("perceptron.json", flag="config")
+
+        Writes only weights:
+
+        - write(weights="perceptron_weights.json")
+        - write("perceptron.json", flag="weights")
+
+        Writes 2 files, configuration separately and weights separately:
+
+        - write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        # if filename is None:
-        with open(filename, "w", newline="\n", encoding="utf-8") as handle:
-            json.dump(self._weights, handle, skipkeys=True, indent="\t")
+        print("inter", self.__dict__)
+        # if filename is None and flag is None and config is None and weights is None:
+        #     if self._config:
+        #         with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
+        #             json.dump(self._weights, handle, skipkeys=True, indent="\t")
 
-# // WriteConfig writes the configuration and weights to the Filer interface object.
-# func (nn *NN) WriteConfig(name ...string) (err error) {
-# 	if len(name) > 0 {
-# 		switch d := utils.GetFileType(name[0]).(type) {
-# 		case error:
-# 			err = d
-# 		case utils.Filer:
-# 			err = d.Encode(nn)
-# 		}
-# 	} else if nn.config != nil {
-# 		err = nn.config.Encode(nn)
-# 	} else {
-# 		err = pkg.ErrNoArgs
-# 	}
-#
-# 	if err != nil {
-# 		err = fmt.Errorf("perceptron.NN.WriteConfig: %w", err)
-# 		log.Print(err)
-# 	}
-# 	return
-# }
-#
-# // WriteWeights writes weights to the Filer interface object.
-# func (nn *NN) WriteWeights(name string) (err error) {
-# 	switch d := utils.GetFileType(name).(type) {
-# 	case error:
-# 		err = d
-# 	case utils.Filer:
-# 		err = d.Encode(nn.Weights)
-# 	}
-#
-# 	if err != nil {
-# 		err = fmt.Errorf("perceptron.NN.WriteWeights: %w", err)
-# 		log.Print(err)
-# 	}
-# 	return
-# }
+        # if filename is None:
+        #     filename = self._config
+        # else:
+        #     if os.path.isfile(filename):
+        #         filename = os.path.normpath(filename)
+        #
+        # with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+        #     json.dump(self._weights, handle, skipkeys=True, indent="\t")
