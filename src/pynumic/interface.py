@@ -1,6 +1,7 @@
 """TODO: Interface for neural network."""
 import json
 from copy import deepcopy
+from typing import overload
 
 from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
@@ -107,33 +108,42 @@ class Interface(Propagation):
 
         return min_count, min_loss
 
+    @overload
+    def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
+        ...
+
+    @overload
+    def write(self, *, config: str | None = None, weights: str | None = None) -> None:
+        ...
+
     def write(
             self,
-            *,
             filename: str | None = None,
+            *,
             flag: str | None = None,
             config: str | None = None,
-            weights: str | None = None,
+            weights: str | None = None
     ) -> None:
-        """Writes the configuration and weights to a file.
+        """Writes the configuration and/or weights to a file.
 
         * Writes configuration and weights to one file:
-        write("perceptron.json")
-        write(config="perceptron.json", weights="perceptron.json")
+            write()
+            write("perceptron.json")
+            write(config="perceptron.json", weights="perceptron.json")
 
         * Writes configuration only:
-        write(config="perceptron.json")
-        write("perceptron.json", flag="config")
+            write(config="perceptron.json")
+            write("perceptron.json", flag="config")
 
         * Writes only weights:
-        write(weights="perceptron_weights.json")
-        write("perceptron.json", flag="weights")
+            write(weights="perceptron_weights.json")
+            write("perceptron.json", flag="weights")
 
         * Writes 2 files, configuration separately and weights separately:
-        write(config="perceptron.json", weights="perceptron_weights.json")
+            write(config="perceptron.json", weights="perceptron_weights.json")
         """
         # if filename is None:
-        with open("perceptron.json", "w", newline="\n") as handle:
+        with open(filename, "w", newline="\n", encoding="utf-8") as handle:
             json.dump(self._weights, handle, skipkeys=True, indent="\t")
 
 # // WriteConfig writes the configuration and weights to the Filer interface object.

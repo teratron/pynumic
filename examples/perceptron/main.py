@@ -47,7 +47,7 @@ def main() -> None:
     # Writing the neural network configuration and weights to a file.
     # pn.write(config="perceptron.json", weights="perceptron_weights.json")
 
-    pn.write()
+    pn.write("perceptron.json", flag="perceptron.json")
 
     # Check the trained data, the result should be about [-0.13 0.2].
     print("Check:", pn.query([-0.52, 0.66, 0.81]))
