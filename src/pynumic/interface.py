@@ -1,6 +1,6 @@
 """TODO: Interface for neural network."""
 from copy import deepcopy
-from typing import overload
+from typing import overload, Any
 
 # from dataclasses import dataclass
 from pynumic.propagation import Propagation
@@ -23,11 +23,24 @@ class Interface(Propagation):
     MAX_ITERATION: int = 1_000_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
-    _config: str | None = None
+    __slots__ = (
+        "_config",
+        "__weights",
+        "__is_init",
+        "__is_query"
+    )
+
+    _config: str | None  # = None
     # __mutex: Lock = Lock()
     __weights: WeightsType
-    __is_init: bool = False
-    __is_query: bool = False
+
+    # __is_init: bool #= False
+    # __is_query: bool #= False
+
+    def __init__(self, **props: Any) -> None:
+        super().__init__(**props)
+        self.__is_init = False
+        self.__is_query = False
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
@@ -70,6 +83,7 @@ class Interface(Propagation):
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
+        #self.__is_query = False
         self._data_input = data_input
         self._data_target = data_target
         return self.__train()

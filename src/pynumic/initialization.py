@@ -16,18 +16,19 @@ class Neuron:
 class Initialization(Properties):
     """initialization neural network."""
 
-    neurons: list[list[Neuron]]
-    _len_input: int = 0
-    _len_output: int = 0
-    _last_ind: int = 0
-    _prev_ind: int = 0
+    __slots__ = (
+        "neurons",
+        "_len_input",
+        "_len_output",
+        "_last_ind",
+        "_prev_ind"
+    )
 
-    # __slots__ = (
-    #     "neurons",
-    #     "_len_input",
-    #     "_len_output",
-    #     "_weights",
-    # )
+    neurons: list[list[Neuron]]
+    _len_input: int  # = 0
+    _len_output: int  # = 0
+    _last_ind: int  # = 0
+    _prev_ind: int  # = 0
 
     # _layer: dict[str, int] = {
     #     last_ind: 0,
@@ -36,6 +37,11 @@ class Initialization(Properties):
 
     def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
         is_init: bool = False
+        self._len_input = 0
+        self._len_output = 0
+        self._last_ind = 0
+        self._prev_ind = 0
+
         if self._weights:
             is_init = self.__init_from_weight()
         elif len_input > 0 and len_target > 0:

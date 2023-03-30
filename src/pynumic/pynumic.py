@@ -43,6 +43,7 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
+        _config = None
         props = self.__get_props(reader, **props)
         # super().__init__()
         # Properties.__init__(self, **props)

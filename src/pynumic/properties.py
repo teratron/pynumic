@@ -40,8 +40,8 @@ class Properties(Activation, Loss):
 
         print("props", self.__dict__)
 
-    def __init_subclass__(cls, **kwargs):
-        print("__init_subclass__", cls)
+    # def __init_subclass__(cls, **kwargs):
+    #     print("__init_subclass__", cls)
 
     # Bias
     @property

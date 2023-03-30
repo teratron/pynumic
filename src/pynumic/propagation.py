@@ -7,6 +7,11 @@ from pynumic.initialization import Initialization
 class Propagation(Initialization):
     """Propagation."""
 
+    __slots__ = (
+        "_data_input",
+        "_data_target"
+    )
+
     _data_input: list[float]
     _data_target: list[float]
 
