@@ -26,7 +26,7 @@ def main() -> None:
     print("Check:", pn.query(data_input))
 
     pn.write()
-    print(pn.__dict__)
+    # print(pn.__dict__)
 
 
 if __name__ == "__main__":

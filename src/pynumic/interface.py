@@ -1,4 +1,5 @@
 """TODO: Interface for neural network."""
+import json
 from copy import deepcopy
 from typing import overload, Any
 
@@ -33,9 +34,6 @@ class Interface(Propagation):
     _config: str | None  # = None
     # __mutex: Lock = Lock()
     __weights: WeightsType
-
-    # __is_init: bool #= False
-    # __is_query: bool #= False
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
@@ -83,7 +81,6 @@ class Interface(Propagation):
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
-        #self.__is_query = False
         self._data_input = data_input
         self._data_target = data_target
         return self.__train()
@@ -97,7 +94,7 @@ class Interface(Propagation):
         return self.__train()
 
     def __train(self) -> tuple[int, float]:
-        # max_loss = 0.0
+        max_loss = 0.0
         min_loss = 1.0
         min_count = 0
         for count in range(1, self.MAX_ITERATION):
@@ -107,8 +104,8 @@ class Interface(Propagation):
                 self.__is_query = False
 
             loss = self._calc_loss()
-            # if loss > max_loss:
-            #     max_loss = loss
+            if loss > max_loss:
+                max_loss = loss
 
             if loss < min_loss:
                 min_loss = loss
@@ -168,7 +165,12 @@ class Interface(Propagation):
 
         - write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        print("inter", self.__dict__)
+        # print("inter", self.__dict__)
+
+        props: dict[str, Any] = {key.lstrip("_"): self.__dict__[key] for key in self.__dict__ if
+                                 key != "_weights"}  # .pop({"weights": self.__dict__.get("_weights"})
+        with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:
+            json.dump(props, handle, indent="\t")
         # if filename is None and flag is None and config is None and weights is None:
         #     if self._config:
         #         with open(self._config, "w", newline="\n", encoding="utf-8") as handle:

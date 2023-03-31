@@ -10,13 +10,6 @@ WeightsType: TypeAlias = list[list[list[float]]]
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    # __slots__ = (
-    #     "_bias",
-    #     "_hidden_layers",
-    #     "_rate",
-    #     "_weights",
-    # )
-
     DEFAULT_RATE: float = 0.3
 
     def __init__(
@@ -37,11 +30,6 @@ class Properties(Activation, Loss):
 
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
-
-        print("props", self.__dict__)
-
-    # def __init_subclass__(cls, **kwargs):
-    #     print("__init_subclass__", cls)
 
     # Bias
     @property

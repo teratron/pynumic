@@ -25,10 +25,10 @@ class Initialization(Properties):
     )
 
     neurons: list[list[Neuron]]
-    _len_input: int  # = 0
-    _len_output: int  # = 0
-    _last_ind: int  # = 0
-    _prev_ind: int  # = 0
+    _len_input: int
+    _len_output: int
+    _last_ind: int
+    _prev_ind: int
 
     # _layer: dict[str, int] = {
     #     last_ind: 0,
