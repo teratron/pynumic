@@ -31,9 +31,10 @@ class Interface(Propagation):
         "__is_query"
     )
 
-    _config: str | None  # = None
-    # __mutex: Lock = Lock()
+    _config: str | None
     __weights: WeightsType
+
+    # __mutex: Lock = Lock()
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
@@ -165,10 +166,10 @@ class Interface(Propagation):
 
         - write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        # print("inter", self.__dict__)
+        print(self.__dict__)
+        props: dict[str, Any] = {key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"}
+        props.update({"weights": self.__dict__.get("_weights")})
 
-        props: dict[str, Any] = {key.lstrip("_"): self.__dict__[key] for key in self.__dict__ if
-                                 key != "_weights"}  # .pop({"weights": self.__dict__.get("_weights"})
         with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:
             json.dump(props, handle, indent="\t")
         # if filename is None and flag is None and config is None and weights is None:
