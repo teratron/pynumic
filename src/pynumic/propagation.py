@@ -1,19 +1,30 @@
 """TODO: Propagation"""
 import math
+from dataclasses import dataclass
 
 from pynumic.initialization import Initialization
+
+
+@dataclass(init=False)
+class Data:
+    """"Data."""
+
+    input: list[float]
+    target: list[float]
 
 
 class Propagation(Initialization):
     """Propagation."""
 
-    __slots__ = (
-        "_data_input",
-        "_data_target"
-    )
+    # __slots__ = (
+    #     "_data.input",
+    #     "_data.target"
+    # )
 
-    _data_input: list[float]
-    _data_target: list[float]
+    # _data.input: list[float]
+    # _data.target: list[float]
+
+    _data: Data = Data()
 
     def _calc_neurons(self) -> None:
         """Calculating neurons."""
@@ -33,7 +44,7 @@ class Propagation(Initialization):
                 self._neurons[i][j].value += (
                     self._neurons[dec][k].value * weight
                     if i > 0
-                    else self._data_input[k] * weight
+                    else self._data.input[k] * weight
                 )
             else:
                 self._neurons[i][j].value += weight
@@ -47,7 +58,7 @@ class Propagation(Initialization):
         """Calculating and return the total error of the output neurons."""
         loss = 0.0
         for i, neuron in enumerate(self._neurons[self._ind.last]):
-            neuron.miss = self._data_target[i] - neuron.value
+            neuron.miss = self._data.target[i] - neuron.value
             match self._loss_mode:
                 case self.AVG:
                     loss += math.fabs(neuron.miss)
@@ -98,7 +109,7 @@ class Propagation(Initialization):
         )
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:
-                value = self._neurons[dec][k].value if i > 0 else self._data_input[k]
+                value = self._neurons[dec][k].value if i > 0 else self._data.input[k]
                 if self._activation_mode == self.LINEAR:
                     self._weights[i][j][k] += grad / value if value != 0 else 0
                 else:

@@ -18,11 +18,11 @@ class Interface(Propagation):
         "__weights",
         "__is_init",
         "__is_query"
+        # "__mutex"
     )
 
     _config: str | None
     __weights: WeightsType
-
     # __mutex: Lock
 
     def __init__(self, **props: Any) -> None:
@@ -46,8 +46,8 @@ class Interface(Propagation):
         # finally:
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
 
-        self._data_input = data_input
-        self._data_target = data_target
+        self._data.input = data_input
+        self._data.target = data_target
         self._calc_neurons()
 
         return self._calc_loss()
@@ -61,7 +61,7 @@ class Interface(Propagation):
             if self._init():
                 self.__is_init = True
 
-        self._data_input = data_input
+        self._data.input = data_input
         self._calc_neurons()
         self.__is_query = True
         return [n.value for n in self._neurons[self._ind.last]]
@@ -72,8 +72,8 @@ class Interface(Propagation):
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
-        self._data_input = data_input
-        self._data_target = data_target
+        self._data.input = data_input
+        self._data.target = data_target
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
@@ -81,7 +81,7 @@ class Interface(Propagation):
         if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
 
-        self._data_target = data_target
+        self._data.target = data_target
         return self.__train()
 
     def __train(self) -> tuple[int, float]:

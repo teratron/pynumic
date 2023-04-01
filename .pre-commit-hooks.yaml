@@ -1,7 +1,0 @@
-- id: test-hook
-  name: Test Hook
-  entry: .githooks/pre-commit
-  exclude: .yaml$|.yml$
-  language: python
-  types: [ python ]
-  description: This is an example hook to demonstrate how to create a pre-commit hook
