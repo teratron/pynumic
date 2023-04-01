@@ -74,7 +74,7 @@ class Interface(Propagation):
         self._data_input = data_input
         self._calc_neurons()
         self.__is_query = True
-        return [n.value for n in self.neurons[self._last_ind]]
+        return [n.value for n in self._neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
@@ -118,7 +118,7 @@ class Interface(Propagation):
                     return min_count, min_loss
 
             # if count % 10000 == 0:
-            #     print(count, loss, self.neurons[0][0], self._weights[0][0][0])
+            #     print(count, loss, self._neurons[0][0], self._weights[0][0][0])
 
             self._calc_miss()
             self._update_weights()

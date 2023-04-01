@@ -17,23 +17,18 @@ class Initialization(Properties):
     """initialization neural network."""
 
     __slots__ = (
-        "neurons",
+        "_neurons",
         "_len_input",
         "_len_output",
         "_last_ind",
         "_prev_ind"
     )
 
-    neurons: list[list[Neuron]]
+    _neurons: list[list[Neuron]]
     _len_input: int
     _len_output: int
     _last_ind: int
     _prev_ind: int
-
-    # _layer: dict[str, int] = {
-    #     last_ind: 0,
-    #     prev_ind: 0
-    # }
 
     def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
         is_init: bool = False
@@ -70,7 +65,7 @@ class Initialization(Properties):
                 ] for _ in range(v)
             ] for i, v in enumerate(layers)
         ]
-        self.neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+        self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
         del weights, layers
         return True
 
@@ -90,5 +85,5 @@ class Initialization(Properties):
                 len(self._weights[i]) for i, _ in enumerate(self._hidden_layers)
             ]
 
-        self.neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
+        self._neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
         return True

@@ -45,8 +45,6 @@ class Pynumic(Interface):
         """
         _config = None
         props = self.__get_props(reader, **props)
-        # super().__init__()
-        # Properties.__init__(self, **props)
         super().__init__(**props)
 
     def __call__(self, reader: str = "", **props: Any) -> None:
@@ -74,7 +72,7 @@ class Pynumic(Interface):
             kwargs = _get_props_from(reader)
 
             if "config" in kwargs:
-                self.config = kwargs["config"]
+                self._config = kwargs["config"]
                 del kwargs["config"]
 
             props |= kwargs
