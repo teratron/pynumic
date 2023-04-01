@@ -3,19 +3,8 @@ import json
 from copy import deepcopy
 from typing import overload, Any
 
-# from dataclasses import dataclass
 from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
-
-
-# from threading import Lock
-
-# @dataclass
-# class Config:
-#     """TODO:"""
-#
-#     filename: str | None
-#     flag: str | None
 
 
 class Interface(Propagation):
@@ -34,12 +23,13 @@ class Interface(Propagation):
     _config: str | None
     __weights: WeightsType
 
-    # __mutex: Lock = Lock()
+    # __mutex: Lock
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
         self.__is_init = False
         self.__is_query = False
+        # self.__mutex = Lock()
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
@@ -74,7 +64,7 @@ class Interface(Propagation):
         self._data_input = data_input
         self._calc_neurons()
         self.__is_query = True
-        return [n.value for n in self._neurons[self._last_ind]]
+        return [n.value for n in self._neurons[self._ind.last]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
@@ -167,7 +157,10 @@ class Interface(Propagation):
         - write(config="perceptron.json", weights="perceptron_weights.json")
         """
         print(self.__dict__)
-        props: dict[str, Any] = {key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"}
+
+        props: dict[str, Any] = {
+            key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"
+        }
         props.update({"weights": self.__dict__.get("_weights")})
 
         with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:

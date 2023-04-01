@@ -17,7 +17,7 @@ class Propagation(Initialization):
 
     def _calc_neurons(self) -> None:
         """Calculating neurons."""
-        dec, length = 0, self._len_input
+        dec, length = 0, self._len.input
         for i, layer in enumerate(self._neurons):
             if i > 0:
                 dec = i - 1
@@ -46,7 +46,7 @@ class Propagation(Initialization):
     def _calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""
         loss = 0.0
-        for i, neuron in enumerate(self._neurons[self._last_ind]):
+        for i, neuron in enumerate(self._neurons[self._ind.last]):
             neuron.miss = self._data_target[i] - neuron.value
             match self._loss_mode:
                 case self.AVG:
@@ -62,7 +62,7 @@ class Propagation(Initialization):
         if math.isinf(loss):
             raise ValueError(f"{__name__}: loss is infinity")
 
-        loss /= self._len_output
+        loss /= self._len.output
         if self._loss_mode == self.RMSE:
             loss = math.sqrt(loss)
 
@@ -70,7 +70,7 @@ class Propagation(Initialization):
 
     def _calc_miss(self) -> None:
         """Calculating the error of neuron in hidden layers."""
-        for i in range(self._prev_ind, -1, -1):
+        for i in range(self._ind.prev, -1, -1):
             inc = i + 1
             for j, _ in enumerate(self._neurons[i]):
                 self._neurons[i][j].miss = 0
@@ -81,7 +81,7 @@ class Propagation(Initialization):
 
     def _update_weights(self) -> None:
         """Update weights."""
-        dec, length = 0, self._len_input
+        dec, length = 0, self._len.input
         for i, weight in enumerate(self._weights):
             if i > 0:
                 dec = i - 1
