@@ -6,8 +6,8 @@ from pynumic import Pynumic
 props: dict[str, Any] = {
     "bias":            True,
     "activation_mode": 3,
-    "loss_mode":       0,
-    "loss_limit":      1e-10,
+    "loss_mode":       Pynumic.MSE,
+    "loss_limit":      1e-33,
     "weights":         [
         [
             [-2.5128086, 2.6974556, 3.034397, -2.4341068],

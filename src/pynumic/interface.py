@@ -10,7 +10,7 @@ from pynumic.properties import WeightsType
 class Interface(Propagation):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_000_000
+    MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     __slots__ = (
@@ -46,8 +46,8 @@ class Interface(Propagation):
         # finally:
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
 
-        self._data.input = data_input
-        self._data.target = data_target
+        self._data_input = data_input
+        self._data_target = data_target
         self._calc_neurons()
 
         return self._calc_loss()
@@ -61,19 +61,20 @@ class Interface(Propagation):
             if self._init():
                 self.__is_init = True
 
-        self._data.input = data_input
+        self._data_input = data_input
         self._calc_neurons()
         self.__is_query = True
-        return [n.value for n in self._neurons[self._ind.last]]
+        return [n.value for n in self._neurons[self._last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
         if not self.__is_init:
+
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
-        self._data.input = data_input
-        self._data.target = data_target
+        self._data_input = data_input
+        self._data_target = data_target
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
@@ -81,13 +82,14 @@ class Interface(Propagation):
         if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
 
-        self._data.target = data_target
+        self._data_target = data_target
         return self.__train()
 
     def __train(self) -> tuple[int, float]:
         max_loss = 0.0
         min_loss = 1.0
         min_count = 0
+        prev_loss = 0.0
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()
@@ -102,13 +104,17 @@ class Interface(Propagation):
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-                # print("---------", count, loss)
+                print("---------", count, loss)
                 if loss < self._loss_limit:
                     self._weights = deepcopy(self.__weights)
                     return min_count, min_loss
 
-            # if count % 10000 == 0:
-            #     print(count, loss, self._neurons[0][0], self._weights[0][0][0])
+            if count % 10000 == 0:
+                print(f"+++, {count}, {loss:.36f}")  # , self._neurons[0][0], self._weights[0][0][0]
+
+            if round(loss, 31) == prev_loss and count % 10000 == 0:
+                print(count, loss)  # , self._neurons[0][0], self._weights[0][0][0]
+            prev_loss = round(loss, 31)
 
             self._calc_miss()
             self._update_weights()

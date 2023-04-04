@@ -14,8 +14,6 @@ class Activation:
     * TANH -- TanH (hyperbolic tangent) (4).
     """
 
-    # __slots__ = "_activation_mode"
-
     LINEAR: int = 0
     """LINEAR -- Linear/identity (0)."""
 
