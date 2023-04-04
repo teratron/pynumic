@@ -1,4 +1,4 @@
-"""TODO: Interface for neural network."""
+"""TODO:"""
 import json
 from copy import deepcopy
 from typing import overload, Any
@@ -86,10 +86,11 @@ class Interface(Propagation):
         return self.__train()
 
     def __train(self) -> tuple[int, float]:
-        max_loss = 0.0
+        # max_loss = 0.0
         min_loss = 1.0
         min_count = 0
-        prev_loss = 0.0
+        prev_loss = 0
+        # prev_loss = (0, 0)
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()
@@ -97,24 +98,32 @@ class Interface(Propagation):
                 self.__is_query = False
 
             loss = self._calc_loss()
-            if loss > max_loss:
-                max_loss = loss
+            # if loss > max_loss:
+            #     max_loss = loss
 
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-                print("---------", count, loss)
+                print("---------", count, loss, loss.as_integer_ratio())
                 if loss < self._loss_limit:
                     self._weights = deepcopy(self.__weights)
                     return min_count, min_loss
 
-            if count % 10000 == 0:
-                print(f"+++, {count}, {loss:.36f}")  # , self._neurons[0][0], self._weights[0][0][0]
+            ab = round(loss, 31).as_integer_ratio()
+            if count % 10000 == 0 and ab[1] == prev_loss:
+                print(f"+++, {count}, {loss}, {ab[1]}, {prev_loss}")
 
-            if round(loss, 31) == prev_loss and count % 10000 == 0:
-                print(count, loss)  # , self._neurons[0][0], self._weights[0][0][0]
-            prev_loss = round(loss, 31)
+            # print(prev_loss, ab[1])
+            prev_loss = ab[1]
+
+            # # if round(loss, 31) == prev_loss and count % 10000 == 0:
+            # rat = loss.as_integer_ratio()
+            # if rat == prev_loss and count % 10000 == 0:
+            #     print(count, loss:.31f, rat)
+            # #prev_loss = round(loss, 31)
+            # print(prev_loss, rat)
+            # prev_loss = list(rat).copy()
 
             self._calc_miss()
             self._update_weights()

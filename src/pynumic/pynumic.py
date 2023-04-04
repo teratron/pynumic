@@ -1,4 +1,4 @@
-"""TODO: PyNumic."""
+"""TODO:"""
 import json
 import os
 from typing import Any
@@ -43,7 +43,7 @@ class Pynumic(Interface):
         :return:
         :rtype:
         """
-        _config = None
+        self._config = None
         props = self.__get_props(reader, **props)
         super().__init__(**props)
 

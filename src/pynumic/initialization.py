@@ -1,4 +1,4 @@
-"""TODO: Initialization."""
+"""TODO:"""
 import random
 from dataclasses import dataclass
 
@@ -11,22 +11,6 @@ class Neuron:
 
     value: float
     miss: float
-
-
-# @dataclass
-# class Length:
-#     """Length."""
-#
-#     input: int
-#     output: int
-#
-#
-# @dataclass
-# class Index:
-#     """Index."""
-#
-#     last: int
-#     prev: int
 
 
 class Initialization(Properties):
@@ -45,11 +29,6 @@ class Initialization(Properties):
     _len_output: int
     _last_ind: int
     _prev_ind: int
-
-    # _layer: dict[str, int] = {
-    #     last_ind: 0,
-    #     prev_ind: 0
-    # }
 
     def _init(self, len_input: int = 0, len_target: int = 0) -> bool:
         is_init: bool = False
