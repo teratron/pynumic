@@ -44,8 +44,8 @@ class Pynumic(Interface):
         :rtype:
         """
         self._config = None
-        props = self.__get_props(reader, **props)
-        super().__init__(**props)
+        # props = self.__get_props(reader, **props)
+        super().__init__(**self.__get_props(reader, **props))
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         props = self.__get_props(reader, **props)

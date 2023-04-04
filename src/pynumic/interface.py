@@ -7,6 +7,9 @@ from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
 
 
+# from decimal import DecimalTuple
+
+
 class Interface(Propagation):
     """Interface for neural network."""
 
@@ -105,25 +108,19 @@ class Interface(Propagation):
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-                print("---------", count, loss, loss.as_integer_ratio())
+                print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")
                 if loss < self._loss_limit:
                     self._weights = deepcopy(self.__weights)
                     return min_count, min_loss
 
-            ab = round(loss, 31).as_integer_ratio()
-            if count % 10000 == 0 and ab[1] == prev_loss:
-                print(f"+++, {count}, {loss}, {ab[1]}, {prev_loss}")
+            if count % 10000 == 0:  # and ab[1] == prev_loss:
+                print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {prev_loss - loss}")
+            prev_loss = loss
 
-            # print(prev_loss, ab[1])
-            prev_loss = ab[1]
-
-            # # if round(loss, 31) == prev_loss and count % 10000 == 0:
-            # rat = loss.as_integer_ratio()
-            # if rat == prev_loss and count % 10000 == 0:
-            #     print(count, loss:.31f, rat)
-            # #prev_loss = round(loss, 31)
-            # print(prev_loss, rat)
-            # prev_loss = list(rat).copy()
+            # ab = round(loss, 30).as_integer_ratio()
+            # if count % 10000 == 0 and ab[1] == prev_loss:
+            #     print(f"+++, {count}, {loss}, {ab[1]}, {prev_loss}")
+            # prev_loss = ab[1]
 
             self._calc_miss()
             self._update_weights()
@@ -193,3 +190,8 @@ class Interface(Propagation):
         #
         # with open(filename, "w", newline="\n", encoding="utf-8") as handle:
         #     json.dump(self._weights, handle, skipkeys=True, indent="\t")
+
+#
+# def get_num_zero_after_point(value: float) -> int:
+#     if value < 1:
+#         value.is_integer()

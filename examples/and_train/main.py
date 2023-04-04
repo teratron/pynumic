@@ -4,7 +4,7 @@ from typing import Any
 from pynumic import Pynumic
 
 props: dict[str, Any] = {
-    "bias":            True,
+    # "bias":            True,
     "activation_mode": Pynumic.SIGMOID,
     "loss_mode":       Pynumic.MSE,
     "loss_limit":      1e-33,
