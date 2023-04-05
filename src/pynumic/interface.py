@@ -94,6 +94,7 @@ class Interface(Propagation):
         min_count = 0
         prev_loss = 0
         # prev_loss = (0, 0)
+        prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()
@@ -104,23 +105,24 @@ class Interface(Propagation):
             # if loss > max_loss:
             #     max_loss = loss
 
-            if loss < min_loss:
+            if loss < min_loss or count == 454:
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-                print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")
+                print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")  #
                 if loss < self._loss_limit:
                     self._weights = deepcopy(self.__weights)
                     return min_count, min_loss
 
-            if count % 10000 == 0:  # and ab[1] == prev_loss:
-                print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {prev_loss - loss}")
+            if count % 10000 == 0:
+                # print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {(loss - prev_loss):.33f}")
+                print(f"+++ {count}, {loss:.33f}, {loss.as_integer_ratio()}")
             prev_loss = loss
 
-            # ab = round(loss, 30).as_integer_ratio()
-            # if count % 10000 == 0 and ab[1] == prev_loss:
-            #     print(f"+++, {count}, {loss}, {ab[1]}, {prev_loss}")
-            # prev_loss = ab[1]
+            ratio = loss.as_integer_ratio()[0]
+            if prev_ratio == ratio:
+                print(f"******** {prev_ratio} - {ratio}")
+            prev_ratio = ratio
 
             self._calc_miss()
             self._update_weights()
