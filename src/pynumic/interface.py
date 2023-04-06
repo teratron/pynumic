@@ -105,7 +105,7 @@ class Interface(Propagation):
             # if loss > max_loss:
             #     max_loss = loss
 
-            if loss < min_loss or count == 454:
+            if loss < min_loss:
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
@@ -116,13 +116,13 @@ class Interface(Propagation):
 
             if count % 10000 == 0:
                 # print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {(loss - prev_loss):.33f}")
-                print(f"+++ {count}, {loss:.33f}, {loss.as_integer_ratio()}")
+                print(f"+++ {count}, {loss:.33f}, {loss - prev_loss}")
             prev_loss = loss
 
-            ratio = loss.as_integer_ratio()[0]
-            if prev_ratio == ratio:
-                print(f"******** {prev_ratio} - {ratio}")
-            prev_ratio = ratio
+            # ratio = loss.as_integer_ratio()[0]
+            # if prev_ratio == ratio and count % 10000 == 0:
+            #     print(f"******** {prev_ratio} - {ratio}")
+            # prev_ratio = ratio
 
             self._calc_miss()
             self._update_weights()
