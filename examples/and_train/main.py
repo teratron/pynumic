@@ -6,7 +6,7 @@ from pynumic import Pynumic
 props: dict[str, Any] = {
     "activation_mode": Pynumic.SIGMOID,
     "loss_mode":       Pynumic.MSE,
-    "loss_limit":      1e-33,
+    "loss_limit":      1e-13,
     "weights":         [
         [
             [-2.5128086, 2.6974556, 3.034397, -2.4341068],
@@ -43,7 +43,7 @@ def main() -> None:
 
     # If there is target data, then we can train the received output data.
     count, loss = pn.and_train(data_target)
-    print("And Train:", count, loss)
+    print(f"And Train: {count = }, {loss = :.5f}")
 
     # Check the trained data, the result should be about [0.7 0.1].
     print("Check:", pn.query(data_input))
