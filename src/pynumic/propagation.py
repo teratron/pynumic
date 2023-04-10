@@ -16,7 +16,10 @@ class Propagation(Initialization):
     _data_target: list[float]
 
     def _calc_neurons(self) -> None:
-        """Calculating neurons."""
+        """Calculating neurons.
+
+        forward propagation
+        """
         dec, length = 0, self._len_input
         for i, layer in enumerate(self._neurons):
             if i > 0:
@@ -69,7 +72,10 @@ class Propagation(Initialization):
         return loss
 
     def _calc_miss(self) -> None:
-        """Calculating the error of neuron in hidden layers."""
+        """Calculating the error of neuron in hidden layers.
+
+        backward propagation
+        """
         for i in range(self._prev_ind, -1, -1):
             inc = i + 1
             for j, _ in enumerate(self._neurons[i]):

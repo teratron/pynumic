@@ -51,6 +51,7 @@ test: dev ## test
 
 clean: ## clean
 	@poetry cache clear pypi --all
+	@poetry cache clear _default_cache --all
 	@rm -rf .pytest_cache/ .mypy_cache/ junit/ build/ dist/
 ifeq ($(OS), Linux)
 	@find . -not -path "./$(VENV)" -path "*/__pycache__*" -delete

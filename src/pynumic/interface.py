@@ -1,5 +1,6 @@
 """TODO:"""
 import json
+import os
 from copy import deepcopy
 from typing import overload, Any
 
@@ -170,15 +171,32 @@ class Interface(Propagation):
 
         - write(config="perceptron.json", weights="perceptron_weights.json")
         """
-        print(self.__dict__)
-
         props: dict[str, Any] = {
             key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"
         }
-        props.update({"weights": self.__dict__.get("_weights")})
+        # props.update({"weights": self.__dict__.get("_weights")})
 
-        with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:
-            json.dump(props, handle, indent="\t")
+        # with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:
+        #     json.dump(props, handle, indent="\t")
+
+        if filename is None and flag is None and config is None and weights is None:
+            # self._config = "config.json"
+            if self._config:
+                props.update({"weights": self.__dict__.get("_weights")})
+                with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump(props, handle, skipkeys=True, indent="\t")
+            else:
+                print("Отсутствует файл или путь к файлу конфигурации")
+
+        if filename and os.path.normpath(filename):
+            match flag:
+                case "config":
+                    pass
+                case "weights":
+                    pass
+                case None | _:
+                    print("Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса")
+
         # if filename is None and flag is None and config is None and weights is None:
         #     if self._config:
         #         with open(self._config, "w", newline="\n", encoding="utf-8") as handle:

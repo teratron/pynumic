@@ -13,7 +13,7 @@ class Neuron:
     miss: float
 
 
-class Initialization(Properties):  # pylint: disable=locally-disabled, too-many-instance-attributes
+class Initialization(Properties):  # pylint: disable=too-many-instance-attributes
     """Initialization neural network."""
 
     __slots__ = (

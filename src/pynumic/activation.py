@@ -2,7 +2,7 @@
 import math
 
 
-class Activation:
+class Activation:  # pylint: disable=too-few-public-methods
     """Activation.
 
     Mode:
