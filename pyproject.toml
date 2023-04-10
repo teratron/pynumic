@@ -46,6 +46,7 @@ autopep8 = "^2.0.2"
 black = "^23.3.0"
 bandit = "^1.7.5"
 isort = "^5.12.0"
+matplotlib = "^3.7.1"
 
 [tool.poetry.group.typing.dependencies]
 mypy = "^1.2.0"
@@ -73,9 +74,15 @@ show_error_codes = true
 init-hook = "import sys; sys.path.append('/src/pynumic')"
 
 [tool.black]
-line-length = 88
-target-version = ['py310', 'py311']
+line-length = 99
+target-version = ["py310", "py311"]
 include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 99
+combine_as_imports = true
+skip_gitignore = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"

@@ -8,9 +8,6 @@ from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
 
 
-# from decimal import DecimalTuple
-
-
 class Interface(Propagation):
     """Interface for neural network."""
 
@@ -73,7 +70,6 @@ class Interface(Propagation):
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
         if not self.__is_init:
-
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
 
@@ -95,7 +91,7 @@ class Interface(Propagation):
         min_count = 0
         prev_loss = 0
         # prev_loss = (0, 0)
-        prev_ratio = 0
+        # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()

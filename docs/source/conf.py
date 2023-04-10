@@ -7,7 +7,7 @@ import os
 import sys
 
 # import setup
-from src.pynumic.__version__ import __version__
+from pynumic.__version__ import __version__
 
 # print(os.path.abspath(os.path.join("..", "..", "src")))
 # print(setup.SRC)
