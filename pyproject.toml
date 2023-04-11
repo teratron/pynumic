@@ -71,7 +71,9 @@ ignore_missing_imports = true
 show_error_codes = true
 
 [tool.pylint]
-init-hook = "import sys; sys.path.append('/src/pynumic')"
+init-hook = "import sys; sys.path.append('src/pynumic')"
+ignore-paths = ["examples"]
+ignore-imports = true
 
 [tool.black]
 line-length = 99

@@ -50,7 +50,6 @@ class Interface(Propagation):
         self._data_input = data_input
         self._data_target = data_target
         self._calc_neurons()
-
         return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
