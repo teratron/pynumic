@@ -37,7 +37,6 @@ class Interface(Propagation):
         if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
-
         # self.__mutex.acquire()
         # self.__mutex.release()
 
@@ -46,7 +45,6 @@ class Interface(Propagation):
         #     """... доступ к общим ресурсам"""
         # finally:
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
-
         self._data_input = data_input
         self._data_target = data_target
         self._calc_neurons()
@@ -56,11 +54,9 @@ class Interface(Propagation):
         """Querying dataset."""
         # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
-
         if not self.__is_init:
             if self._init():
                 self.__is_init = True
-
         self._data_input = data_input
         self._calc_neurons()
         self.__is_query = True
@@ -71,7 +67,6 @@ class Interface(Propagation):
         if not self.__is_init:
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
-
         self._data_input = data_input
         self._data_target = data_target
         return self.__train()
@@ -80,7 +75,6 @@ class Interface(Propagation):
         """Training dataset after the query."""
         if not self.__is_init:
             raise ValueError(f"{__name__}: not initialized")
-
         self._data_target = data_target
         return self.__train()
 

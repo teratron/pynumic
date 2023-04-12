@@ -23,23 +23,24 @@ class Propagation(Initialization):
             if i > 0:
                 dec = i - 1
                 length = len(self._neurons[dec])
-
             for j, _ in enumerate(layer):
-                k = self._neurons[i][j].value = 0
-                for k, weight in enumerate(self._weights[i][j]):
-                    if k < length:
-                        self._neurons[i][j].value += (
-                            self._neurons[dec][k].value * weight
-                            if i > 0
-                            else self._data_input[k] * weight
-                        )
-                    else:
-                        self._neurons[i][j].value += weight
+                self.__get_neuron(i, j, dec, length)
 
-                if self._activation_mode == self.LINEAR:
-                    self._neurons[i][j].value /= k if k > 0 else 1
-                else:
-                    self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
+    def __get_neuron(self, i: int, j: int, dec: int, length: int) -> None:
+        k = self._neurons[i][j].value = 0
+        for k, weight in enumerate(self._weights[i][j]):
+            if k < length:
+                self._neurons[i][j].value += (
+                    self._neurons[dec][k].value * weight
+                    if i > 0
+                    else self._data_input[k] * weight
+                )
+            else:
+                self._neurons[i][j].value += weight
+        if self._activation_mode == self.LINEAR:
+            self._neurons[i][j].value /= k if k > 0 else 1
+        else:
+            self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
 
     def _calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""
@@ -53,17 +54,13 @@ class Propagation(Initialization):
                     loss += math.atan(neuron.miss) ** 2
                 case self.MSE | self.RMSE | _:
                     loss += neuron.miss ** 2
-
         if math.isnan(loss):
             raise ValueError(f"{__name__}: loss not-a-number value")
-
         if math.isinf(loss):
             raise ValueError(f"{__name__}: loss is infinity")
-
         loss /= self._len_output
         if self._loss_mode == self.RMSE:
             loss = math.sqrt(loss)
-
         return loss
 
     # Backward propagation
@@ -85,19 +82,21 @@ class Propagation(Initialization):
             if i > 0:
                 dec = i - 1
                 length = len(self._neurons[dec])
-
             for j, _ in enumerate(weight):
-                grad = (
-                        self._rate
-                        * self._neurons[i][j].miss
-                        * self._get_derivative(self._neurons[i][j].value)
-                )
-                for k, _ in enumerate(self._weights[i][j]):
-                    if k < length:
-                        value = self._neurons[dec][k].value if i > 0 else self._data_input[k]
-                        if self._activation_mode == self.LINEAR:
-                            self._weights[i][j][k] += grad / value if value != 0 else 0
-                        else:
-                            self._weights[i][j][k] += grad * value
-                    else:
-                        self._weights[i][j][k] += grad
+                self.__get_weight(i, j, dec, length)
+
+    def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
+        grad = (
+                self._rate
+                * self._neurons[i][j].miss
+                * self._get_derivative(self._neurons[i][j].value)
+        )
+        for k, _ in enumerate(self._weights[i][j]):
+            if k < length:
+                value = self._neurons[dec][k].value if i > 0 else self._data_input[k]
+                if self._activation_mode == self.LINEAR:
+                    self._weights[i][j][k] += grad / value if value != 0 else 0
+                else:
+                    self._weights[i][j][k] += grad * value
+            else:
+                self._weights[i][j][k] += grad

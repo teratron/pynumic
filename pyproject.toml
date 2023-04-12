@@ -62,8 +62,8 @@ pytest-cov = "^4.0.0"
 [tool.poetry.scripts]
 
 [tool.mypy]
-files = "src/**/*.py"
-packages = "src/pynumic"
+files = ["src/**/*.py"]
+packages = ["src/pynumic"]
 strict = true
 namespace_packages = true
 explicit_package_bases = true

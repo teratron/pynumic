@@ -27,7 +27,6 @@ class Properties(Activation, Loss):
         self._hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
         self._weights: WeightsType = self.__check_weights(weights)
-
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
 
@@ -55,10 +54,8 @@ class Properties(Activation, Loss):
     def __check_hidden_layers(value: list[int] | None) -> list[int]:
         if not value or value is None or value == [0]:
             return []
-
         if isinstance(value, list) and all(list(map(lambda i: i > 0, value))):
             return value
-
         raise ValueError(f"{__name__}: array of hidden layers incorrectly set {value}")
 
     # Rate
@@ -88,8 +85,6 @@ class Properties(Activation, Loss):
     def __check_weights(value: WeightsType | None) -> WeightsType:
         if not value or value is None or value == [0]:
             return []
-
         if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
             return value
-
         raise ValueError(f"{__name__}: array of weights incorrectly set {value}")

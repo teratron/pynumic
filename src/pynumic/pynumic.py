@@ -69,13 +69,10 @@ class Pynumic(Interface):
     def __get_props(self, reader: str, **props: Any) -> dict[str, Any]:
         if reader != "":
             kwargs = _get_props_from(reader)
-
             if "config" in kwargs:
                 self._config = kwargs["config"]
                 del kwargs["config"]
-
             props |= kwargs
-
         return props
 
 
@@ -85,7 +82,6 @@ def _get_props_from(reader: str) -> dict[str, Any]:
         if os.path.isfile(reader):
             filename = os.path.normpath(reader)
             _, ext = os.path.splitext(filename)
-
             if ext == ".json":
                 with open(filename, "r", encoding="utf-8") as handle:
                     data = json.load(handle)
@@ -96,7 +92,6 @@ def _get_props_from(reader: str) -> dict[str, Any]:
                 )
         else:
             data = json.loads(reader)
-
         return data
     except json.JSONDecodeError as err:
         print(f"{__name__}: JSONDecodeError: {err}")
