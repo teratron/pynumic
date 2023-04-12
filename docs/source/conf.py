@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath(os.path.join("..", "..", "src")))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 author = "Oleg Alexandrov"
-project = "PyNumic"
+project = "Pynumic"
 project_copyright = "2023, " + author
 version = __version__
 release = __version__
