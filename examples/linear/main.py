@@ -25,7 +25,8 @@ def main() -> None:
     # Check the trained data, the result should be about [5 -50.3].
     print("Check:", pn.query(data_input))
 
-    pn.write()
+    # pn.write("config.json", flag="config")
+    pn.write(config="config.json", weights="weights.json")
     # print(pn.__dict__)
 
 

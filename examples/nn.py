@@ -16,7 +16,7 @@ def main() -> None:
     x: list[int] = []
     y: list[float] = []
 
-    for i in range(20):
+    for i in range(30):
         print(i)
         x.append(i)
 
@@ -30,10 +30,10 @@ def main() -> None:
 
         # backward propagation
         delta[1] = target - neurons[2]
-        y.append(round(delta[1], 3))
+        y.append(round(delta[1], 5))
 
-        # if round(neurons[2], 3) == target:
-        #     break
+        if round(neurons[2], 3) == target:
+            break
 
         delta[0] = delta[1] * weights[1]
         print(f"{delta[0] = :.5f} {delta[1] = :.5f}")

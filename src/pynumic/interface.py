@@ -8,6 +8,9 @@ from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
 
 
+# from threading import Lock
+
+
 class Interface(Propagation):
     """Interface for neural network."""
 
@@ -124,10 +127,41 @@ class Interface(Propagation):
 
     @overload
     def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
+        """
+        Writes configuration and weights to one file:
+        - write("perceptron.json")
+
+        Writes configuration only:
+        - write("perceptron.json", flag="config")
+
+        Writes only weights:
+        - write("perceptron.json", flag="weights")
+
+        :param filename:
+        :param flag:
+        :return: None
+        """
         ...
 
     @overload
     def write(self, *, config: str | None = None, weights: str | None = None) -> None:
+        """
+        Writes configuration only:
+        - write(config="perceptron_config.json")
+
+        Writes only weights:
+        - write(weights="perceptron_weights.json")
+
+        Writes 2 files, configuration separately and weights separately:
+        - write(config="perceptron_config.json", weights="perceptron_weights.json")
+
+        Writes configuration and weights to one file:
+        - write(config="perceptron.json", weights="perceptron.json")
+
+        :param config:
+        :param weights:
+        :return: None
+        """
         ...
 
     def write(
@@ -165,42 +199,37 @@ class Interface(Propagation):
         }
         # props.update({"weights": self.__dict__.get("_weights")})
 
-        # with open("linear.json", "w", newline="\n", encoding="utf-8") as handle:
-        #     json.dump(props, handle, indent="\t")
-
         if filename is None and flag is None and config is None and weights is None:
-            # self._config = "config.json"
             if self._config:
                 props.update({"weights": self.__dict__.get("_weights")})
                 with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
-                    json.dump(props, handle, skipkeys=True, indent="\t")
+                    json.dump(props, handle, indent="\t")
             else:
                 print("Отсутствует файл или путь к файлу конфигурации")
 
         if filename and os.path.normpath(filename):
             match flag:
                 case "config":
-                    pass
-                case "weights":
-                    pass
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump(props, handle, indent="\t")
+                case "weight" | "weights":
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump({"weights": self._weights}, handle, indent="\t")
                 case None | _:
                     print("Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса")
+                    props.update({"weights": self.__dict__.get("_weights")})
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump(props, handle, indent="\t")
 
-        # if filename is None and flag is None and config is None and weights is None:
-        #     if self._config:
-        #         with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
-        #             json.dump(self._weights, handle, skipkeys=True, indent="\t")
+        if config and weights:
+            props.update({"weights": self.__dict__.get("_weights")})
+            with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                json.dump(props, handle, indent="\t")
+        else:
+            if config and os.path.normpath(config):
+                with open(config, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump(props, handle, indent="\t")
 
-        # if filename is None:
-        #     filename = self._config
-        # else:
-        #     if os.path.isfile(filename):
-        #         filename = os.path.normpath(filename)
-        #
-        # with open(filename, "w", newline="\n", encoding="utf-8") as handle:
-        #     json.dump(self._weights, handle, skipkeys=True, indent="\t")
-
-#
-# def get_num_zero_after_point(value: float) -> int:
-#     if value < 1:
-#         value.is_integer()
+            if weights and os.path.normpath(weights):
+                with open(weights, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump({"weights": self._weights}, handle, indent="\t")
