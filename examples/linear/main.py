@@ -13,7 +13,7 @@ def main() -> None:
     pn(bias=True, hidden_layers=[3, 2])
     pn.activation_mode = pn.LINEAR
     pn.loss_mode = pn.MSE
-    pn.loss_limit = 1e-16  # .0001
+    pn.loss_limit = 1e-5  # .0001
 
     # Dataset that doesn't need to be scaled.
     data_input = [10.6, -5.0, 200.0]
@@ -26,7 +26,7 @@ def main() -> None:
     print("Check:", pn.query(data_input))
 
     # pn.write("config.json", flag="config")
-    pn.write(config="config.json", weights="weights.json")
+    # pn.write(config="config.json", weights="weights.json")
     # print(pn.__dict__)
 
 

@@ -2,13 +2,23 @@
 import json
 import os
 from copy import deepcopy
+from dataclasses import dataclass
 from typing import overload, Any
+
+import matplotlib.pyplot as plt
 
 from pynumic.propagation import Propagation
 from pynumic.properties import WeightsType
 
 
 # from threading import Lock
+
+@dataclass()
+class DataPlot:
+    """DataPlot."""
+
+    iter: list[int]
+    loss: list[float]
 
 
 class Interface(Propagation):
@@ -34,6 +44,7 @@ class Interface(Propagation):
         self.__is_init = False
         self.__is_query = False
         # self.__mutex = Lock()
+        self.data_plot = DataPlot([], [])
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
@@ -98,19 +109,24 @@ class Interface(Propagation):
             # if loss > max_loss:
             #     max_loss = loss
 
+            # print(f"+++ {count = }, {loss = :.10f}")
+            self.data_plot.iter.append(count)
+            self.data_plot.loss.append(round(loss, 10))
+            # print(f"+++ {self.data_plot.iter[count-1] = }, {self.data_plot.loss[count-1] = :.8f}")
+
             if loss < min_loss:
                 min_loss = loss
                 min_count = count
                 self.__weights = deepcopy(self._weights)
-                print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")  #
-                if loss < self._loss_limit:
-                    self._weights = deepcopy(self.__weights)
-                    return min_count, min_loss
+                # print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")  #
+                # if loss < self._loss_limit:
+                #     self._weights = deepcopy(self.__weights)
+                #     return min_count, min_loss
 
-            if count % 10000 == 0:
-                # print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {(loss - prev_loss):.33f}")
-                print(f"+++ {count}, {loss:.33f}, {loss - prev_loss}")
-            prev_loss = loss
+            # if count % 10000 == 0:
+            #     # print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {(loss - prev_loss):.33f}")
+            #     print(f"+++ {count}, {loss:.33f}, {loss - prev_loss}")
+            # prev_loss = loss
 
             # ratio = loss.as_integer_ratio()[0]
             # if prev_ratio == ratio and count % 10000 == 0:
@@ -122,6 +138,18 @@ class Interface(Propagation):
 
         if min_count > 0:
             self._weights = deepcopy(self.__weights)
+
+        fig, ax = plt.subplots()
+        print(self.data_plot.iter, self.data_plot.loss)
+        ax.plot(self.data_plot.iter, self.data_plot.loss)
+        ax.set(
+            xlabel='iter',
+            ylabel='loss',
+            title='Loss'
+        )
+        ax.grid()
+        # fig.savefig("test.png")
+        plt.show()
 
         return min_count, min_loss
 
@@ -223,7 +251,7 @@ class Interface(Propagation):
 
         if config and weights:
             props.update({"weights": self.__dict__.get("_weights")})
-            with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+            with open(config, "w", newline="\n", encoding="utf-8") as handle:
                 json.dump(props, handle, indent="\t")
         else:
             if config and os.path.normpath(config):
