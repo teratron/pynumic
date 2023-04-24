@@ -64,29 +64,18 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
     """Activation function."""
     match mode:
         case Activation.LINEAR:
+            # if math.fabs(value) > 1:
+            #     return math.copysign(1, value)
             return value
         case Activation.RELU:
-            return 0.0 if value < 0 else value
+            return 0 if value < 0 else value
         case Activation.LEAKY_RELU:
             return 0.01 * value if value < 0 else value
         case Activation.TANH:
             value = math.exp(2 * value)
-            value = (value - 1) / (value + 1)
-            if math.isnan(value):  # TODO:
-                raise ValueError(f"act {__name__}: loss not-a-number value")
-            if math.isinf(value):  # TODO:
-                raise ValueError(f"act {__name__}: loss is infinity")
-            return value
-            # value = math.exp(2 * value)
-            # return (value - 1) / (value + 1)
+            return (value - 1) / (value + 1)
         case Activation.SIGMOID | _:
-            value = 1 / (1 + math.exp(-value))
-            if math.isnan(value):  # TODO:
-                raise ValueError(f"act {__name__}: loss not-a-number value")
-            if math.isinf(value):  # TODO:
-                raise ValueError(f"act {__name__}: loss is infinity")
-            return value
-            # return 1 / (1 + math.exp(-value))
+            return 1 / (1 + math.exp(-value))
 
 
 def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:

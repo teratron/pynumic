@@ -19,12 +19,13 @@ class DataPlot:
 
     iter: list[int]
     loss: list[float]
+    avg: list[float]
 
 
 class Interface(Propagation):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_000
+    MAX_ITERATION: int = 1_000  # _000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     __slots__ = (
@@ -111,8 +112,10 @@ class Interface(Propagation):
 
             # print(f"+++ {count = }, {loss = :.10f}")
             self.data_plot.iter.append(count)
-            self.data_plot.loss.append(round(loss, 10))
+            self.data_plot.loss.append(loss)
+            # self.data_plot.loss.append(round(loss, 10))
             # print(f"+++ {self.data_plot.iter[count-1] = }, {self.data_plot.loss[count-1] = :.8f}")
+            print(f"+++ {loss}  {self.data_plot.loss[count - 1]:.38f}")
 
             if loss < min_loss:
                 min_loss = loss
@@ -140,8 +143,8 @@ class Interface(Propagation):
             self._weights = deepcopy(self.__weights)
 
         fig, ax = plt.subplots()
-        print(self.data_plot.iter, self.data_plot.loss)
-        ax.plot(self.data_plot.iter, self.data_plot.loss)
+        # print(self.data_plot.iter, self.data_plot.loss)
+        ax.plot(self.data_plot.iter[:min_count + 10], self.data_plot.loss[:min_count + 10])
         ax.set(
             xlabel='iter',
             ylabel='loss',

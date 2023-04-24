@@ -55,7 +55,7 @@ class Initialization(Properties):  # pylint: disable=too-many-instance-attribute
         self._weights = [
             [
                 [
-                    -0.5 if self._activation_mode == self.LINEAR
+                    -0.555 if self._activation_mode == self.LINEAR
                     else round(random.uniform(-0.5, 0.5), 3)
                     for _ in range(weights[i])
                 ] for _ in range(v)

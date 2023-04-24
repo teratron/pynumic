@@ -5,14 +5,13 @@ from pynumic import Pynumic
 def main() -> None:
     """TODO:"""
     # Returns a new neural network
-    # instance with the default parameters,
-    # same n = nn.New("perceptron").
+    # instance with the default parameters.
     pn = Pynumic()
 
     # Properties.
-    pn(bias=True, hidden_layers=[3, 2])
+    pn(bias=True, hidden_layers=[3, 2], rate=0.1)
     pn.activation_mode = pn.LINEAR
-    pn.loss_mode = pn.MSE
+    pn.loss_mode = pn.MSE  # pn.MSE
     pn.loss_limit = 1e-5  # .0001
 
     # Dataset that doesn't need to be scaled.
