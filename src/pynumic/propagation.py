@@ -37,10 +37,11 @@ class Propagation(Initialization):
                 )
             else:
                 self._neurons[i][j].value += weight
-        # if self._activation_mode == self.LINEAR:
-        #     self._neurons[i][j].value /= k if k > 0 else 1
-        # else:
         self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
+        if self._activation_mode == self.LINEAR:
+            self._neurons[i][j].value /= k if k > 0 else 1
+        # else:
+        #     self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
 
     def _calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""
