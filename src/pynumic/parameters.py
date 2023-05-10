@@ -6,9 +6,9 @@ class Parameters:
     _last_ind: int = 0
     _prev_ind: int = 0
 
-    # def __init__(self) -> None:
-    #     self._last_ind = length - 1
-    #     self._prev_ind = self._last_ind - 1
+    def __init__(self) -> None:
+        # self._last_ind = length - 1
+        self._prev_ind = self._last_ind - 1
 
     @property
     def last_ind(self) -> int:

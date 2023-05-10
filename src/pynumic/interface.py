@@ -1,6 +1,7 @@
 """TODO:"""
 import json
 import os
+from abc import ABC, abstractmethod
 from copy import deepcopy
 from dataclasses import dataclass
 from typing import overload, Any
@@ -22,10 +23,60 @@ class DataPlot:
     # avg: list[float]
 
 
-class Interface(Propagation):
+class NeuralNetwork(ABC):
+    """NeuralNetwork."""
+
+    @abstractmethod
+    def verify(self, data_input: list[float], data_target: list[float]) -> float:
+        """Verifying dataset."""
+        ...
+
+    @abstractmethod
+    def query(self, data_input: list[float]) -> list[float]:
+        """Querying dataset."""
+        ...
+
+    @abstractmethod
+    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+        """Training dataset."""
+        ...
+
+    @abstractmethod
+    def and_train(self, data_target: list[float]) -> tuple[int, float]:
+        """Training dataset after the query."""
+        ...
+
+    @abstractmethod
+    def write(self, *args, **kwargs) -> None:
+        """Writes the configuration and/or weights to a file."""
+        ...
+
+    # @abstractmethod
+    # @overload
+    # def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
+    #     ...
+    #
+    # @abstractmethod
+    # @overload
+    # def write(self, *, config: str | None = None, weights: str | None = None) -> None:
+    #     ...
+
+    # @abstractmethod
+    # def write(
+    #         self,
+    #         filename: str | None = None,
+    #         *,
+    #         flag: str | None = None,
+    #         config: str | None = None,
+    #         weights: str | None = None
+    # ) -> None:
+    #     ...
+
+
+class Interface(Propagation, NeuralNetwork):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_00  #0
+    MAX_ITERATION: int = 1_000_00  # 0
     """Maximum number of iterations after which training is forcibly terminated."""
 
     __slots__ = (
