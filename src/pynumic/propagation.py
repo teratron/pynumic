@@ -1,6 +1,7 @@
 """TODO:"""
 import math
 
+# from pynumic.loss import Loss
 from pynumic.initialization import Initialization
 
 
@@ -42,6 +43,12 @@ class Propagation(Initialization):
             self._neurons[i][j].value /= k if k > 0 else 1
         # else:
         #     self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
+
+    # @_total_loss()  # self.loss_mode
+    # def _calc_loss(self) -> Iterable[float]:
+    #     """Calculating and return the total error of the output neurons."""
+    #     for i in range(self._len_output):
+    #         yield self._data_target[i] - self._neurons[self._last_ind][i].value
 
     def _calc_loss(self) -> float:
         """Calculating and return the total error of the output neurons."""

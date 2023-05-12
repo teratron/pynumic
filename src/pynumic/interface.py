@@ -166,7 +166,7 @@ class Interface(Propagation, NeuralNetwork):
             self.data_plot.loss.append(loss)
             # self.data_plot.loss.append(round(loss, 10))
             # print(f"+++ {self.data_plot.iter[count-1] = }, {self.data_plot.loss[count-1] = :.8f}")
-            print(f"{count} +++ {loss}  {self.data_plot.loss[count - 1]:.38f}")
+            # print(f"{count} +++ {loss}  {self.data_plot.loss[count - 1]:.38f}")
 
             if loss < min_loss:
                 min_loss = loss
