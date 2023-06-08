@@ -1,14 +1,26 @@
 """TODO:"""
+from dataclasses import dataclass
 from typing import TypeAlias
 
 from pynumic.activation import Activation
 from pynumic.loss import Loss
+from pynumic.parameters import Parameters
 
 WeightsType: TypeAlias = list[list[list[float]]]
 
 
+@dataclass
+class Neuron:
+    """Neuron."""
+
+    value: float
+    miss: float
+
+
 class Properties(Activation, Loss):
     """Properties of neural network."""
+
+    __slots__ = "_params"
 
     DEFAULT_RATE: float = 0.3
 
@@ -23,10 +35,12 @@ class Properties(Activation, Loss):
             rate: float = DEFAULT_RATE,
             weights: WeightsType | None = None,
     ) -> None:
+        self._params = Parameters()
         self._bias: bool = bias
         self._hidden_layers: list[int] = self.__check_hidden_layers(hidden_layers)
         self._rate: float = self.__check_rate(rate)
         self._weights: WeightsType = self.__check_weights(weights)
+
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
 
@@ -54,8 +68,10 @@ class Properties(Activation, Loss):
     def __check_hidden_layers(value: list[int] | None) -> list[int]:
         if not value or value is None or value == [0]:
             return []
+
         if isinstance(value, list) and all(list(map(lambda i: i > 0, value))):
             return value
+
         raise ValueError(f"{__name__}: array of hidden layers incorrectly set {value}")
 
     # Rate
@@ -81,10 +97,30 @@ class Properties(Activation, Loss):
     def weights(self, value: WeightsType) -> None:
         self._weights = self.__check_weights(value)
 
-    @staticmethod
-    def __check_weights(value: WeightsType | None) -> WeightsType:
+    def __check_weights(self, value: WeightsType | None) -> WeightsType:
         if not value or value is None or value == [0]:
             return []
+
         if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
+            self.__init_weights(value)
             return value
+
         raise ValueError(f"{__name__}: array of weights incorrectly set {value}")
+
+    def __init_weights(self, value: WeightsType) -> bool:
+        length = len(value)
+        self._params.last_ind = length - 1
+        self._params.len_input = len(value[0][0])
+        self._params._len_output = len(value[self._params.last_ind])
+
+        if length > 1 and len(value[0]) + 1 == len(value[1][0]):
+            self._bias = True
+            self._params.len_input -= 1
+
+        if self._params.last_ind > 0:
+            self._hidden_layers = [
+                len(value[i]) for i, _ in enumerate(self._hidden_layers)
+            ]
+
+        self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
+        return True

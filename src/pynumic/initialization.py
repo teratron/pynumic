@@ -77,12 +77,15 @@ class Initialization(Properties):  # pylint: disable=too-many-instance-attribute
         self._prev_ind = self._last_ind - 1
         self._len_input = len(self._weights[0][0])
         self._len_output = len(self._weights[self._last_ind])
+
         if length > 1 and len(self._weights[0]) + 1 == len(self._weights[1][0]):
             self._bias = True
             self._len_input -= 1
+
         if self._last_ind > 0:
             self._hidden_layers = [
                 len(self._weights[i]) for i, _ in enumerate(self._hidden_layers)
             ]
+
         self._neurons = [[Neuron(0, 0) for _ in v] for v in self._weights]
         return True
