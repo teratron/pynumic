@@ -102,8 +102,8 @@ class Properties(Activation, Loss):
             return []
 
         if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
-            self.__init_weights(value)
-            return value
+            if self.__init_weights(value):
+                return value
 
         raise ValueError(f"{__name__}: array of weights incorrectly set {value}")
 
@@ -111,7 +111,7 @@ class Properties(Activation, Loss):
         length = len(value)
         self._params.last_ind = length - 1
         self._params.len_input = len(value[0][0])
-        self._params._len_output = len(value[self._params.last_ind])
+        self._params.len_output = len(value[self._params.last_ind])
 
         if length > 1 and len(value[0]) + 1 == len(value[1][0]):
             self._bias = True
@@ -123,4 +123,5 @@ class Properties(Activation, Loss):
             ]
 
         self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
-        return True
+        self._params.is_init = True
+        return self._params.is_init

@@ -2,9 +2,10 @@ class Parameters:
     """Parameters."""
 
     _last_ind: int = 0
-    prev_ind: int = 0
+    prev_ind: int = -1
     len_input: int = 0
     len_output: int = 0
+    is_init: bool = False
 
     @property
     def last_ind(self) -> int:

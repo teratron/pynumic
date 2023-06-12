@@ -100,9 +100,11 @@ class Interface(Propagation, NeuralNetwork):
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
-        if not self.__is_init:
+        #if not self.__is_init:
+        if not self._params.is_init:
             if self._init(len(data_input), len(data_target)):
                 self.__is_init = True
+
         # self.__mutex.acquire()
         # self.__mutex.release()
 
@@ -111,6 +113,7 @@ class Interface(Propagation, NeuralNetwork):
         #     """... доступ к общим ресурсам"""
         # finally:
         #     self.__mutex.release()  # освобождаем блокировку независимо от результата
+
         self._data_input = data_input
         self._data_target = data_target
         self._calc_neurons()
