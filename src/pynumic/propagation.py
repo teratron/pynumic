@@ -3,9 +3,11 @@ import math
 
 # from pynumic.loss import Loss
 from pynumic.initialization import Initialization
+from pynumic.properties import Properties
 
 
-class Propagation(Initialization):
+#class Propagation(Initialization):
+class Propagation(Properties):
     """Propagation."""
 
     __slots__ = (

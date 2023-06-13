@@ -1,6 +1,7 @@
 """TODO:"""
 import json
 import os
+import random
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from dataclasses import dataclass
@@ -9,7 +10,7 @@ from typing import overload, Any
 import matplotlib.pyplot as plt
 
 from pynumic.propagation import Propagation
-from pynumic.properties import WeightsType
+from pynumic.properties import WeightsType, Neuron
 
 
 # from threading import Lock
@@ -93,16 +94,43 @@ class Interface(Propagation, NeuralNetwork):
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
-        self.__is_init = False
+        #self.__is_init = False
         self.__is_query = False
         # self.__mutex = Lock()
+
         self.data_plot = DataPlot([], [])
+
+    def __init(self, len_input: int, len_target: int) -> bool:
+        self._params.len_input = len_input
+        self._params.len_output = len_target
+        weights: list[int] = [self._params.len_input + int(self._bias)]
+        layers: list[int] = [self._params.len_output]
+
+        if self._hidden_layers:
+            self._params.last_ind = len(self._hidden_layers)
+            weights += list(map(lambda x: x + int(self._bias), self._hidden_layers))
+            layers = self._hidden_layers + layers
+
+        self._weights = [
+            [
+                [
+                    -0.555 if self._activation_mode == self.LINEAR
+                    else round(random.uniform(-0.5, 0.5), 3)
+                    for _ in range(weights[i])
+                ] for _ in range(v)
+            ] for i, v in enumerate(layers)
+        ]
+
+        self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+        self._params.is_init = True
+        del weights, layers
+        return self._params.is_init
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
         #if not self.__is_init:
         if not self._params.is_init:
-            if self._init(len(data_input), len(data_target)):
+            if self.__init(len(data_input), len(data_target)):
                 self.__is_init = True
 
         # self.__mutex.acquire()
