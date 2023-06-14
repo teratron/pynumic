@@ -72,8 +72,10 @@ class Pynumic(Interface):
             if "config" in kwargs:
                 self._config = kwargs["config"]
                 del kwargs["config"]
-            props |= kwargs
-        return props
+            #props |= kwargs
+
+        #return props
+        return props | kwargs
 
 
 def _get_props_from(reader: str) -> dict[str, Any]:

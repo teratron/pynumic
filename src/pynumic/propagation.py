@@ -2,11 +2,11 @@
 import math
 
 # from pynumic.loss import Loss
-from pynumic.initialization import Initialization
+# from pynumic.initialization import Initialization
 from pynumic.properties import Properties
 
 
-#class Propagation(Initialization):
+# class Propagation(Initialization):
 class Propagation(Properties):
     """Propagation."""
 
@@ -73,7 +73,7 @@ class Propagation(Properties):
 
         if math.isinf(loss):
             raise ValueError(f"{__name__}: loss is infinity")
-        loss /= self._len_output
+        loss /= self._params.len_output
 
         if self._loss_mode == self.RMSE:
             loss = math.sqrt(loss)

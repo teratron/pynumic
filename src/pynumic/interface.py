@@ -83,8 +83,8 @@ class Interface(Propagation, NeuralNetwork):
     __slots__ = (
         "_config",
         "__weights",
-        "__is_init",
-        "__is_query"
+        # "__is_init",
+        # "__is_query"
         # "__mutex"
     )
 
@@ -94,8 +94,8 @@ class Interface(Propagation, NeuralNetwork):
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
-        #self.__is_init = False
-        self.__is_query = False
+        # self.__is_init = False
+        # self.__is_query = False
         # self.__mutex = Lock()
 
         self.data_plot = DataPlot([], [])
@@ -131,7 +131,7 @@ class Interface(Propagation, NeuralNetwork):
         #if not self.__is_init:
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
-                self.__is_init = True
+                self._params.is_init = True
 
         # self.__mutex.acquire()
         # self.__mutex.release()
@@ -151,26 +151,26 @@ class Interface(Propagation, NeuralNetwork):
         """Querying dataset."""
         # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
-        if not self.__is_init:
-            if self._init():
-                self.__is_init = True
+        if not self._params.is_init:
+            if self.__init(0, 0):  # TODO:
+                self._params.is_init = True
         self._data_input = data_input
         self._calc_neurons()
-        self.__is_query = True
-        return [n.value for n in self._neurons[self._last_ind]]
+        self._params.is_query = True
+        return [n.value for n in self._neurons[self._params.last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
-        if not self.__is_init:
-            if self._init(len(data_input), len(data_target)):
-                self.__is_init = True
+        if not self._params.is_init:
+            if self.__init(len(data_input), len(data_target)):
+                self._params.is_init = True
         self._data_input = data_input
         self._data_target = data_target
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
         """Training dataset after the query."""
-        if not self.__is_init:
+        if not self._params.is_init:
             raise ValueError(f"{__name__}: not initialized")
         self._data_target = data_target
         return self.__train()
@@ -183,10 +183,10 @@ class Interface(Propagation, NeuralNetwork):
         # prev_loss = (0, 0)
         # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
-            if not self.__is_query:
+            if not self._params.is_query:
                 self._calc_neurons()
             else:
-                self.__is_query = False
+                self._params.is_query = False
 
             loss = self._calc_loss()
             # if loss > max_loss:
