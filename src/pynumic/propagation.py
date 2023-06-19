@@ -2,7 +2,6 @@
 import math
 
 # from pynumic.loss import Loss
-# from pynumic.initialization import Initialization
 from pynumic.properties import Properties
 
 
@@ -88,7 +87,7 @@ class Propagation(Properties):
                 self._neurons[i][j].miss = 0
                 for k, _ in enumerate(self._neurons[inc]):
                     self._neurons[i][j].miss += (
-                            self._neurons[inc][k].miss * self._weights[inc][k][j]
+                        self._neurons[inc][k].miss * self._weights[inc][k][j]
                     )
 
     def _update_weights(self) -> None:
@@ -104,9 +103,9 @@ class Propagation(Properties):
 
     def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
         grad = (
-                self._rate
-                * self._neurons[i][j].miss
-                * self._get_derivative(self._neurons[i][j].value)
+            self._rate
+            * self._neurons[i][j].miss
+            * self._get_derivative(self._neurons[i][j].value)
         )
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:

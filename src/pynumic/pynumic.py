@@ -3,10 +3,10 @@ import json
 import os
 from typing import Any
 
-from pynumic.interface import Interface
+from pynumic.perceptron import Perceptron
 
 
-class Pynumic(Interface):
+class Pynumic(Perceptron):
     """Access point to neural network.
 
     Pynumic(reader: str, **props: Any)
@@ -89,7 +89,7 @@ def _get_props_from(reader: str) -> dict[str, Any]:
                 data.update(config=filename)
             else:
                 raise FileExistsError(
-                        f"{__name__}: incorrect config file extension: {ext}"
+                    f"{__name__}: incorrect config file extension: {ext}"
                 )
         else:
             data = json.loads(reader)

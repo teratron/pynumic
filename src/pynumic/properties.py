@@ -20,9 +20,13 @@ class Neuron:
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    __slots__ = "_params"
+    __slots__ = (
+        "_params",
+        "_neurons"
+    )
 
     DEFAULT_RATE: float = 0.3
+    _neurons: list[list[Neuron]]
 
     def __init__(
             self,
@@ -98,7 +102,7 @@ class Properties(Activation, Loss):
         self._weights = self.__check_weights(value)
 
     def __check_weights(self, value: WeightsType | None) -> WeightsType:
-        if not value or value is None or value == [0]:
+        if not value or value is None or value == [[[0]]]:
             return []
 
         if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
@@ -124,4 +128,5 @@ class Properties(Activation, Loss):
 
         self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
         self._params.is_init = True
+
         return self._params.is_init

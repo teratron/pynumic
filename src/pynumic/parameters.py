@@ -6,7 +6,6 @@ class Parameters:
     len_input: int = 0
     len_output: int = 0
     is_init: bool = False
-    is_query: bool = False
 
     @property
     def last_ind(self) -> int:

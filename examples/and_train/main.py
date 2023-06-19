@@ -33,17 +33,15 @@ def main() -> None:
     # Returns a new neural network instance from config.
     pn = Pynumic(**props)
 
-    # Dataset:
-    data_input = [0.27, 0.31, 0.52]
-    data_target = [0.7, 0.1]
-
     # Getting the results of the trained network.
+    data_input = [0.27, 0.31, 0.52]
     data_output = pn.query(data_input)
     print("Query:", data_output)
 
     # If there is target data, then we can train the received output data.
+    data_target = [0.7, 0.1]
     count, loss = pn.and_train(data_target)
-    print(f"And Train: {count = }, {loss = :.5f}")
+    print(f"And Train: {count = }, {loss = :.8f}")
 
     # Check the trained data, the result should be about [0.7 0.1].
     print("Check:", pn.query(data_input))

@@ -28,6 +28,30 @@ def main() -> None:
     # pn.write(config="config.json", weights="weights.json")
     # print(pn.__dict__)
 
+    # import matplotlib.pyplot as plt
+    # from dataclasses import dataclass
+    #
+    # @dataclass()
+    # class DataPlot:
+    #     """DataPlot."""
+    #
+    #     iter: list[int]
+    #     loss: list[float]
+    #     # avg: list[float]
+    # self.data_plot = DataPlot([], [])
+    # fig, ax = plt.subplots()
+    # # print(self.data_plot.iter, self.data_plot.loss)
+    # # ax.plot(self.data_plot.iter[:min_count + 10], self.data_plot.loss[:min_count + 10])
+    # ax.plot(self.data_plot.iter[:100], self.data_plot.loss[:100])
+    # ax.set(
+    #     xlabel='iter',
+    #     ylabel='loss',
+    #     title='Loss'
+    # )
+    # ax.grid()
+    # fig.savefig("test.png")
+    # plt.show()
+
 
 if __name__ == "__main__":
     main()

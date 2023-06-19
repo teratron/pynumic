@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pynumic"
-version = "0.1.23"
+version = "0.1.24"
 description = "Simple neural network library"
 authors = ["Oleg Alexandrov <alexandrovoleg.ru@gmail.com>"]
 license = "MIT"
@@ -67,8 +67,8 @@ mypy_path = "src"
 files = ["src/**/*.py"]
 packages = ["src/pynumic"]
 strict = true
-namespace_packages = true
-explicit_package_bases = true
+namespace_packages = false
+explicit_package_bases = false
 ignore_missing_imports = true
 show_error_codes = true
 show_column_numbers = true
