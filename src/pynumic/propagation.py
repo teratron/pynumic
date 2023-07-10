@@ -5,7 +5,6 @@ import math
 from pynumic.properties import Properties
 
 
-# class Propagation(Initialization):
 class Propagation(Properties):
     """Propagation."""
 

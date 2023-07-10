@@ -8,7 +8,6 @@ class Interface(ABC):
 
     @abstractmethod
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
-    #def verify(self, data_input: list[float], *args: Any) -> float:
         """Verifying dataset."""
         ...
 
@@ -19,7 +18,6 @@ class Interface(ABC):
 
     @abstractmethod
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-    #def train(self, data_input: list[float], *args: Any) -> tuple[int, float]:
         """Training dataset."""
         ...
 
