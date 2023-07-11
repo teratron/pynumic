@@ -3,7 +3,7 @@ import json
 import os
 import random
 from copy import deepcopy
-from typing import overload, Any
+from typing import Any
 
 from pynumic.interface import Interface
 from pynumic.propagation import Propagation
@@ -58,7 +58,8 @@ class Perceptron(Propagation, Interface):
         return self._params.is_init
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
-        """Verifying dataset."""
+        self.verify.__doc__ = Interface.verify.__doc__
+
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
                 self._params.is_init = True
@@ -70,7 +71,8 @@ class Perceptron(Propagation, Interface):
         return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
-        """Querying dataset."""
+        self.query.__doc__ = Interface.query.__doc__
+
         # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
         if not self._params.is_init:
@@ -84,7 +86,8 @@ class Perceptron(Propagation, Interface):
         return [n.value for n in self._neurons[self._params.last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-        """Training dataset."""
+        self.train.__doc__ = Interface.train.__doc__
+
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
                 self._params.is_init = True
@@ -95,7 +98,8 @@ class Perceptron(Propagation, Interface):
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
-        """Training dataset after the query."""
+        self.and_train.__doc__ = Interface.and_train.__doc__
+
         if not self._params.is_init:
             raise ValueError(f"{__name__}: not initialized")
 
@@ -154,44 +158,42 @@ class Perceptron(Propagation, Interface):
 
         return min_count, min_loss
 
-    @overload
-    def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
-        """
-        Writes configuration and weights to one file:
-        - write("perceptron.json")
-
-        Writes configuration only:
-        - write("perceptron.json", flag="config")
-
-        Writes only weights:
-        - write("perceptron.json", flag="weights")
-
-        :param filename:
-        :param flag:
-        :return: None
-        """
-        ...
-
-    @overload
-    def write(self, *, config: str | None = None, weights: str | None = None) -> None:
-        """
-        Writes configuration only:
-        - write(config="perceptron_config.json")
-
-        Writes only weights:
-        - write(weights="perceptron_weights.json")
-
-        Writes 2 files, configuration separately and weights separately:
-        - write(config="perceptron_config.json", weights="perceptron_weights.json")
-
-        Writes configuration and weights to one file:
-        - write(config="perceptron.json", weights="perceptron.json")
-
-        :param config:
-        :param weights:
-        :return: None
-        """
-        ...
+    # @overload
+    # def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
+    #     """
+    #     Writes configuration and weights to one file:
+    #     - write("perceptron.json")
+    #
+    #     Writes configuration only:
+    #     - write("perceptron.json", flag="config")
+    #
+    #     Writes only weights:
+    #     - write("perceptron.json", flag="weights")
+    #
+    #     :param filename:
+    #     :param flag:
+    #     :return: None
+    #     """
+    #
+    # @overload
+    # def write(self, *, config: str | None = None, weights: str | None = None) -> None:
+    #     """
+    #     Writes configuration only:
+    #     - write(config="perceptron_config.json")
+    #
+    #     Writes only weights:
+    #     - write(weights="perceptron_weights.json")
+    #
+    #     Writes 2 files, configuration separately and weights separately:
+    #     - write(config="perceptron_config.json", weights="perceptron_weights.json")
+    #
+    #     Writes configuration and weights to one file:
+    #     - write(config="perceptron.json", weights="perceptron.json")
+    #
+    #     :param config:
+    #     :param weights:
+    #     :return: None
+    #     """
 
     def write(
             self,

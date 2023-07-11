@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from typing import TypeAlias
 
+# import pynumic.activation
 from pynumic.activation import Activation
 from pynumic.loss import Loss
 from pynumic.parameters import Parameters

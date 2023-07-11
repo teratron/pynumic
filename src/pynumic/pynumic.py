@@ -35,8 +35,8 @@ class Pynumic(Perceptron):
     def __init__(self, reader: str = "", **props: Any) -> None:
         """Returns a new neural network instance of one of the architectures.
         :param reader: string variable through which is passed:
-                * Filename of json config ("config.json")
-                * Directly json dump passed as a string ("{'bias': true, ...}")
+                - Filename of json config ("config.json")
+                - Directly json dump passed as a string ("{'bias': true, ...}")
         :param props: properties of the neural network.
         :type reader: str
         :type props: dict[str, Any]

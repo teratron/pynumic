@@ -1,36 +1,38 @@
 """TODO:"""
 import math
-from enum import IntEnum
 
 
-class Mode(IntEnum):  # pylint: disable=too-few-public-methods
-    """Activation mode.
+# from enum import IntEnum
 
-    Mode:
 
-    * LINEAR -- Linear/identity (0);
-    * RELU -- ReLu (rectified linear unit) (1);
-    * LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2);
-    * SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3);
-    * TANH -- TanH (hyperbolic tangent) (4).
-    """
-
-    LINEAR: int = 0
-    """LINEAR -- Linear/identity (0)."""
-
-    RELU: int = 1
-    """RELU -- ReLu (rectified linear unit) (1)."""
-
-    LEAKY_RELU: int = 2
-    """LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2)."""
-
-    SIGMOID: int = 3
-    """SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3)."""
-
-    TANH: int = 4
-    """TANH -- TanH (hyperbolic tangent) (4)."""
-
-    DEFAULT: int = SIGMOID
+# class Mode(IntEnum):  # pylint: disable=too-few-public-methods
+#     """Activation mode.
+#
+#     Mode:
+#
+#     * LINEAR -- Linear/identity (0);
+#     * RELU -- ReLu (rectified linear unit) (1);
+#     * LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2);
+#     * SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3);
+#     * TANH -- TanH (hyperbolic tangent) (4).
+#     """
+#
+#     LINEAR: int = 0
+#     """LINEAR -- Linear/identity (0)."""
+#
+#     RELU: int = 1
+#     """RELU -- ReLu (rectified linear unit) (1)."""
+#
+#     LEAKY_RELU: int = 2
+#     """LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2)."""
+#
+#     SIGMOID: int = 3
+#     """SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3)."""
+#
+#     TANH: int = 4
+#     """TANH -- TanH (hyperbolic tangent) (4)."""
+#
+#     DEFAULT: int = SIGMOID
 
 
 class Activation:  # pylint: disable=too-few-public-methods
