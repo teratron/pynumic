@@ -1,5 +1,8 @@
-class Parameters:
-    """Parameters."""
+"""TODO:"""
+
+
+class Parameters:  # pylint: disable=too-few-public-methods
+    """Parameters. Параметры для нормальной работы нейросети"""
 
     _last_ind: int = 0
     prev_ind: int = -1
@@ -9,6 +12,7 @@ class Parameters:
 
     @property
     def last_ind(self) -> int:
+        """TODO:"""
         return self._last_ind
 
     @last_ind.setter

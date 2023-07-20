@@ -61,9 +61,9 @@ class Pynumic(Perceptron):
 
     def __dir__(self) -> list[str]:
         return (
-                ["__class__", "__doc__", "__module__"]
-                + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
-                + [m for m in self.__dict__ if m[0] != "_"]
+            ["__class__", "__doc__", "__module__"]
+            + [m for cls in self.__class__.mro() for m in cls.__dict__ if m[0] != "_"]
+            + [m for m in self.__dict__ if m[0] != "_"]
         )
 
     def __get_props(self, reader: str, **props: Any) -> dict[str, Any]:

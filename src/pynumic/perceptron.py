@@ -58,8 +58,6 @@ class Perceptron(Propagation, Interface):
         return self._params.is_init
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
-        self.verify.__doc__ = Interface.verify.__doc__
-
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
                 self._params.is_init = True
@@ -71,8 +69,6 @@ class Perceptron(Propagation, Interface):
         return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
-        self.query.__doc__ = Interface.query.__doc__
-
         # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
         if not self._params.is_init:
@@ -86,8 +82,6 @@ class Perceptron(Propagation, Interface):
         return [n.value for n in self._neurons[self._params.last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-        self.train.__doc__ = Interface.train.__doc__
-
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
                 self._params.is_init = True
@@ -98,8 +92,6 @@ class Perceptron(Propagation, Interface):
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
-        self.and_train.__doc__ = Interface.and_train.__doc__
-
         if not self._params.is_init:
             raise ValueError(f"{__name__}: not initialized")
 
@@ -111,7 +103,7 @@ class Perceptron(Propagation, Interface):
         # max_loss = 0.0
         min_loss = 1.0
         min_count = 0
-        prev_loss = 0
+        # prev_loss = 0
         # prev_loss = (0, 0)
         # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
