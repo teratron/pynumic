@@ -47,25 +47,25 @@ class Activation:  # pylint: disable=too-few-public-methods
     * TANH -- TanH (hyperbolic tangent) (4).
     """
 
-    LINEAR: int = 0
-    """LINEAR -- Linear/identity (0)."""
-
-    RELU: int = 1
-    """RELU -- ReLu (rectified linear unit) (1)."""
-
-    LEAKY_RELU: int = 2
-    """LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2)."""
-
-    SIGMOID: int = 3
-    """SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3)."""
-
-    TANH: int = 4
-    """TANH -- TanH (hyperbolic tangent) (4)."""
-
-    DEFAULT_ACTIVATION_MODE: int = SIGMOID
+    # LINEAR: int = 0
+    # """LINEAR -- Linear/identity (0)."""
+    #
+    # RELU: int = 1
+    # """RELU -- ReLu (rectified linear unit) (1)."""
+    #
+    # LEAKY_RELU: int = 2
+    # """LEAKY_RELU -- Leaky ReLu (leaky rectified linear unit) (2)."""
+    #
+    # SIGMOID: int = 3
+    # """SIGMOID -- Logistic, a.k.a. sigmoid or soft step (3)."""
+    #
+    # TANH: int = 4
+    # """TANH -- TanH (hyperbolic tangent) (4)."""
+    #
+    # DEFAULT_ACTIVATION_MODE: int = SIGMOID
     # DEFAULT_ACTIVATION_LIMIT: float = 0.1e-3
 
-    def __init__(self, activation_mode: int) -> None:
+    def __init__(self, activation_mode: ActivationMode) -> None:
         self._activation_mode: int = self.__check_activation_mode(activation_mode)
         self.mode = ActivationMode(activation_mode)
 
@@ -80,7 +80,7 @@ class Activation:  # pylint: disable=too-few-public-methods
 
     def __check_activation_mode(self, value: int) -> int:
         return (
-            self.DEFAULT_ACTIVATION_MODE
+            self.DEFAULT #_ACTIVATION_MODE
             if value < self.LINEAR or value > self.TANH
             else value
         )

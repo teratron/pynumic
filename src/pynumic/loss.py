@@ -1,6 +1,6 @@
 """TODO:"""
 import math
-# from enum import IntEnum
+from enum import IntEnum
 
 from typing import Callable, Iterable, Union, TypeAlias, Any
 
@@ -9,30 +9,30 @@ _InnerType: TypeAlias = Callable[[Any], float]
 _OuterType: TypeAlias = Callable[[_TargetType], _InnerType]
 
 
-# class LossMode(IntEnum):
-#     """Loss mode.
-#
-#     The mode of calculation of the total error:
-#
-#     * MSE -- Mean Squared Error (0);
-#     * RMSE -- Root Mean Squared Error (1);
-#     * ARCTAN -- Arctan Error (2);
-#     * AVG -- Average Error (3).
-#     """
-#
-#     MSE: int = 0
-#     """MSE -- Mean Squared Error (0)."""
-#
-#     RMSE: int = 1
-#     """RMSE -- Root Mean Squared Error (1)."""
-#
-#     ARCTAN: int = 2
-#     """ARCTAN -- Arctan Error (2)."""
-#
-#     AVG: int = 3
-#     """AVG -- Average Error (3)."""
-#
-#     DEFAULT_LOSS_MODE: int = MSE
+class LossMode(IntEnum):
+    """Loss mode.
+
+    The mode of calculation of the total error:
+
+    * MSE -- Mean Squared Error (0);
+    * RMSE -- Root Mean Squared Error (1);
+    * ARCTAN -- Arctan Error (2);
+    * AVG -- Average Error (3).
+    """
+
+    MSE: int = 0
+    """MSE -- Mean Squared Error (0)."""
+
+    RMSE: int = 1
+    """RMSE -- Root Mean Squared Error (1)."""
+
+    ARCTAN: int = 2
+    """ARCTAN -- Arctan Error (2)."""
+
+    AVG: int = 3
+    """AVG -- Average Error (3)."""
+
+    DEFAULT_LOSS_MODE: int = MSE
 
 
 class Loss:
