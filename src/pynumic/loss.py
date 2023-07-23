@@ -1,7 +1,7 @@
 """TODO:"""
 import math
 
-from typing import Callable, Iterable, Union, TypeAlias, Any
+from typing import Callable, Iterable, Union, Any
 
 
 class Loss:
@@ -63,11 +63,9 @@ class Loss:
         return self.DEFAULT_LOSS_LIMIT if value < 0 else value
 
 
-_TargetType: TypeAlias = Callable[[Any], Union[Iterable[float], float]]
-_InnerType: TypeAlias = Callable[[Any], float]
-
-
-def _total_loss(func: _TargetType) -> _InnerType:
+def _total_loss(
+        func: Callable[[Any], Union[Iterable[float], float]]
+) -> Callable[[Any], float]:
     def inner(obj: Any) -> float:
         loss = 0.0
         miss = func(obj)
