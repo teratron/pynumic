@@ -34,7 +34,7 @@ class Properties(Activation, Loss):
             *,
             bias: bool = False,
             hidden_layers: list[int] | None = None,
-            activation_mode: int = Activation.DEFAULT,
+            activation_mode: Activation = Activation.DEFAULT_ACTIVATION_MODE,
             loss_mode: int = Loss.DEFAULT_LOSS_MODE,
             loss_limit: float = Loss.DEFAULT_LOSS_LIMIT,
             rate: float = DEFAULT_RATE,

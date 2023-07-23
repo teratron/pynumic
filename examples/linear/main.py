@@ -11,8 +11,8 @@ def main() -> None:
     # Properties.
     pn(bias=True, hidden_layers=[3, 2], rate=0.3)
     pn.activation_mode = pn.LINEAR
-    pn.loss_mode = pn.MSE  # pn.MSE
-    pn.loss_limit = 1e-5  # .0001
+    pn.loss_mode = pn.MSE
+    pn.loss_limit = 1e-5
 
     # Dataset that doesn't need to be scaled.
     data_input = [10.6, -5.0, 200.0]

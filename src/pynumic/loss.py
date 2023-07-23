@@ -1,38 +1,7 @@
 """TODO:"""
 import math
-from enum import IntEnum
 
 from typing import Callable, Iterable, Union, TypeAlias, Any
-
-_TargetType: TypeAlias = Callable[[Any], Union[Iterable[float], float]]
-_InnerType: TypeAlias = Callable[[Any], float]
-_OuterType: TypeAlias = Callable[[_TargetType], _InnerType]
-
-
-class LossMode(IntEnum):
-    """Loss mode.
-
-    The mode of calculation of the total error:
-
-    * MSE -- Mean Squared Error (0);
-    * RMSE -- Root Mean Squared Error (1);
-    * ARCTAN -- Arctan Error (2);
-    * AVG -- Average Error (3).
-    """
-
-    MSE: int = 0
-    """MSE -- Mean Squared Error (0)."""
-
-    RMSE: int = 1
-    """RMSE -- Root Mean Squared Error (1)."""
-
-    ARCTAN: int = 2
-    """ARCTAN -- Arctan Error (2)."""
-
-    AVG: int = 3
-    """AVG -- Average Error (3)."""
-
-    DEFAULT_LOSS_MODE: int = MSE
 
 
 class Loss:
@@ -93,45 +62,37 @@ class Loss:
     def __check_loss_limit(self, value: float) -> float:
         return self.DEFAULT_LOSS_LIMIT if value < 0 else value
 
-    # def _total_loss(self) -> _OuterType:
-    #     return _total_loss(self._loss_mode)
+
+_TargetType: TypeAlias = Callable[[Any], Union[Iterable[float], float]]
+_InnerType: TypeAlias = Callable[[Any], float]
 
 
-def _total_loss(mode: int = Loss.MSE) -> _OuterType:
-    """Decorator."""
+def _total_loss(func: _TargetType) -> _InnerType:
+    def inner(obj: Any) -> float:
+        loss = 0.0
+        miss = func(obj)
+        if isinstance(miss, Iterable):
+            count = 0.0
+            for value in miss:
+                loss += __get_loss(value, obj.loss_mode)
+                count += 1
 
-    def outer(func: _TargetType) -> _InnerType:
-        # def inner() -> float:
-        def inner(obj: Any) -> float:
-            loss = 0.0
-            # miss = func()
-            miss = func(obj)
+            if count > 1:
+                loss /= count
+        elif isinstance(miss, float):
+            loss += __get_loss(miss, obj.loss_mode)
 
-            if isinstance(miss, Iterable):
-                count = 0.0
-                for value in miss:
-                    loss += __get_loss(value, mode)
-                    count += 1
+        if math.isnan(loss):
+            raise ValueError(f'{__name__}: loss not-a-number value')
 
-                if count > 1:
-                    loss /= count
-            elif isinstance(miss, float):
-                loss += __get_loss(miss, mode)
+        if math.isinf(loss):
+            raise ValueError(f'{__name__}: loss is infinity')
 
-            if math.isnan(loss):
-                raise ValueError(f'{__name__}: loss not-a-number value')
+        if obj.loss_mode == Loss.RMSE:
+            loss = math.sqrt(loss)
 
-            if math.isinf(loss):
-                raise ValueError(f'{__name__}: loss is infinity')
-
-            if mode == Loss.RMSE:
-                loss = math.sqrt(loss)
-
-            return loss
-
-        return inner
-
-    return outer
+        return loss
+    return inner
 
 
 def __get_loss(value: float, mode: int) -> float:
