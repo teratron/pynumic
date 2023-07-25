@@ -45,12 +45,14 @@ class Propagation(Properties):
         if self._activation_mode == self.LINEAR:
             self._neurons[i][j].value /= k if k > 0 else 1
 
+    # Calculating and return the total error of the output neurons.
     @_total_loss
     def _calc_loss(self) -> Iterable[float]:
-        """Calculating and return the total error of the output neurons."""
         for i in range(self._params.len_output):
-            yield self._data_target[i] - self._neurons[self._params.last_ind][i].value
-            # print(self._data_target[i] - self._neurons[self._params.last_ind][i].value)
+            self._neurons[self._params.last_ind][i].miss = (
+                    self._data_target[i] - self._neurons[self._params.last_ind][i].value
+            )
+            yield self._neurons[self._params.last_ind][i].miss
 
     # def _calc_loss(self) -> float:
     #     """Calculating and return the total error of the output neurons."""

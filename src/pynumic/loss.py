@@ -70,17 +70,14 @@ def _total_loss(
         loss = 0.0
         if hasattr(obj, "loss_mode"):
             miss = func(obj)
-            print("*********", obj.loss_mode)
             if isinstance(miss, Generator):
                 count = 0.0
                 for value in miss:
                     loss += __get_loss(value, obj.loss_mode)
                     count += 1
-                # print("*********", loss)
+
                 if count > 1:
                     loss /= count
-            elif isinstance(miss, float):
-                loss += __get_loss(miss, obj.loss_mode)
 
             if math.isnan(loss):
                 raise ValueError(f'{__name__}: loss not-a-number value')

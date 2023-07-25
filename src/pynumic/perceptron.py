@@ -81,12 +81,7 @@ class Perceptron(Propagation, Interface):
         return [n.value for n in self._neurons[self._params.last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-        """Training dataset.
-
-        :param data_input:
-        :param data_target:
-        :return:
-        """
+        """Training dataset."""
         if not self._params.is_init:
             if not self.__init(len(data_input), len(data_target)):
                 raise ValueError(f"{__name__}: not initialized")
