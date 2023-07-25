@@ -65,7 +65,7 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
     match mode:
         case Activation.LINEAR:
             # if math.fabs(value) >= 1:  # TODO:
-            #     return math.copysign(1, value)  # TODO:
+            #     return math.copysign(0.9, value)  # TODO:
             return value
         case Activation.RELU:
             return 0 if value < 0 else value

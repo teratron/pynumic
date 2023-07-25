@@ -2,10 +2,9 @@
 from dataclasses import dataclass
 from typing import TypeAlias
 
-# import pynumic.activation
+from pynumic._parameters import Parameters
 from pynumic.activation import Activation
 from pynumic.loss import Loss
-from pynumic._parameters import Parameters
 
 WeightsType: TypeAlias = list[list[list[float]]]
 
@@ -34,7 +33,7 @@ class Properties(Activation, Loss):
             *,
             bias: bool = False,
             hidden_layers: list[int] | None = None,
-            activation_mode: Activation = Activation.DEFAULT_ACTIVATION_MODE,
+            activation_mode: int = Activation.DEFAULT_ACTIVATION_MODE,
             loss_mode: int = Loss.DEFAULT_LOSS_MODE,
             loss_limit: float = Loss.DEFAULT_LOSS_LIMIT,
             rate: float = DEFAULT_RATE,

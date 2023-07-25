@@ -13,7 +13,7 @@ from pynumic.properties import WeightsType, Neuron
 class Perceptron(Propagation, Interface):
     """Interface for neural network."""
 
-    MAX_ITERATION: int = 1_000_00  # 0
+    MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
     __slots__ = (
@@ -24,7 +24,6 @@ class Perceptron(Propagation, Interface):
 
     _config: str | None
     __weights: WeightsType
-    # __mutex: Lock
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
@@ -82,9 +81,15 @@ class Perceptron(Propagation, Interface):
         return [n.value for n in self._neurons[self._params.last_ind]]
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+        """Training dataset.
+
+        :param data_input:
+        :param data_target:
+        :return:
+        """
         if not self._params.is_init:
-            if self.__init(len(data_input), len(data_target)):
-                self._params.is_init = True
+            if not self.__init(len(data_input), len(data_target)):
+                raise ValueError(f"{__name__}: not initialized")
 
         self._data_input = data_input
         self._data_target = data_target
@@ -103,9 +108,11 @@ class Perceptron(Propagation, Interface):
         # max_loss = 0.0
         min_loss = 1.0
         min_count = 0
+
         # prev_loss = 0
         # prev_loss = (0, 0)
         # prev_ratio = 0
+        print(self.__is_query)
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()
@@ -128,9 +135,9 @@ class Perceptron(Propagation, Interface):
                 min_count = count
                 self.__weights = deepcopy(self._weights)
                 # print(f"--------- {count}, {loss:.33f}, {loss.as_integer_ratio()}")  #
-                # if loss < self._loss_limit:
-                #     self._weights = deepcopy(self.__weights)
-                #     return min_count, min_loss
+                if loss < self._loss_limit:
+                    self._weights = deepcopy(self.__weights)
+                    return min_count, min_loss
 
             # if count % 10000 == 0:
             #     # print(f"+++ {count}, {loss:.33f}, {str(loss)[str(loss).rfind('e-') + 2:]}, {(loss - prev_loss):.33f}")

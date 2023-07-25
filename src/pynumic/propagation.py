@@ -1,7 +1,6 @@
 """TODO:"""
 from typing import Iterable
 
-
 from pynumic.loss import _total_loss
 from pynumic.properties import Properties
 
@@ -51,6 +50,7 @@ class Propagation(Properties):
         """Calculating and return the total error of the output neurons."""
         for i in range(self._params.len_output):
             yield self._data_target[i] - self._neurons[self._params.last_ind][i].value
+            # print(self._data_target[i] - self._neurons[self._params.last_ind][i].value)
 
     # def _calc_loss(self) -> float:
     #     """Calculating and return the total error of the output neurons."""

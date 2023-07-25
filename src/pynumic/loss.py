@@ -1,7 +1,7 @@
 """TODO:"""
 import math
 
-from typing import Callable, Iterable, Union, Any
+from typing import Callable, Iterable, Generator, Any
 
 
 class Loss:
@@ -64,30 +64,32 @@ class Loss:
 
 
 def _total_loss(
-        func: Callable[[Any], Union[Iterable[float], float]]
+        func: Callable[[Any], Iterable[float]]
 ) -> Callable[[Any], float]:
     def inner(obj: Any) -> float:
         loss = 0.0
-        miss = func(obj)
-        if isinstance(miss, Iterable):
-            count = 0.0
-            for value in miss:
-                loss += __get_loss(value, obj.loss_mode)
-                count += 1
+        if hasattr(obj, "loss_mode"):
+            miss = func(obj)
+            print("*********", obj.loss_mode)
+            if isinstance(miss, Generator):
+                count = 0.0
+                for value in miss:
+                    loss += __get_loss(value, obj.loss_mode)
+                    count += 1
+                # print("*********", loss)
+                if count > 1:
+                    loss /= count
+            elif isinstance(miss, float):
+                loss += __get_loss(miss, obj.loss_mode)
 
-            if count > 1:
-                loss /= count
-        elif isinstance(miss, float):
-            loss += __get_loss(miss, obj.loss_mode)
+            if math.isnan(loss):
+                raise ValueError(f'{__name__}: loss not-a-number value')
 
-        if math.isnan(loss):
-            raise ValueError(f'{__name__}: loss not-a-number value')
+            if math.isinf(loss):
+                raise ValueError(f'{__name__}: loss is infinity')
 
-        if math.isinf(loss):
-            raise ValueError(f'{__name__}: loss is infinity')
-
-        if obj.loss_mode == Loss.RMSE:
-            loss = math.sqrt(loss)
+            if obj.loss_mode == Loss.RMSE:
+                loss = math.sqrt(loss)
 
         return loss
     return inner
@@ -101,18 +103,3 @@ def __get_loss(value: float, mode: int) -> float:
             return math.atan(value) ** 2
         case Loss.MSE | Loss.RMSE | _:
             return value ** 2
-
-# @_total_loss(3)
-# def calc_loss() -> Iterable[float]:
-#     for value in (0.1, 0.2, 0.3, 0.4):
-#         yield value
-#
-#
-# @_total_loss(2)
-# def _calc_loss() -> float:
-#     return 0.333
-#
-#
-# if __name__ == "__main__":
-#     print('calc_loss', type(calc_loss()))
-#     print('_calc_loss', type(_calc_loss()))
