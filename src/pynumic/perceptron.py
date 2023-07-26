@@ -66,6 +66,7 @@ class Perceptron(Propagation, Interface):
         self._data_target = data_target
         self._calc_neurons()
 
+        # noinspection PyArgumentList
         return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
@@ -111,7 +112,6 @@ class Perceptron(Propagation, Interface):
         # prev_loss = 0
         # prev_loss = (0, 0)
         # prev_ratio = 0
-        print(self.__is_query)
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 self._calc_neurons()

@@ -1,6 +1,6 @@
-"""TODO:"""
+"""TODO: loss.py - """
 import math
-from functools import wraps
+#from functools import wraps
 from typing import Callable, Iterable, Generator, Any
 
 
@@ -62,11 +62,44 @@ class Loss:
     def __check_loss_limit(self, value: float) -> float:
         return self.DEFAULT_LOSS_LIMIT if value < 0 else value
 
+    # @staticmethod
+    # def total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float]:
+    #     @wraps(func)
+    #     def inner(self: Any) -> float:
+    #         loss = 0.0
+    #         miss = func(self)
+    #         if isinstance(miss, Generator):
+    #             count = 0.0
+    #             for value in miss:
+    #                 loss += _get_loss(value, self.loss_mode)
+    #                 count += 1
+    #
+    #             if count > 1:
+    #                 loss /= count
+    #
+    #         if math.isnan(loss):
+    #             raise ValueError(f'{__name__}: loss not-a-number value')
+    #
+    #         if math.isinf(loss):
+    #             raise ValueError(f'{__name__}: loss is infinity')
+    #
+    #         if self.loss_mode == Loss.RMSE:
+    #             loss = math.sqrt(loss)
+    #
+    #         return loss
+    #
+    #     return inner
 
-def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[object], float]:
-    @wraps(func)
+def _total_loss(func: Callable[[object], Iterable[float]]) -> Callable[[object], float]:
+    #@wraps(func)
     def inner(obj: object) -> float:
         loss = 0.0
+        # try:
+        #     value = getattr(wrapped, attr)
+        # except AttributeError:
+        #     pass
+        # else:
+        #     setattr(wrapper, attr, value)
         if hasattr(obj, "loss_mode"):
             miss = func(obj)
             if isinstance(miss, Generator):
