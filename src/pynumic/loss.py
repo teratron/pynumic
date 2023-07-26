@@ -63,10 +63,8 @@ class Loss:
         return self.DEFAULT_LOSS_LIMIT if value < 0 else value
 
 
-def _total_loss(
-        func: Callable[[Any], Iterable[float]]
-) -> Callable[[Any], float]:
-    def inner(obj: Any) -> float:
+def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[object], float]:
+    def inner(obj: object) -> float:
         loss = 0.0
         if hasattr(obj, "loss_mode"):
             miss = func(obj)
@@ -89,6 +87,7 @@ def _total_loss(
                 loss = math.sqrt(loss)
 
         return loss
+
     return inner
 
 

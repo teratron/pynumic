@@ -57,6 +57,7 @@ class Perceptron(Propagation, Interface):
         return self._params.is_init
 
     def verify(self, data_input: list[float], data_target: list[float]) -> float:
+        """Verifying dataset."""
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
                 self._params.is_init = True
@@ -68,6 +69,7 @@ class Perceptron(Propagation, Interface):
         return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
+        """Querying dataset."""
         # if not self.__is_init:
         #     raise ValueError(f"{__name__}: not initialized")
         if not self._params.is_init:
@@ -92,6 +94,7 @@ class Perceptron(Propagation, Interface):
         return self.__train()
 
     def and_train(self, data_target: list[float]) -> tuple[int, float]:
+        """Training dataset after the query."""
         if not self._params.is_init:
             raise ValueError(f"{__name__}: not initialized")
 
@@ -99,6 +102,7 @@ class Perceptron(Propagation, Interface):
 
         return self.__train()
 
+    # noinspection PyArgumentList
     def __train(self) -> tuple[int, float]:
         # max_loss = 0.0
         min_loss = 1.0
