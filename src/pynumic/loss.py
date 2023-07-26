@@ -1,6 +1,6 @@
 """TODO:"""
 import math
-
+from functools import wraps
 from typing import Callable, Iterable, Generator, Any
 
 
@@ -64,6 +64,7 @@ class Loss:
 
 
 def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[object], float]:
+    @wraps(func)
     def inner(obj: object) -> float:
         loss = 0.0
         if hasattr(obj, "loss_mode"):
