@@ -90,12 +90,31 @@ class Loss:
     #
     #     return inner
 
+
 def _total_loss(func: Callable[[object], Iterable[float]]) -> Callable[[object], float]:
     #@wraps(func)
     def inner(obj: object) -> float:
         loss = 0.0
         # try:
         #     value = getattr(wrapped, attr)
+        #     miss = func(obj)
+        #     if isinstance(miss, Generator):
+        #         count = 0.0
+        #         for value in miss:
+        #             loss += __get_loss(value, obj.loss_mode)
+        #             count += 1
+        #
+        #         if count > 1:
+        #             loss /= count
+        #
+        #     if math.isnan(loss):
+        #         raise ValueError(f'{__name__}: loss not-a-number value')
+        #
+        #     if math.isinf(loss):
+        #         raise ValueError(f'{__name__}: loss is infinity')
+        #
+        #     if obj.loss_mode == Loss.RMSE:
+        #         loss = math.sqrt(loss)
         # except AttributeError:
         #     pass
         # else:
