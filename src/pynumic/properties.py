@@ -1,4 +1,4 @@
-"""TODO:"""
+"""TODO: properties.py -"""
 from dataclasses import dataclass
 from typing import TypeAlias
 
@@ -48,7 +48,9 @@ class Properties(Activation, Loss):
         Activation.__init__(self, activation_mode)
         Loss.__init__(self, loss_mode, loss_limit)
 
+    ############################################################################
     # Bias
+    ############################################################################
     @property
     def bias(self) -> bool:
         """The neuron bias, false or true (required field for a config)."""
@@ -58,7 +60,9 @@ class Properties(Activation, Loss):
     def bias(self, value: bool) -> None:
         self._bias = value
 
+    ############################################################################
     # Hidden Layers
+    ############################################################################
     @property
     def hidden_layers(self) -> list[int]:
         """List of the number of neuron in each hidden layers."""
@@ -78,7 +82,9 @@ class Properties(Activation, Loss):
 
         raise ValueError(f"{__name__}: array of hidden layers incorrectly set {value}")
 
+    ############################################################################
     # Rate
+    ############################################################################
     @property
     def rate(self) -> float:
         """Learning coefficient (greater than 0.0 and less than or equal to 1.0)."""
@@ -91,7 +97,9 @@ class Properties(Activation, Loss):
     def __check_rate(self, value: float) -> float:
         return self.DEFAULT_RATE if value <= 0 or value > 1 else value
 
+    ############################################################################
     # Weights
+    ############################################################################
     @property
     def weights(self) -> WeightsType:
         """TODO:"""

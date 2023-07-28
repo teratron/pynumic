@@ -66,7 +66,8 @@ class Perceptron(Propagation, Interface):
         self._data_target = data_target
         self._calc_neurons()
 
-        return self._calc_loss()  # noinspection PyArgumentList
+        # noinspection PyArgumentList
+        return self._calc_loss()
 
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""

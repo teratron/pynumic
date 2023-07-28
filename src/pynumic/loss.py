@@ -1,6 +1,6 @@
 """TODO: loss.py - """
 import math
-#from functools import wraps
+# from functools import wraps
 from typing import Callable, Iterable, Generator, Any
 
 
@@ -91,9 +91,9 @@ class Loss:
     #     return inner
 
 
-def _total_loss(func: Callable[[object], Iterable[float]]) -> Callable[[object], float]:
-    #@wraps(func)
-    def inner(obj: object) -> float:
+def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float]:
+    # @wraps(func)
+    def inner(obj: Any = ...) -> float:
         loss = 0.0
         # try:
         #     value = getattr(wrapped, attr)

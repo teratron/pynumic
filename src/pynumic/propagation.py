@@ -16,9 +16,9 @@ class Propagation(Properties):
     _data_input: list[float]
     _data_target: list[float]
 
-    ################################################################################
-    ### Forward propagation
-    ################################################################################
+    ############################################################################
+    # Forward propagation
+    ############################################################################
 
     # Calculating neurons.
     def _calc_neurons(self) -> None:
@@ -48,9 +48,18 @@ class Propagation(Properties):
         if self._activation_mode == self.LINEAR:
             self._neurons[i][j].value /= k if k > 0 else 1
 
+    # @staticmethod
+    # @overload
+    # def _calc_loss() -> float:
+    #     ...
+    #
+    # @overload
+    # def _calc_loss(self) -> float:
+    #     ...
+
     # Calculating and return the total error of the output neurons.
     @_total_loss
-    #@Loss.total_loss
+    # @Loss.total_loss
     def _calc_loss(self) -> Iterable[float]:
         for i in range(self._params.len_output):
             self._neurons[self._params.last_ind][i].miss = (
@@ -82,9 +91,9 @@ class Propagation(Properties):
     #         loss = math.sqrt(loss)
     #     return loss
 
-    ################################################################################
-    ### Backward propagation
-    ################################################################################
+    ############################################################################
+    # Backward propagation
+    ############################################################################
 
     # Calculating the error of neuron in hidden layers.
     def _calc_miss(self) -> None:
@@ -94,7 +103,7 @@ class Propagation(Properties):
                 self._neurons[i][j].miss = 0
                 for k, _ in enumerate(self._neurons[inc]):
                     self._neurons[i][j].miss += (
-                        self._neurons[inc][k].miss * self._weights[inc][k][j]
+                            self._neurons[inc][k].miss * self._weights[inc][k][j]
                     )
 
     # Update weights.
@@ -110,9 +119,9 @@ class Propagation(Properties):
 
     def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
         grad = (
-            self._rate
-            * self._neurons[i][j].miss
-            * self._get_derivative(self._neurons[i][j].value)
+                self._rate
+                * self._neurons[i][j].miss
+                * self._get_derivative(self._neurons[i][j].value)
         )
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:
