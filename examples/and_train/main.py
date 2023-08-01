@@ -41,7 +41,7 @@ def main() -> None:
     # If there is target data, then we can train the received output data.
     data_target = [0.7, 0.1]
     count, loss = pn.and_train(data_target)
-    print(f"And Train: {count = }, {loss = :.8f}")
+    print(f"And Train: {count = }, {loss = :.16f}")
 
     # Check the trained data, the result should be about [0.7 0.1].
     print("Check:", pn.query(data_input))

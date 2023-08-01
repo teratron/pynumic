@@ -245,7 +245,9 @@ class Perceptron(Propagation, Interface):
                     with open(filename, "w", newline="\n", encoding="utf-8") as handle:
                         json.dump({"weights": self._weights}, handle, indent="\t")
                 case None | _:
-                    print("Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса")
+                    print(
+                        "Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса"
+                    )
                     props.update({"weights": self.__dict__.get("_weights")})
                     with open(filename, "w", newline="\n", encoding="utf-8") as handle:
                         json.dump(props, handle, indent="\t")
