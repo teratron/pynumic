@@ -2,6 +2,8 @@
 import math
 from typing import Callable, Iterable, Generator, Any
 
+from pynumic._exceptions import NotANumberError, InfinityError
+
 
 class Loss:
     """Loss.
@@ -105,10 +107,10 @@ def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float
                     loss /= count
 
             if math.isnan(loss):
-                raise ValueError(f'{__name__}: loss not-a-number value')
+                raise NotANumberError(f"{__name__}: loss is")
 
             if math.isinf(loss):
-                raise ValueError(f'{__name__}: loss is infinity')
+                raise InfinityError(f"{__name__}: loss is")
 
             if obj.loss_mode == Loss.RMSE:
                 loss = math.sqrt(loss)
