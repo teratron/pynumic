@@ -12,34 +12,23 @@ class InvalidProjectFile(PynumicException):
 class PynumicValueError(ValueError):
     """Pynumic value error."""
 
-    _message: str = "---value error---"
-    __message: str = ""
+    _message: str = "value error"
 
-    def __init_subclass__(cls) -> None:
-        # print(cls._message)
-        cls.__message = cls._message
-
-    def __init__(self, message: str = _message) -> None:
+    def __init__(self, message: str = "") -> None:
         self.message = message
         super().__init__(self.message)
 
     def __str__(self) -> str:
-        if self.message in self.__message:
-            print("+++")
-            return f"{PynumicValueError._message}"
+        if self.message in self._message:
+            return f"+++ {self._message}"
 
-        print("---")
-        return f"{self.message} {self._message}"
+        return f"--- {self.message} {self._message}"
 
 
 class NotANumberError(PynumicValueError):
-    """Not-a-Number value."""
+    """Not a number value."""
 
     _message: str = "not-a-number value"
-
-    # def __init__(self, message: str = _message) -> None:
-    #     self.message = message
-    #     super().__init__(self.message)
 
 
 class InfinityError(PynumicValueError):
@@ -47,28 +36,34 @@ class InfinityError(PynumicValueError):
 
     _message: str = "infinity value"
 
-    # def __init__(self, message: str = _message) -> None:
-    #     self.message = message
-    #     super().__init__(self.message)
-
 
 if __name__ == "__main__":
     try:
-        raise NotANumberError
-    except NotANumberError as err:
-        print(f"Not a number error: {err}")
+        raise PynumicValueError
+    except PynumicValueError as err:
+        print(f"{err}")
 
     try:
-        raise NotANumberError("loss is")
+        raise PynumicValueError("loss is")
+    except PynumicValueError as err:
+        print(f"{err}\n")
+
+    try:
+        raise NotANumberError
     except NotANumberError as err:
         print(f"{err}")
 
     try:
-        raise InfinityError
-    except InfinityError as err:
-        print(f"Infinity error: {err}")
+        raise NotANumberError("miss is")
+    except NotANumberError as err:
+        print(f"{err}\n")
 
     try:
-        raise InfinityError("loss is")
+        raise InfinityError
+    except InfinityError as err:
+        print(f"{err}")
+
+    try:
+        raise InfinityError("variable is")
     except InfinityError as err:
         print(f"{err}")
