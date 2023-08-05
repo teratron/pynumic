@@ -48,48 +48,14 @@ class Propagation(Properties):
         if self._activation_mode == self.LINEAR:
             self._neurons[i][j].value /= k if k > 0 else 1
 
-    # @staticmethod
-    # @overload
-    # def _calc_loss() -> float:
-    #     ...
-    #
-    # @overload
-    # def _calc_loss(self) -> float:
-    #     ...
-
     # Calculating and return the total error of the output neurons.
     @_total_loss
-    # @Loss.total_loss
     def _calc_loss(self) -> Iterable[float]:
         for i in range(self._params.len_output):
             self._neurons[self._params.last_ind][i].miss = (
-                    self._data_target[i] - self._neurons[self._params.last_ind][i].value
+                self._data_target[i] - self._neurons[self._params.last_ind][i].value
             )
             yield self._neurons[self._params.last_ind][i].miss
-
-    # def _calc_loss(self) -> float:
-    #     """Calculating and return the total error of the output neurons."""
-    #     loss = 0.0
-    #     for i, neuron in enumerate(self._neurons[self._params.last_ind]):
-    #         neuron.miss = self._data_target[i] - neuron.value
-    #         match self._loss_mode:
-    #             case self.AVG:
-    #                 loss += math.fabs(neuron.miss)
-    #             case self.ARCTAN:
-    #                 loss += math.atan(neuron.miss) ** 2
-    #             case self.MSE | self.RMSE | _:
-    #                 loss += neuron.miss ** 2
-    #
-    #     if math.isnan(loss):
-    #         raise ValueError(f"{__name__}: loss not-a-number value")
-    #
-    #     if math.isinf(loss):
-    #         raise ValueError(f"{__name__}: loss is infinity")
-    #     loss /= self._params.len_output
-    #
-    #     if self._loss_mode == self.RMSE:
-    #         loss = math.sqrt(loss)
-    #     return loss
 
     ############################################################################
     # Backward propagation

@@ -20,9 +20,9 @@ class PynumicValueError(ValueError):
 
     def __str__(self) -> str:
         if self.message in self._message:
-            return f"+++ {self._message}"
+            return f"{self._message}"
 
-        return f"--- {self.message} {self._message}"
+        return f"{self.message} {self._message}"
 
 
 class NotANumberError(PynumicValueError):
