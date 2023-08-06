@@ -22,12 +22,13 @@ class Perceptron(Propagation, Interface):
         "__is_query"
     )
 
-    _config: str | None
+    #_config: str | None
     __weights: WeightsType
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
         self.__is_query = False
+        self._config: str | None = None
 
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input
