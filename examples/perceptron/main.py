@@ -47,7 +47,7 @@ def main() -> None:
     # Writing the neural network configuration and weights to a file.
     # pn.write(config="perceptron.json", weights="perceptron_weights.json")
 
-    pn.write("perceptron.json")
+    pn.write("perceptron.json", flag="config")
     # pn.write("perceptron.json", flag="perceptron.json")
     # pn.write()
 
