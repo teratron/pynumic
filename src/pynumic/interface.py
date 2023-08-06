@@ -35,6 +35,8 @@ class Interface(ABC):
 
         :param filename:
         :param flag:
+        - config
+        - weights
         :return: None
         """
 
