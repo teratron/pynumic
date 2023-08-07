@@ -43,7 +43,6 @@ class Pynumic(Perceptron):
         :return:
         :rtype:
         """
-        #self._config = None
         super().__init__(**self.__get_props(reader, **props))
 
     def __call__(self, reader: str = "", **props: Any) -> None:

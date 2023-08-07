@@ -22,7 +22,6 @@ class Perceptron(Propagation, Interface):
         "__is_query"
     )
 
-    #_config: str | None
     __weights: WeightsType
 
     def __init__(self, **props: Any) -> None:
@@ -156,43 +155,6 @@ class Perceptron(Propagation, Interface):
             self._weights = deepcopy(self.__weights)
 
         return min_count, min_loss
-
-    # @overload
-    # def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
-    #     """
-    #     Writes configuration and weights to one file:
-    #     - write("perceptron.json")
-    #
-    #     Writes configuration only:
-    #     - write("perceptron.json", flag="config")
-    #
-    #     Writes only weights:
-    #     - write("perceptron.json", flag="weights")
-    #
-    #     :param filename:
-    #     :param flag:
-    #     :return: None
-    #     """
-    #
-    # @overload
-    # def write(self, *, config: str | None = None, weights: str | None = None) -> None:
-    #     """
-    #     Writes configuration only:
-    #     - write(config="perceptron_config.json")
-    #
-    #     Writes only weights:
-    #     - write(weights="perceptron_weights.json")
-    #
-    #     Writes 2 files, configuration separately and weights separately:
-    #     - write(config="perceptron_config.json", weights="perceptron_weights.json")
-    #
-    #     Writes configuration and weights to one file:
-    #     - write(config="perceptron.json", weights="perceptron.json")
-    #
-    #     :param config:
-    #     :param weights:
-    #     :return: None
-    #     """
 
     def write(
             self,
