@@ -28,16 +28,20 @@ class Perceptron(Propagation, Interface):
     __slots__ = (
         "_config",
         "__weights",
-        "__is_query"
+        # "__is_query",
+        "data"
     )
 
     __weights: WeightsType
 
     def __init__(self, **props: Any) -> None:
         super().__init__(**props)
-        self.__is_query = False
+        # self.__is_query = False
         self._config: str | None = None
         self.data: DataArray = DataArray([], [])
+
+    def __del__(self) -> None:
+        del self.data
 
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input
@@ -89,7 +93,8 @@ class Perceptron(Propagation, Interface):
 
         self._data_input = data_input
         self._calc_neurons()
-        self.__is_query = True
+        self._params.is_query = True
+        # self.__is_query = True
 
         return [n.value for n in self._neurons[self._params.last_ind]]
 
@@ -122,10 +127,12 @@ class Perceptron(Propagation, Interface):
         # prev_loss = (0, 0)
         # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
-            if not self.__is_query:
+            # if not self.__is_query:
+            if not self._params.is_query:
                 self._calc_neurons()
             else:
-                self.__is_query = False
+                self._params.is_query = False
+                # self.__is_query = False
 
             loss = self._calc_loss()
 
@@ -159,74 +166,74 @@ class Perceptron(Propagation, Interface):
 
         return min_count, min_loss
 
-    # def write(
-    #         self,
-    #         filename: str | None = None,
-    #         *,
-    #         flag: str | None = None,
-    #         config: str | None = None,
-    #         weights: str | None = None
-    # ) -> None:
-    #     """Writes the configuration and/or weights to a file.
-    #
-    #     Writes configuration and weights to one file:
-    #
-    #     - write()
-    #     - write("perceptron.json")
-    #     - write(config="perceptron.json", weights="perceptron.json")
-    #
-    #     Writes configuration only:
-    #
-    #     - write(config="perceptron.json")
-    #     - write("perceptron.json", flag="config")
-    #
-    #     Writes only weights:
-    #
-    #     - write(weights="perceptron_weights.json")
-    #     - write("perceptron.json", flag="weights")
-    #
-    #     Writes 2 files, configuration separately and weights separately:
-    #
-    #     - write(config="perceptron.json", weights="perceptron_weights.json")
-    #     """
-    #     props: dict[str, Any] = {
-    #         key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"
-    #     }
-    #     # props.update({"weights": self.__dict__.get("_weights")})
-    #
-    #     if filename is None and flag is None and config is None and weights is None:
-    #         if self._config:
-    #             props.update({"weights": self.__dict__.get("_weights")})
-    #             with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
-    #                 json.dump(props, handle, indent="\t")
-    #         else:
-    #             print("Отсутствует файл или путь к файлу конфигурации")
-    #
-    #     if filename and os.path.normpath(filename):
-    #         match flag:
-    #             case "config":
-    #                 with open(filename, "w", newline="\n", encoding="utf-8") as handle:
-    #                     json.dump(props, handle, indent="\t")
-    #             case "weight" | "weights":
-    #                 with open(filename, "w", newline="\n", encoding="utf-8") as handle:
-    #                     json.dump({"weights": self._weights}, handle, indent="\t")
-    #             case None | _:
-    #                 print(
-    #                     "Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса"
-    #                 )
-    #                 props.update({"weights": self.__dict__.get("_weights")})
-    #                 with open(filename, "w", newline="\n", encoding="utf-8") as handle:
-    #                     json.dump(props, handle, indent="\t")
-    #
-    #     if config and weights:
-    #         props.update({"weights": self.__dict__.get("_weights")})
-    #         with open(config, "w", newline="\n", encoding="utf-8") as handle:
-    #             json.dump(props, handle, indent="\t")
-    #     else:
-    #         if config and os.path.normpath(config):
-    #             with open(config, "w", newline="\n", encoding="utf-8") as handle:
-    #                 json.dump(props, handle, indent="\t")
-    #
-    #         if weights and os.path.normpath(weights):
-    #             with open(weights, "w", newline="\n", encoding="utf-8") as handle:
-    #                 json.dump({"weights": self._weights}, handle, indent="\t")
+    def write(
+            self,
+            filename: str | None = None,
+            *,
+            flag: str | None = None,
+            config: str | None = None,
+            weights: str | None = None
+    ) -> None:
+        """Writes the configuration and/or weights to a file.
+
+        Writes configuration and weights to one file:
+
+        - write()
+        - write("perceptron.json")
+        - write(config="perceptron.json", weights="perceptron.json")
+
+        Writes configuration only:
+
+        - write(config="perceptron.json")
+        - write("perceptron.json", flag="config")
+
+        Writes only weights:
+
+        - write(weights="perceptron_weights.json")
+        - write("perceptron.json", flag="weights")
+
+        Writes 2 files, configuration separately and weights separately:
+
+        - write(config="perceptron.json", weights="perceptron_weights.json")
+        """
+        props: dict[str, Any] = {
+            key.lstrip("_"): value for key, value in self.__dict__.items() if key != "_weights"
+        }
+        # props.update({"weights": self.__dict__.get("_weights")})
+
+        if filename is None and flag is None and config is None and weights is None:
+            if self._config:
+                props.update({"weights": self.__dict__.get("_weights")})
+                with open(self._config, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump(props, handle, indent="\t")
+            else:
+                print("Отсутствует файл или путь к файлу конфигурации")
+
+        if filename and os.path.normpath(filename):
+            match flag:
+                case "config":
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump(props, handle, indent="\t")
+                case "weight" | "weights":
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump({"weights": self._weights}, handle, indent="\t")
+                case None | _:
+                    print(
+                        "Некорректный флаг или флаг отсутствует, будет записана конфигурация и веса"
+                    )
+                    props.update({"weights": self.__dict__.get("_weights")})
+                    with open(filename, "w", newline="\n", encoding="utf-8") as handle:
+                        json.dump(props, handle, indent="\t")
+
+        if config and weights:
+            props.update({"weights": self.__dict__.get("_weights")})
+            with open(config, "w", newline="\n", encoding="utf-8") as handle:
+                json.dump(props, handle, indent="\t")
+        else:
+            if config and os.path.normpath(config):
+                with open(config, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump(props, handle, indent="\t")
+
+            if weights and os.path.normpath(weights):
+                with open(weights, "w", newline="\n", encoding="utf-8") as handle:
+                    json.dump({"weights": self._weights}, handle, indent="\t")

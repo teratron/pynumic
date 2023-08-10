@@ -1,5 +1,6 @@
 """TODO:"""
 from pynumic import Pynumic
+
 import matplotlib.pyplot as plt
 
 
@@ -25,12 +26,13 @@ def main() -> None:
     # Check the trained data, the result should be about [5 -50.3].
     print("Check:", pn.query(data_input))
 
-    # pn.write("config.json", flag="config")
+    pn.write("config.json", flag="config")
     # pn.write(config="config.json", weights="weights.json")
     # print(pn.__dict__)
 
     _fig, ax = plt.subplots()
-    ax.plot(pn.data.count[:100], pn.data.loss[:100])
+    length = len(pn.data.count)
+    ax.plot(pn.data.count[:length], pn.data.loss[:length])
     ax.set(
         xlabel='iter',
         ylabel='loss',
