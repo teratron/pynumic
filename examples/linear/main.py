@@ -1,7 +1,7 @@
 """TODO:"""
-from pynumic import Pynumic
-
 import matplotlib.pyplot as plt
+
+from pynumic import Pynumic
 
 
 def main() -> None:
@@ -13,7 +13,7 @@ def main() -> None:
     # Properties.
     pn(bias=True, hidden_layers=[3, 2], rate=0.3)
     pn.activation_mode = pn.LINEAR
-    pn.loss_mode = pn.MSE
+    pn.loss_mode = pn.RMSE
     pn.loss_limit = 1e-5
 
     # Dataset that doesn't need to be scaled.

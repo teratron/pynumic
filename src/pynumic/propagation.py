@@ -45,8 +45,8 @@ class Propagation(Properties):
 
         self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
 
-        if self._activation_mode == self.LINEAR:
-            self._neurons[i][j].value /= k if k > 0 else 1
+        # if self._activation_mode == self.LINEAR:
+        #     self._neurons[i][j].value /= k if k > 0 else 1
 
     # Calculating and return the total error of the output neurons.
     @_total_loss
