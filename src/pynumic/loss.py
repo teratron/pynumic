@@ -121,10 +121,13 @@ def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float
 
 
 def __get_loss(value: float, mode: int) -> float:
-    match mode:
-        case Loss.AVG:
-            return math.fabs(value)
-        case Loss.ARCTAN:
-            return math.atan(value) ** 2
-        case Loss.MSE | Loss.RMSE | _:
-            return value ** 2
+    try:
+        match mode:
+            case Loss.AVG:
+                return math.fabs(value)
+            case Loss.ARCTAN:
+                return math.atan(value) ** 2
+            case Loss.MSE | Loss.RMSE | _:
+                return value ** 2
+    except OverflowError:
+        raise OverflowError()

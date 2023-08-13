@@ -17,6 +17,7 @@ class DataArray:
 
     count: list[int]
     loss: list[float]
+    resistance: list[float]
 
 
 class Perceptron(Propagation, Interface):
@@ -38,7 +39,7 @@ class Perceptron(Propagation, Interface):
         super().__init__(**props)
         # self.__is_query = False
         self._config: str | None = None
-        self.data: DataArray = DataArray([], [])
+        self.data: DataArray = DataArray([], [], [])
 
     def __del__(self) -> None:
         del self.data
