@@ -36,13 +36,14 @@ class Perceptron(Propagation, Interface):
     __weights: WeightsType
 
     def __init__(self, **props: Any) -> None:
-        super().__init__(**props)
+        # super().__init__(**props)
+        super().__init__()
         # self.__is_query = False
         self._config: str | None = None
         self.data: DataArray = DataArray([], [], [])
 
-    def __del__(self) -> None:
-        del self.data
+    # def __del__(self) -> None:
+    #     del self.data
 
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input

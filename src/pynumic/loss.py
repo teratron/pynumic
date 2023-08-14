@@ -66,34 +66,6 @@ class Loss:
 
 def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float]:
     def inner(obj: Any) -> float:
-        # try:
-        #     loss = 0.0
-        #     miss = func(obj)
-        #     if isinstance(miss, Generator):
-        #         count = 0.0
-        #         for value in miss:
-        #             loss += __get_loss(value, obj.loss_mode)
-        #             count += 1
-        #
-        #         if count > 1:
-        #             loss /= count
-        #
-        #     if math.isnan(loss):
-        #         raise ValueError(f'{__name__}: loss not-a-number value')
-        #
-        #     if math.isinf(loss):
-        #         raise ValueError(f'{__name__}: loss is infinity')
-        #
-        #     if obj.loss_mode == Loss.RMSE:
-        #         loss = math.sqrt(loss)
-        #
-        #     return loss
-        # except AttributeError as err:
-        #     print(f'{__name__}: loss is {err}')
-        #     raise
-        # except ValueError:
-        #     raise
-
         loss = 0.0
         if hasattr(obj, "loss_mode"):
             miss = func(obj)
@@ -130,4 +102,5 @@ def __get_loss(value: float, mode: int) -> float:
             case Loss.MSE | Loss.RMSE | _:
                 return value ** 2
     except OverflowError:
-        raise OverflowError()
+        print(f"{__name__}: overflow error")
+        raise

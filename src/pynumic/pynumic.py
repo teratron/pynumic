@@ -4,6 +4,7 @@ import os
 from typing import Any
 
 from pynumic.perceptron import Perceptron
+from pynumic.properties import Properties
 
 
 class Pynumic(Perceptron):
@@ -43,7 +44,8 @@ class Pynumic(Perceptron):
         :return:
         :rtype:
         """
-        super().__init__(**self.__get_props(reader, **props))
+        # super().__init__(**self.__get_props(reader, **props))
+        Properties.__init__(**self.__get_props(reader, **props))
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         props = self.__get_props(reader, **props)

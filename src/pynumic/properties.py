@@ -45,7 +45,11 @@ class Properties(Activation, Loss):
         self._rate: float = self.__check_rate(rate)
         self._weights: WeightsType = self.__check_weights(weights)
 
-        Activation.__init__(self, activation_mode)
+        Activation.__init__(self, activation_mode)  # TODO: FIXIT
+        print(self.activation_mode, "--------------------------------------", Activation.LINEAR)
+        if activation_mode == Activation.LINEAR:
+            print("--------------------------------------")
+
         Loss.__init__(self, loss_mode, loss_limit)
 
     ############################################################################

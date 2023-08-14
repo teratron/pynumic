@@ -32,7 +32,6 @@ class Activation:  # pylint: disable=too-few-public-methods
     # ELU, SELU, SWISH, ELiSH
 
     DEFAULT_ACTIVATION_MODE: int = SIGMOID
-    # DEFAULT_ACTIVATION_LIMIT: float = 0.1e-3 # TODO:
 
     def __init__(self, activation_mode: int) -> None:
         self._activation_mode: int = self.__check_activation_mode(activation_mode)
@@ -66,9 +65,6 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
     """Activation function."""
     match mode:
         case Activation.LINEAR:
-            # if math.fabs(value) > 1.:  # TODO:
-            #     return 0.01 * value
-            #     #return math.copysign(0.9, value)  # TODO:
             return value
         case Activation.RELU:
             return 0 if value < 0 else value
