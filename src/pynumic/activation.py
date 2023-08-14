@@ -63,30 +63,38 @@ class Activation:  # pylint: disable=too-few-public-methods
 
 def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
     """Activation function."""
-    match mode:
-        case Activation.LINEAR:
-            return value
-        case Activation.RELU:
-            return 0 if value < 0 else value
-        case Activation.LEAKY_RELU:
-            return 0.01 * value if value < 0 else value
-        case Activation.TANH:
-            value = math.exp(2 * value)
-            return (value - 1) / (value + 1)
-        case Activation.SIGMOID | _:
-            return 1 / (1 + math.exp(-value))
+    try:
+        match mode:
+            case Activation.LINEAR:
+                return value
+            case Activation.RELU:
+                return 0 if value < 0 else value
+            case Activation.LEAKY_RELU:
+                return 0.01 * value if value < 0 else value
+            case Activation.TANH:
+                value = math.exp(2 * value)
+                return (value - 1) / (value + 1)
+            case Activation.SIGMOID | _:
+                return 1 / (1 + math.exp(-value))
+    except OverflowError:
+        print(f"{__name__}: overflow error")
+        raise
 
 
 def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:
     """Derivative activation function."""
-    match mode:
-        case Activation.LINEAR:
-            return 1
-        case Activation.RELU:
-            return 0 if value < 0 else 1
-        case Activation.LEAKY_RELU:
-            return 0.01 if value < 0 else 1
-        case Activation.TANH:
-            return 1 - value ** 2
-        case Activation.SIGMOID | _:
-            return value * (1 - value)
+    try:
+        match mode:
+            case Activation.LINEAR:
+                return 1
+            case Activation.RELU:
+                return 0 if value < 0 else 1
+            case Activation.LEAKY_RELU:
+                return 0.01 if value < 0 else 1
+            case Activation.TANH:
+                return 1 - value ** 2
+            case Activation.SIGMOID | _:
+                return value * (1 - value)
+    except OverflowError:
+        print(f"{__name__}: overflow error")
+        raise

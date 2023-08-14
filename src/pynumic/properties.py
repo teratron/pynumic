@@ -46,7 +46,7 @@ class Properties(Activation, Loss):
         self._weights: WeightsType = self.__check_weights(weights)
 
         Activation.__init__(self, activation_mode)  # TODO: FIXIT
-        print(self.activation_mode, "--------------------------------------", Activation.LINEAR)
+        print(self.activation_mode, "--------------------------------------", self.hidden_layers)
         if activation_mode == Activation.LINEAR:
             print("--------------------------------------")
 

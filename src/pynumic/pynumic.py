@@ -45,7 +45,8 @@ class Pynumic(Perceptron):
         :rtype:
         """
         # super().__init__(**self.__get_props(reader, **props))
-        Properties.__init__(**self.__get_props(reader, **props))
+        super().__init__()
+        Properties.__init__(self, **self.__get_props(reader, **props))
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         props = self.__get_props(reader, **props)
