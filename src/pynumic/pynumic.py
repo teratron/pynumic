@@ -45,12 +45,11 @@ class Pynumic(Perceptron):
         :rtype:
         """
         # super().__init__(**self.__get_props(reader, **props))
-        super().__init__()
         Properties.__init__(self, **self.__get_props(reader, **props))
 
     def __call__(self, reader: str = "", **props: Any) -> None:
         props = self.__get_props(reader, **props)
-        if props != {}:
+        if props:
             for key in props.keys():
                 if key in self.__dir__():
                     setattr(self, key, props[key])

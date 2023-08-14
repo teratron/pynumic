@@ -29,7 +29,7 @@ class Perceptron(Propagation, Interface):
     __slots__ = (
         "_config",
         "__weights",
-        # "__is_query",
+        "__is_query",
         "data"
     )
 
@@ -37,10 +37,10 @@ class Perceptron(Propagation, Interface):
 
     def __init__(self, **props: Any) -> None:
         # super().__init__(**props)
-        super().__init__()
-        # self.__is_query = False
+        #super().__init__()
+        self.__is_query = False
         self._config: str | None = None
-        self.data: DataArray = DataArray([], [], [])
+        #self.data: DataArray = DataArray([], [], [])
 
     # def __del__(self) -> None:
     #     del self.data
@@ -95,8 +95,8 @@ class Perceptron(Propagation, Interface):
 
         self._data_input = data_input
         self._calc_neurons()
-        self._params.is_query = True
-        # self.__is_query = True
+        # self._params.is_query = True
+        self.__is_query = True
 
         return [n.value for n in self._neurons[self._params.last_ind]]
 
@@ -129,17 +129,17 @@ class Perceptron(Propagation, Interface):
         # prev_loss = (0, 0)
         # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
-            # if not self.__is_query:
-            if not self._params.is_query:
+            if not self.__is_query:
+            # if not self._params.is_query:
                 self._calc_neurons()
             else:
-                self._params.is_query = False
-                # self.__is_query = False
+                # self._params.is_query = False
+                self.__is_query = False
 
             loss = self._calc_loss()
 
-            self.data.count.append(count)
-            self.data.loss.append(loss)
+            # self.data.count.append(count)
+            # self.data.loss.append(loss)
 
             if loss < min_loss:
                 min_loss = loss
