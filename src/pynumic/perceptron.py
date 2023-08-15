@@ -17,7 +17,7 @@ class DataArray:
 
     count: list[int]
     loss: list[float]
-    resistance: list[float]
+    #resistance: list[float]
 
 
 class Perceptron(Propagation, Interface):
@@ -36,14 +36,13 @@ class Perceptron(Propagation, Interface):
     __weights: WeightsType
 
     def __init__(self, **props: Any) -> None:
-        # super().__init__(**props)
-        #super().__init__()
+        super().__init__(**props)
         self.__is_query = False
         self._config: str | None = None
-        #self.data: DataArray = DataArray([], [], [])
+        self.data: DataArray = DataArray([], [])
 
-    # def __del__(self) -> None:
-    #     del self.data
+    def __del__(self) -> None:
+        del self.data
 
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input
@@ -138,8 +137,8 @@ class Perceptron(Propagation, Interface):
 
             loss = self._calc_loss()
 
-            # self.data.count.append(count)
-            # self.data.loss.append(loss)
+            self.data.count.append(count)
+            self.data.loss.append(loss)
 
             if loss < min_loss:
                 min_loss = loss

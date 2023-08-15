@@ -78,14 +78,14 @@ def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float
                 if count > 1:
                     loss /= count
 
-            if math.isnan(loss):
-                raise NotANumberError(f"{__name__}: loss is")
+                if math.isnan(loss):
+                    raise NotANumberError(f"{__name__}: loss is")
 
-            if math.isinf(loss):
-                raise InfinityError(f"{__name__}: loss is")
+                if math.isinf(loss):
+                    raise InfinityError(f"{__name__}: loss is")
 
-            if obj.loss_mode == Loss.RMSE:
-                loss = math.sqrt(loss)
+                if obj.loss_mode == Loss.RMSE:
+                    loss = math.sqrt(loss)
 
         return loss
 
@@ -101,6 +101,6 @@ def __get_loss(value: float, mode: int) -> float:
                 return math.atan(value) ** 2
             case Loss.MSE | Loss.RMSE | _:
                 return value ** 2
-    except OverflowError:
-        print(f"{__name__}: overflow error")
+    except OverflowError as err:
+        print(f"{__name__}: {err}")
         raise

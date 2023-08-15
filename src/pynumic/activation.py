@@ -29,7 +29,7 @@ class Activation:  # pylint: disable=too-few-public-methods
     TANH: int = 4
     """TANH -- TanH (hyperbolic tangent) (4)."""
 
-    # ELU, SELU, SWISH, ELiSH
+    # TODO: ELU, SELU, SWISH, ELiSH
 
     DEFAULT_ACTIVATION_MODE: int = SIGMOID
 
@@ -76,8 +76,8 @@ def get_activation(value: float, mode: int = Activation.SIGMOID) -> float:
                 return (value - 1) / (value + 1)
             case Activation.SIGMOID | _:
                 return 1 / (1 + math.exp(-value))
-    except OverflowError:
-        print(f"{__name__}: overflow error")
+    except OverflowError as err:
+        print(f"{__name__}: {err}")
         raise
 
 
@@ -95,6 +95,6 @@ def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:
                 return 1 - value ** 2
             case Activation.SIGMOID | _:
                 return value * (1 - value)
-    except OverflowError:
-        print(f"{__name__}: overflow error")
+    except OverflowError as err:
+        print(f"{__name__}: {err}")
         raise

@@ -45,8 +45,8 @@ class Propagation(Properties):
 
         self._neurons[i][j].value = self._get_activation(self._neurons[i][j].value)
 
-        # if self._activation_mode == self.LINEAR:
-        #     self._neurons[i][j].value /= k if k > 0 else 1
+        if self._activation_mode == self.LINEAR:
+            self._neurons[i][j].value /= k if k > 0 else 1
 
     # Calculating and return the total error of the output neurons.
     @_total_loss
@@ -69,7 +69,7 @@ class Propagation(Properties):
                 self._neurons[i][j].miss = 0
                 for k, _ in enumerate(self._neurons[inc]):
                     self._neurons[i][j].miss += (
-                            self._neurons[inc][k].miss * self._weights[inc][k][j]
+                        self._neurons[inc][k].miss * self._weights[inc][k][j]
                     )
 
     # Update weights.
@@ -85,9 +85,9 @@ class Propagation(Properties):
 
     def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
         grad = (
-                self._rate
-                * self._neurons[i][j].miss
-                * self._get_derivative(self._neurons[i][j].value)
+            self._rate
+            * self._neurons[i][j].miss
+            * self._get_derivative(self._neurons[i][j].value)
         )
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:
