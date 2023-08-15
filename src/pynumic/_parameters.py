@@ -10,6 +10,7 @@ class Parameters:  # pylint: disable=too-few-public-methods
     len_output: int = 0
     is_init: bool = False
     # is_query: bool = False
+    num_layers: list[int] = []  # TODO: for propagation
 
     @property
     def last_ind(self) -> int:

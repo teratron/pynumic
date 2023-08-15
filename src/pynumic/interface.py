@@ -11,12 +11,14 @@ class Interface(ABC):
         """Querying dataset."""
 
     @abstractmethod
-    def verify(self, data_input: list[float], data_target: list[float]) -> float:
+    def verify(self, data_target: list[float], data_input: list[float]) -> float:
         """Verifying dataset."""
 
     @abstractmethod
     def train(
-        self, data_input: list[float] | None = None, data_target: list[float]
+            self,
+            data_target: list[float],
+            data_input: list[float] | None = None
     ) -> tuple[int, float]:
         """Training dataset."""
 

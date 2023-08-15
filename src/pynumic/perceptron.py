@@ -36,9 +36,6 @@ class Perceptron(Propagation, Interface):
         self._config: str | None = None
         self.data: DataArray = DataArray([], [])
 
-    def __del__(self) -> None:
-        del self.data
-
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input
         self._params.len_output = len_target
@@ -94,7 +91,7 @@ class Perceptron(Propagation, Interface):
         # noinspection PyArgumentList
         return self._calc_loss()
 
-    def train(self, data_target: list[float], data_input: list[float]) -> tuple[int, float]:
+    def train(self, data_target: list[float], data_input: list[float] | None = None) -> tuple[int, float]:
         """Training dataset."""
         if not self._params.is_init:
             if not self.__init(len(data_input), len(data_target)):
