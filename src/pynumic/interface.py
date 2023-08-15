@@ -7,28 +7,25 @@ class Interface(ABC):
     """Interface for neural network."""
 
     @abstractmethod
-    def verify(self, data_input: list[float], data_target: list[float]) -> float:
-        """Verifying dataset."""
-
-    @abstractmethod
     def query(self, data_input: list[float]) -> list[float]:
         """Querying dataset."""
 
     @abstractmethod
-    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
-        """Training dataset."""
+    def verify(self, data_input: list[float], data_target: list[float]) -> float:
+        """Verifying dataset."""
 
     @abstractmethod
-    def and_train(self, data_target: list[float]) -> tuple[int, float]:
-        """Training dataset after the query."""
+    def train(
+        self, data_input: list[float] | None = None, data_target: list[float]
+    ) -> tuple[int, float]:
+        """Training dataset."""
+
+    # @abstractmethod
+    # def and_train(self, data_target: list[float]) -> tuple[int, float]:
+    #     """Training dataset after the query."""
 
     @overload
-    def write(
-            self,
-            filename: str | None = None,
-            *,
-            flag: str | None = None
-    ) -> None:
+    def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
         """Writes configuration and weights to one file:
         - write("perceptron.json")
 
@@ -52,12 +49,7 @@ class Interface(ABC):
         """
 
     @overload
-    def write(
-            self,
-            *,
-            config: str | None = None,
-            weights: str | None = None
-    ) -> None:
+    def write(self, *, config: str | None = None, weights: str | None = None) -> None:
         """Writes configuration only:
         - write(
             config="perceptron_config.json"
@@ -87,11 +79,11 @@ class Interface(ABC):
 
     @abstractmethod
     def write(
-            self,
-            filename: str | None = None,
-            *,
-            flag: str | None = None,
-            config: str | None = None,
-            weights: str | None = None
+        self,
+        filename: str | None = None,
+        *,
+        flag: str | None = None,
+        config: str | None = None,
+        weights: str | None = None,
     ) -> None:
         """Writes the configuration and/or weights to a file."""

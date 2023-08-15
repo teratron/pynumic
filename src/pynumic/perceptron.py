@@ -13,11 +13,11 @@ from pynumic.properties import WeightsType, Neuron
 
 @dataclass()
 class DataArray:
-    """TODO: """
+    """TODO:"""
 
     count: list[int]
     loss: list[float]
-    #resistance: list[float]
+    # resistance: list[float]
 
 
 class Perceptron(Propagation, Interface):
@@ -26,12 +26,7 @@ class Perceptron(Propagation, Interface):
     MAX_ITERATION: int = 1_000_000
     """Maximum number of iterations after which training is forcibly terminated."""
 
-    __slots__ = (
-        "_config",
-        "__weights",
-        "__is_query",
-        "data"
-    )
+    __slots__ = ("_config", "__weights", "__is_query", "data")
 
     __weights: WeightsType
 
@@ -58,11 +53,14 @@ class Perceptron(Propagation, Interface):
         self._weights = [
             [
                 [
-                    -0.555 if self._activation_mode == self.LINEAR
+                    -0.555
+                    if self._activation_mode == self.LINEAR
                     else round(random.uniform(-0.5, 0.5), 3)
                     for _ in range(weights[i])
-                ] for _ in range(v)
-            ] for i, v in enumerate(layers)
+                ]
+                for _ in range(v)
+            ]
+            for i, v in enumerate(layers)
         ]
 
         self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
@@ -71,7 +69,19 @@ class Perceptron(Propagation, Interface):
 
         return self._params.is_init
 
-    def verify(self, data_input: list[float], data_target: list[float]) -> float:
+    def query(self, data_input: list[float]) -> list[float]:
+        """Querying dataset."""
+        if not self._params.is_init:
+            raise ValueError(f"{__name__}: not initialized")
+
+        self._data_input = data_input
+        self._calc_neurons()
+        # self._params.is_query = True
+        self.__is_query = True
+
+        return [n.value for n in self._neurons[self._params.last_ind]]
+
+    def verify(self, data_target: list[float], data_input: list[float]) -> float:
         """Verifying dataset."""
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
@@ -84,22 +94,7 @@ class Perceptron(Propagation, Interface):
         # noinspection PyArgumentList
         return self._calc_loss()
 
-    def query(self, data_input: list[float]) -> list[float]:
-        """Querying dataset."""
-        # if not self.__is_init:
-        #     raise ValueError(f"{__name__}: not initialized")
-        if not self._params.is_init:
-            if self.__init(0, 0):  # TODO:
-                self._params.is_init = True
-
-        self._data_input = data_input
-        self._calc_neurons()
-        # self._params.is_query = True
-        self.__is_query = True
-
-        return [n.value for n in self._neurons[self._params.last_ind]]
-
-    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
+    def train(self, data_target: list[float], data_input: list[float]) -> tuple[int, float]:
         """Training dataset."""
         if not self._params.is_init:
             if not self.__init(len(data_input), len(data_target)):
@@ -110,14 +105,12 @@ class Perceptron(Propagation, Interface):
 
         return self.__train()
 
-    def and_train(self, data_target: list[float]) -> tuple[int, float]:
-        """Training dataset after the query."""
-        if not self._params.is_init:
-            raise ValueError(f"{__name__}: not initialized")
-
-        self._data_target = data_target
-
-        return self.__train()
+    # def and_train(self, data_target: list[float]) -> tuple[int, float]:
+    #     """Training dataset after the query."""
+    #     if not self._params.is_init:
+    #         raise ValueError(f"{__name__}: not initialized")
+    #     self._data_target = data_target
+    #     return self.__train()
 
     # noinspection PyArgumentList
     def __train(self) -> tuple[int, float]:
@@ -129,7 +122,7 @@ class Perceptron(Propagation, Interface):
         # prev_ratio = 0
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
-            # if not self._params.is_query:
+                # if not self._params.is_query:
                 self._calc_neurons()
             else:
                 # self._params.is_query = False
@@ -168,12 +161,12 @@ class Perceptron(Propagation, Interface):
         return min_count, min_loss
 
     def write(
-            self,
-            filename: str | None = None,
-            *,
-            flag: str | None = None,
-            config: str | None = None,
-            weights: str | None = None
+        self,
+        filename: str | None = None,
+        *,
+        flag: str | None = None,
+        config: str | None = None,
+        weights: str | None = None,
     ) -> None:
         """Writes the configuration and/or weights to a file.
 
