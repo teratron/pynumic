@@ -11,20 +11,16 @@ class Interface(ABC):
         """Querying dataset."""
 
     @abstractmethod
-    def verify(self, data_target: list[float], data_input: list[float]) -> float:
+    def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
 
     @abstractmethod
-    def train(
-            self,
-            data_target: list[float],
-            data_input: list[float] | None = None
-    ) -> tuple[int, float]:
+    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
 
-    # @abstractmethod
-    # def and_train(self, data_target: list[float]) -> tuple[int, float]:
-    #     """Training dataset after the query."""
+    @abstractmethod
+    def and_train(self, data_target: list[float]) -> tuple[int, float]:
+        """Training dataset after the query."""
 
     @overload
     def write(self, filename: str | None = None, *, flag: str | None = None) -> None:
@@ -81,11 +77,11 @@ class Interface(ABC):
 
     @abstractmethod
     def write(
-        self,
-        filename: str | None = None,
-        *,
-        flag: str | None = None,
-        config: str | None = None,
-        weights: str | None = None,
+            self,
+            filename: str | None = None,
+            *,
+            flag: str | None = None,
+            config: str | None = None,
+            weights: str | None = None,
     ) -> None:
         """Writes the configuration and/or weights to a file."""

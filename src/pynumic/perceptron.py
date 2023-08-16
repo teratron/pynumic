@@ -50,7 +50,7 @@ class Perceptron(Propagation, Interface):
         self._weights = [
             [
                 [
-                    -0.555
+                    -1.0  # 0.555
                     if self._activation_mode == self.LINEAR
                     else round(random.uniform(-0.5, 0.5), 3)
                     for _ in range(weights[i])
@@ -78,7 +78,7 @@ class Perceptron(Propagation, Interface):
 
         return [n.value for n in self._neurons[self._params.last_ind]]
 
-    def verify(self, data_target: list[float], data_input: list[float]) -> float:
+    def verify(self, data_input: list[float], data_target: list[float]) -> float:
         """Verifying dataset."""
         if not self._params.is_init:
             if self.__init(len(data_input), len(data_target)):
@@ -91,7 +91,7 @@ class Perceptron(Propagation, Interface):
         # noinspection PyArgumentList
         return self._calc_loss()
 
-    def train(self, data_target: list[float], data_input: list[float] | None = None) -> tuple[int, float]:
+    def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
         if not self._params.is_init:
             if not self.__init(len(data_input), len(data_target)):
@@ -102,12 +102,12 @@ class Perceptron(Propagation, Interface):
 
         return self.__train()
 
-    # def and_train(self, data_target: list[float]) -> tuple[int, float]:
-    #     """Training dataset after the query."""
-    #     if not self._params.is_init:
-    #         raise ValueError(f"{__name__}: not initialized")
-    #     self._data_target = data_target
-    #     return self.__train()
+    def and_train(self, data_target: list[float]) -> tuple[int, float]:
+        """Training dataset after the query."""
+        if not self._params.is_init:
+            raise ValueError(f"{__name__}: not initialized")
+        self._data_target = data_target
+        return self.__train()
 
     # noinspection PyArgumentList
     def __train(self) -> tuple[int, float]:

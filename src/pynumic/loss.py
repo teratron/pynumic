@@ -82,7 +82,7 @@ def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float
                     raise NotANumberError(f"{__name__}: loss is")
 
                 if math.isinf(loss):
-                    raise InfinityError(f"{__name__}: loss is")
+                    raise InfinityError(f"{__name__}: loss is: --{loss}--")
 
                 if obj.loss_mode == Loss.RMSE:
                     loss = math.sqrt(loss)

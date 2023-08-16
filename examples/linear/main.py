@@ -10,7 +10,7 @@ def main() -> None:
     # print(pn.__dict__)
 
     # Properties.
-    pn(bias=True, hidden_layers=[3, 2, 3, 5], rate=0.2)
+    pn(bias=True, hidden_layers=[3, 2, 5], rate=0.2)
     pn.activation_mode = pn.LINEAR
     pn.loss_mode = pn.AVG
     pn.loss_limit = 1e-5

@@ -29,12 +29,12 @@ def main() -> None:
     len_data = len(dataset) - len_output + 1
     for _ in range(10_000):
         for i in range(len_input, len_data):
-            _, _ = pn.train(dataset[i:i + len_output], dataset[i - len_input:i])
+            _, _ = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
 
         # Verifying.
         _sum = _num = 0.0
         for i in range(len_input, len_data):
-            _sum += pn.verify(dataset[i:i + len_output], dataset[i - len_input:i])
+            _sum += pn.verify(dataset[i - len_input:i], dataset[i:i + len_output])
             _num += 1
 
         # Average error for the entire epoch.
