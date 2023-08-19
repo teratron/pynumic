@@ -39,13 +39,13 @@ class Perceptron(Propagation, Interface):
     def __init(self, len_input: int, len_target: int) -> bool:
         self._params.len_input = len_input
         self._params.len_output = len_target
+        self._params.layers = [self._params.len_output]
         weights: list[int] = [self._params.len_input + int(self._bias)]
-        layers: list[int] = [self._params.len_output]
 
         if self._hidden_layers:
             self._params.last_ind = len(self._hidden_layers)
             weights += list(map(lambda x: x + int(self._bias), self._hidden_layers))
-            layers = self._hidden_layers + layers
+            self._params.layers = self._hidden_layers + self._params.layers
 
         self._weights = [
             [
@@ -57,12 +57,12 @@ class Perceptron(Propagation, Interface):
                 ]
                 for _ in range(v)
             ]
-            for i, v in enumerate(layers)
+            for i, v in enumerate(self._params.layers)
         ]
 
-        self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in layers]
+        self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in self._params.layers]
         self._params.is_init = True
-        del weights, layers
+        del weights
 
         return self._params.is_init
 

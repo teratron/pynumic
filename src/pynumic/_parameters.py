@@ -8,9 +8,9 @@ class Parameters:  # pylint: disable=too-few-public-methods
     prev_ind: int = -1
     len_input: int = 0
     len_output: int = 0
+    layers: list[int] = []  # TODO: for propagation
     is_init: bool = False
     # is_query: bool = False
-    layers: list[int] = []  # TODO: for propagation
 
     @property
     def last_ind(self) -> int:
