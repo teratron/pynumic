@@ -133,6 +133,13 @@ class Properties(Activation, Loss):
             self._hidden_layers = [
                 len(value[i]) for i, _ in enumerate(self._hidden_layers)
             ]
+            self._params.layers = [self._params.len_output, self._params.len_output]
+            # TODO:
+            self._params.layers = [
+                [self._params.len_output, self._params.len_output].insert(i, v)
+                for i, v in enumerate(self._hidden_layers)
+            ]
+            self._params.layers = list(map(lambda x: x + int(self._bias), self._hidden_layers))
 
         self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
         self._params.is_init = True
