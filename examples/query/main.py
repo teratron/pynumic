@@ -1,8 +1,7 @@
 """TODO:"""
 from pynumic import Pynumic
 
-JSON_STREAM = """
-{
+JSON_STREAM = """{
     "bias": true,
     "activation_mode": 3,
     "loss_mode": 0,

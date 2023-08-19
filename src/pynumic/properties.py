@@ -2,9 +2,9 @@
 from dataclasses import dataclass
 from typing import TypeAlias
 
-from pynumic._parameters import Parameters
 from pynumic.activation import Activation
 from pynumic.loss import Loss
+from pynumic.parameters import Parameters
 
 WeightsType: TypeAlias = list[list[list[float]]]
 
@@ -129,17 +129,20 @@ class Properties(Activation, Loss):
             self._bias = True
             self._params.len_input -= 1
 
+        print(self._params.len_input, self._params.len_output)
+
         if self._params.last_ind > 0:
             self._hidden_layers = [
-                len(value[i]) for i, _ in enumerate(self._hidden_layers)
+                len(value[i]) for i, _ in enumerate(value)
             ]
-            self._params.layers = [self._params.len_output, self._params.len_output]
             # TODO:
-            self._params.layers = [
-                [self._params.len_output, self._params.len_output].insert(i, v)
-                for i, v in enumerate(self._hidden_layers)
-            ]
-            self._params.layers = list(map(lambda x: x + int(self._bias), self._hidden_layers))
+            print(self._hidden_layers)
+            self._params.layers = (
+                    [self._params.len_output]
+                    + self._hidden_layers
+                    + [self._params.len_output]
+            )
+            print(self._params.layers)
 
         self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
         self._params.is_init = True

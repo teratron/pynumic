@@ -44,8 +44,8 @@ class Perceptron(Propagation, Interface):
 
         if self._hidden_layers:
             self._params.last_ind = len(self._hidden_layers)
-            weights += list(map(lambda x: x + int(self._bias), self._hidden_layers))
             self._params.layers = self._hidden_layers + self._params.layers
+            weights += list(map(lambda x: x + int(self._bias), self._hidden_layers))
 
         self._weights = [
             [
