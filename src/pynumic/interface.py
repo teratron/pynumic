@@ -1,4 +1,4 @@
-"""TODO:"""
+"""TODO: interface.py - """
 from abc import ABC, abstractmethod
 from typing import overload
 
@@ -30,7 +30,7 @@ class Interface(ABC):
         Writes configuration only:
         - write(
             "perceptron.json",
-            flag="config
+            flag="config"
         )
 
         Writes only weights:
@@ -77,11 +77,11 @@ class Interface(ABC):
 
     @abstractmethod
     def write(
-            self,
-            filename: str | None = None,
-            *,
-            flag: str | None = None,
-            config: str | None = None,
-            weights: str | None = None,
+        self,
+        filename: str | None = None,
+        *,
+        flag: str | None = None,
+        config: str | None = None,
+        weights: str | None = None,
     ) -> None:
         """Writes the configuration and/or weights to a file."""
