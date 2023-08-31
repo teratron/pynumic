@@ -122,6 +122,7 @@ class Properties(Activation, Loss):
     def __init_weights(self, value: WeightsType) -> bool:
         length = len(value)
         self._params.last_ind = length - 1
+        print(length, self._params.last_ind, self._params.prev_ind)
         self._params.len_input = len(value[0][0])
         self._params.len_output = len(value[self._params.last_ind])
 
