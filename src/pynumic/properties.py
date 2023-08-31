@@ -122,7 +122,6 @@ class Properties(Activation, Loss):
     def __init_weights(self, value: WeightsType) -> bool:
         length = len(value)
         self._params.last_ind = length - 1
-        print(length, self._params.last_ind, self._params.prev_ind)
         self._params.len_input = len(value[0][0])
         self._params.len_output = len(value[self._params.last_ind])
 
@@ -130,6 +129,7 @@ class Properties(Activation, Loss):
             self._bias = True
             self._params.len_input -= 1
 
+        # print(self.bias, length, self._params.last_ind, self._params.prev_ind)
         print(self._params.len_input, self._params.len_output)
 
         if self._params.last_ind > 0:
