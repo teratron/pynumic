@@ -72,7 +72,7 @@ class Perceptron(Propagation, Interface):
             raise ValueError(f"{__name__}: not initialized")
 
         self._data_input = data_input
-        self._calc_neurons()
+        self._calculate_neurons()
         # self._params.is_query = True
         self.__is_query = True
 
@@ -86,10 +86,10 @@ class Perceptron(Propagation, Interface):
 
         self._data_input = data_input
         self._data_target = data_target
-        self._calc_neurons()
+        self._calculate_neurons()
 
         # noinspection PyArgumentList
-        return self._calc_loss()
+        return self._calculate_loss()
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
         """Training dataset."""
@@ -120,12 +120,12 @@ class Perceptron(Propagation, Interface):
         for count in range(1, self.MAX_ITERATION):
             if not self.__is_query:
                 # if not self._params.is_query:
-                self._calc_neurons()
+                self._calculate_neurons()
             else:
                 # self._params.is_query = False
                 self.__is_query = False
 
-            loss = self._calc_loss()
+            loss = self._calculate_loss()
 
             self.data.count.append(count)
             self.data.loss.append(loss)
@@ -149,7 +149,7 @@ class Perceptron(Propagation, Interface):
             #     print(f"******** {prev_ratio} - {ratio}")
             # prev_ratio = ratio
 
-            self._calc_miss()
+            self._calculate_miss()
             self._update_weights()
 
         if min_count > 0:

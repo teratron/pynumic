@@ -21,7 +21,7 @@ class Propagation(Properties):
     ############################################################################
 
     # Calculating neurons.
-    def _calc_neurons(self) -> None:
+    def _calculate_neurons(self) -> None:
         dec, length = 0, self._params.len_input
         for i, layer in enumerate(self._neurons):
             if i > 0:
@@ -50,7 +50,7 @@ class Propagation(Properties):
 
     # Calculating and return the total error of the output neurons.
     @_total_loss
-    def _calc_loss(self) -> Iterable[float]:
+    def _calculate_loss(self) -> Iterable[float]:
         for i in range(self._params.len_output):
             self._neurons[self._params.last_ind][i].miss = (
                 self._data_target[i] - self._neurons[self._params.last_ind][i].value
@@ -62,7 +62,7 @@ class Propagation(Properties):
     ############################################################################
 
     # Calculating the error of neuron in hidden layers.
-    def _calc_miss(self) -> None:
+    def _calculate_miss(self) -> None:
         for i in range(self._params.prev_ind, -1, -1):
             inc = i + 1
             for j, _ in enumerate(self._neurons[i]):
