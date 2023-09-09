@@ -81,6 +81,7 @@ ignore-imports = true
 
 [tool.ruff]
 line-length = 99
+src = ["src"]
 
 [tool.black]
 line-length = 99
