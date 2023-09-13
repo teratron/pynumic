@@ -12,7 +12,7 @@ class InvalidProjectFile(PynumicException):
 class PynumicValueError(ValueError):
     """Pynumic value error."""
 
-    _message: str = "value error"
+    _message: str = "ERROR: value error"
 
     def __init__(self, message: str = "") -> None:
         self.message = message

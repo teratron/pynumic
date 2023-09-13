@@ -136,8 +136,6 @@ class Properties(Activation, Loss):
             self._hidden_layers = [
                 len(value[i]) for i, _ in enumerate(value)
             ]
-            # TODO:
-            # print(self._hidden_layers)
             self._params.layers = (
                     [self._params.len_input]
                     + self._hidden_layers

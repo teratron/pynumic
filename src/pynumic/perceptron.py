@@ -60,6 +60,8 @@ class Perceptron(Propagation, Interface):
             for i, v in enumerate(self._params.layers)
         ]
 
+        print(self._params.layers)
+
         self._neurons = [[Neuron(0, 0) for _ in range(v)] for v in self._params.layers]
         self._params.is_init = True
         del weights
