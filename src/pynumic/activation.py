@@ -46,11 +46,7 @@ class Activation:  # pylint: disable=too-few-public-methods
         self._activation_mode = self.__check_activation_mode(value)
 
     def __check_activation_mode(self, value: int) -> int:
-        return (
-            self.DEFAULT_ACTIVATION_MODE
-            if value < self.LINEAR or value > self.TANH
-            else value
-        )
+        return self.DEFAULT_ACTIVATION_MODE if value < self.LINEAR or value > self.TANH else value
 
     def _get_activation(self, value: float) -> float:
         """Activation function."""
@@ -92,7 +88,7 @@ def get_derivative(value: float, mode: int = Activation.SIGMOID) -> float:
             case Activation.LEAKY_RELU:
                 return 0.01 if value < 0 else 1
             case Activation.TANH:
-                return 1 - value ** 2
+                return 1 - value**2
             case Activation.SIGMOID | _:
                 return value * (1 - value)
     except OverflowError as err:

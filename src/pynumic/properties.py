@@ -20,10 +20,7 @@ class Neuron:
 class Properties(Activation, Loss):
     """Properties of neural network."""
 
-    __slots__ = (
-        "_params",
-        "_neurons"
-    )
+    __slots__ = ("_params", "_neurons")
 
     DEFAULT_RATE: float = 0.3
     _neurons: list[list[Neuron]]
@@ -113,11 +110,15 @@ class Properties(Activation, Loss):
         if not value or value is None or value == [[[0]]]:
             return []
 
-        if isinstance(value, list) and isinstance(value[0], list) and isinstance(value[0][0], list):
-            if self.__init_weights(value):
-                return value
+        if (
+            isinstance(value, list)
+            and isinstance(value[0], list)
+            and isinstance(value[0][0], list)
+            and self.__init_weights(value)
+        ):
+            return value
 
-        raise ValueError(f"{__name__}: array of weights incorrectly set {value}")
+        raise ValueError(f"ERROR: {__name__}: array of weights incorrectly set {value}")
 
     def __init_weights(self, value: WeightsType) -> bool:
         length = len(value)
@@ -125,23 +126,23 @@ class Properties(Activation, Loss):
         self._params.len_input = len(value[0][0])
         self._params.len_output = len(value[self._params.last_ind])
 
-        if length > 1 and len(value[0]) + 1 == len(value[1][0]):
-            self._bias = True
-            self._params.len_input -= 1
+        print(self.bias)
 
-        # print(self.bias, length, self._params.last_ind, self._params.prev_ind)
-        print(self._params.len_input, self._params.len_output)
+        if length > 1:
+            if len(value[0]) + 1 == len(value[1][0]):
+                self._bias = True
+                self._params.len_input -= 1
+        else:
+            print(
+                "INFO: Нейронная сеть не имеет скрытых слоёв, поэтому,"
+                "если явно не указан bias, то bias будет определён далее."
+            )
 
         if self._params.last_ind > 0:
-            self._hidden_layers = [
-                len(value[i]) for i, _ in enumerate(value)
-            ]
+            self._hidden_layers = [len(value[i]) for i, _ in enumerate(value)]
             self._params.layers = (
-                    [self._params.len_input]
-                    + self._hidden_layers
-                    + [self._params.len_output]
+                [self._params.len_input] + self._hidden_layers + [self._params.len_output]
             )
-            print(self._params.layers)
 
         self._neurons = [[Neuron(0, 0) for _ in v] for v in value]
         self._params.is_init = True

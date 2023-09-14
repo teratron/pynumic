@@ -45,11 +45,7 @@ class Loss:
         self._loss_mode = self.__check_loss_mode(value)
 
     def __check_loss_mode(self, value: int) -> int:
-        return (
-            self.DEFAULT_LOSS_MODE
-            if value < self.MSE or value > self.AVG
-            else value
-        )
+        return self.DEFAULT_LOSS_MODE if value < self.MSE or value > self.AVG else value
 
     @property
     def loss_limit(self) -> float:
@@ -100,7 +96,7 @@ def __get_loss(value: float, mode: int) -> float:
             case Loss.ARCTAN:
                 return math.atan(value) ** 2
             case Loss.MSE | Loss.RMSE | _:
-                return value ** 2
+                return value**2
     except OverflowError as err:
         print(f"{__name__}: {err}")
         raise

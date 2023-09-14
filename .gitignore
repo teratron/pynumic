@@ -315,6 +315,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# ruff
+.ruff_cache/
+
 # json
 *.json
 !examples/json/config/*.json

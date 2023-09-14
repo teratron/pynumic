@@ -8,10 +8,7 @@ from pynumic.properties import Properties
 class Propagation(Properties):
     """Propagation."""
 
-    __slots__ = (
-        "_data_input",
-        "_data_target"
-    )
+    __slots__ = ("_data_input", "_data_target")
 
     _data_input: list[float]
     _data_target: list[float]
@@ -36,9 +33,7 @@ class Propagation(Properties):
         for k, weight in enumerate(self._weights[i][j]):
             if k < length:
                 self._neurons[i][j].value += (
-                    self._neurons[dec][k].value * weight
-                    if i > 0
-                    else self._data_input[k] * weight
+                    self._neurons[dec][k].value * weight if i > 0 else self._data_input[k] * weight
                 )
             else:
                 self._neurons[i][j].value += weight
@@ -85,9 +80,7 @@ class Propagation(Properties):
 
     def __get_weight(self, i: int, j: int, dec: int, length: int) -> None:
         grad = (
-            self._rate
-            * self._neurons[i][j].miss
-            * self._get_derivative(self._neurons[i][j].value)
+            self._rate * self._neurons[i][j].miss * self._get_derivative(self._neurons[i][j].value)
         )
         for k, _ in enumerate(self._weights[i][j]):
             if k < length:
