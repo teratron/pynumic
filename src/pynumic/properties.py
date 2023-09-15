@@ -126,13 +126,13 @@ class Properties(Activation, Loss):
         self._params.len_input = len(value[0][0])
         self._params.len_output = len(value[self._params.last_ind])
 
-        print(self.bias)
-
         if length > 1:
             if len(value[0]) + 1 == len(value[1][0]):
                 self._bias = True
                 self._params.len_input -= 1
         else:
+            if self.bias:
+                pass
             print(
                 "INFO: Нейронная сеть не имеет скрытых слоёв, поэтому,"
                 "если явно не указан bias, то bias будет определён далее."
