@@ -30,19 +30,19 @@ def main() -> None:
     # pn.write(config="config.json", weights="weights.json")
     # print(pn.__dict__)
 
-    import matplotlib.pyplot as plt
-
-    _fig, ax = plt.subplots()
-    length = len(pn.data.count)
-    ax.plot(pn.data.count[:length], pn.data.loss[:length])
-    ax.set(
-        xlabel='iter',
-        ylabel='loss',
-        title='Loss'
-    )
-    ax.grid()
-    # fig.savefig("test.png")
-    plt.show()
+    # import matplotlib.pyplot as plt
+    #
+    # _fig, ax = plt.subplots()
+    # length = len(pn.data.count)
+    # ax.plot(pn.data.count[:length], pn.data.loss[:length])
+    # ax.set(
+    #     xlabel='iter',
+    #     ylabel='loss',
+    #     title='Loss'
+    # )
+    # ax.grid()
+    # # fig.savefig("test.png")
+    # plt.show()
 
 
 if __name__ == "__main__":
