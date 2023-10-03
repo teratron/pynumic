@@ -70,7 +70,7 @@ ActivationMode function mode (required field for a config).
 |------|------------|------------------------------------------|
 | 0    | LINEAR     | Linear/identity                          |
 | 1    | RELU       | ReLu (rectified linear unit)             |
-| 2    | LEAKYRELU  | Leaky ReLu (leaky rectified linear unit) |
+| 2    | LEAKY_RELU | Leaky ReLu (leaky rectified linear unit) |
 | 3    | SIGMOID    | Logistic, a.k.a. sigmoid or soft step    |
 | 4    | TANH       | TanH (hyperbolic tangent)                |
 
