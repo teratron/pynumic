@@ -29,8 +29,6 @@ class Activation:  # pylint: disable=too-few-public-methods
     TANH: int = 4
     """TANH -- TanH (hyperbolic tangent) (4)."""
 
-    # TODO: ELU, SELU, SWISH, ELiSH
-
     DEFAULT_ACTIVATION_MODE: int = SIGMOID
 
     def __init__(self, activation_mode: int) -> None:

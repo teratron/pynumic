@@ -10,7 +10,7 @@ ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@$(VENV_BIN)/pip install -U pip setuptools
 	@$(VENV_BIN)/pip install poetry
-	@poetry shell
+	@$(VENV_BIN)/poetry shell
 	@poetry check
 	@poetry lock
 	@poetry install
