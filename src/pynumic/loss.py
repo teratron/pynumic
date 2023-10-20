@@ -1,6 +1,7 @@
 """TODO: loss.py - """
 import math
 from typing import Callable, Iterable, Generator, Any
+from functools import wraps
 
 from pynumic.exceptions import NotANumberError, InfinityError
 
@@ -61,6 +62,7 @@ class Loss:
 
 
 def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float]:
+    @wraps(func)
     def inner(obj: Any) -> float:
         loss = 0.0
         if hasattr(obj, "loss_mode"):

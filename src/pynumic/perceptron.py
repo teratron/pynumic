@@ -90,7 +90,7 @@ class Perceptron(Propagation, Interface):
         self._data_target = data_target
         self._calculate_neurons()
 
-        # noinspection PyArgumentList
+        ## noinspection PyArgumentList
         return self._calculate_loss()
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
@@ -111,7 +111,6 @@ class Perceptron(Propagation, Interface):
         self._data_target = data_target
         return self.__train()
 
-    # noinspection PyArgumentList
     def __train(self) -> tuple[int, float]:
         min_loss = 1.0
         min_count = 0
@@ -127,6 +126,7 @@ class Perceptron(Propagation, Interface):
                 # self._params.is_query = False
                 self.__is_query = False
 
+            # noinspection PyArgumentList
             loss = self._calculate_loss()
 
             self.data.count.append(count)
