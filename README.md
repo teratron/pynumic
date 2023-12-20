@@ -135,4 +135,4 @@ See the latest commits on [https://github.com/teratron/pynumic](https://github.c
 
 ---
 
-![My Skills](https://skillicons.dev/icons?i=python,golang,javascript,react,html,css,sass,git,github)
+![My Skills](https://skillicons.dev/icons?i=python,golang,javascript,react,vue,html,css,sass,git,github)
