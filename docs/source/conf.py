@@ -48,7 +48,7 @@ master_doc = "index"
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_baseurl = ""  # https://zigenzoog.github.io/pynumic
+html_baseurl = ""  # https://teratron.github.io/pynumic
 html_static_path = ["_static"]
 html_theme = "classic"  # classic | alabaster
 
@@ -58,7 +58,7 @@ match html_theme:
             "github_button": True,
             "github_banner": False,
             "github_type":   "star&v=2",
-            "github_user":   "zigenzoog",
+            "github_user": "teratron",
             "github_repo":   "pynumic",
         }
     case _:

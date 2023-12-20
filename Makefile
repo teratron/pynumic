@@ -107,7 +107,7 @@ endif
 #################################################
 
 set-url: ## git remote set-url origin git@github.com:login/repo.git
-	@git remote set-url origin git@github.com:zigenzoog/pynumic.git
+	@git remote set-url origin git@github.com:teratron/pynumic.git
 
 git-hooks: ## git-hooks
 	@mkdir .githooks || true

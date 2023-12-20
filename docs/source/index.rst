@@ -11,8 +11,8 @@ Welcome to PyNumic's documentation!
    :caption: Contents:
 
 
-.. |CONTRIBUTORS| image:: https://img.shields.io/github/contributors/zigenzoog/pynumic
-    :target: https://github.com/zigenzoog/pynumic/graphs/contributors
+.. |CONTRIBUTORS| image:: https://img.shields.io/github/contributors/teratron/pynumic
+    :target: https://github.com/teratron/pynumic/graphs/contributors
 .. |COMMIT| image:: https://img.shields.io/github/last-commit/teratron/pynumic
 .. |BLACK| image:: https://img.shields.io/badge/%20style-black-000000.svg
     :target: https://github.com/psf/black

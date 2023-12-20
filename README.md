@@ -5,7 +5,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynumic)](https://pypi.org/project/pynumic)
 [![PyPI - Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
 [![PyPI - Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
-[![License](https://img.shields.io/github/license/zigenzoog/pynumic)](https://pypi.org/project/pynumic)
+[![License](https://img.shields.io/github/license/teratron/pynumic)](https://pypi.org/project/pynumic)
 [![Code style: docformatter](https://img.shields.io/badge/%20formatter-docformatter-fedcba)](https://github.com/PyCQA/docformatter)
 [![Code style: mypy](https://img.shields.io/badge/code%20style-mypy-green)](https://github.com/python/mypy)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000)](https://github.com/psf/black)
@@ -93,7 +93,7 @@ Minimum (sufficient) limit of the average of the error during training.
 
 Learning coefficient (greater than 0.0 and less than or equal to 1.0).
 
-More documentation is available at the [pynumic website](https://zigenzoog.github.io/pynumic).
+More documentation is available at the [pynumic website](https://teratron.github.io/pynumic).
 
 ---
 

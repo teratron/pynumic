@@ -1,3 +1,3 @@
 # Documentation
 
-[PyNumic documentation](https://zigenzoog.github.io/pynumic)
+[PyNumic documentation](https://teratron.github.io/pynumic)

@@ -5,9 +5,9 @@ description = "Simple neural network library"
 authors = ["Oleg Alexandrov <alexandrovoleg.ru@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://zigenzoog.github.io/pynumic"
-repository = "https://github.com/zigenzoog/pynumic"
-documentation = "https://zigenzoog.github.io/pynumic/docs"
+homepage = "https://teratron.github.io/pynumic"
+repository = "https://github.com/teratron/pynumic"
+documentation = "https://teratron.github.io/pynumic/docs"
 keywords = [
     "neural",
     "network",
