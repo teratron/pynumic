@@ -161,11 +161,11 @@ Icon
 .com.apple.timemachine.donotpresent
 
 # Directories potentially created on remote AFP share
+.apdisk
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
-.apdisk
 
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -221,6 +221,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+junit/
 
 # Translations
 *.mo
@@ -256,6 +257,8 @@ ipython_config.py
 # pyenv
 .python-version
 
+# Poetry
+poetry.lock
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -267,7 +270,7 @@ ipython_config.py
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
-#Pipfile.lock
+Pipfile.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
@@ -311,6 +314,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# ruff
+.ruff_cache/
 
 # json
 *.json
