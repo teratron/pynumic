@@ -1,7 +1,5 @@
 # PyNumic
 
-    under construction
-
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pynumic)](https://pypi.org/project/pynumic)
 [![PyPI - Version](https://img.shields.io/pypi/v/pynumic.svg)](https://pypi.org/project/pynumic)
 [![PyPI - Downloads](https://img.shields.io/pypi/dd/pynumic)](https://pypi.org/project/pynumic/#files)
@@ -18,14 +16,12 @@ Simple neural network library for python.
 
 ## Visuals
 
-    Depending on what you are making, it can be a good idea to include screenshots or even a video
-    (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help,
-    but check out Asciinema for a more sophisticated method.
+
 
 ## Installation
 
 ```shell
-$ pip install pynumic
+pip install pynumic
 ```
 
 ## Usage
@@ -50,19 +46,19 @@ if __name__ == '__main__':
 
 ### Properties of Perceptron Neural Network
 
-### _name_
+#### _name_
 
 Neural network architecture name (required field for a config).
 
-### _bias_
+#### _bias_
 
 The neuron bias, false or true (required field for a config).
 
-### _hidden_layer_
+#### _hidden_layer_
 
 Array of the number of neurons in each hidden layer.
 
-### _activation_mode_
+#### _activation_mode_
 
 ActivationMode function mode (required field for a config).
 
@@ -74,7 +70,7 @@ ActivationMode function mode (required field for a config).
 | 3    | SIGMOID    | Logistic, a.k.a. sigmoid or soft step    |
 | 4    | TANH       | TanH (hyperbolic tangent)                |
 
-### _loss_mode_
+#### _loss_mode_
 
 The mode of calculation of the total error.
 
@@ -85,11 +81,11 @@ The mode of calculation of the total error.
 | 2    | ARCTAN | Arctan                  |
 | 3    | AVG    | Average                 |
 
-### _loss_limit_
+#### _loss_limit_
 
 Minimum (sufficient) limit of the average of the error during training.
 
-### _rate_
+#### _rate_
 
 Learning coefficient (greater than 0.0 and less than or equal to 1.0).
 
@@ -129,9 +125,9 @@ You can find examples of neural networks in the [example's directory](examples).
 
 ## Project status
 
-Project at the initial stage.
+_Project at the initial stage._
 
-See the latest commits on [https://github.com/teratron/pynumic](https://github.com/teratron/pynumic)
+See the latest [commits](https://github.com/teratron/pynumic/commits/master).
 
 ---
 
