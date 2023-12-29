@@ -11,9 +11,9 @@ ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@$(VENV_BIN)/pip install -U pip setuptools
 	@$(VENV_BIN)/pip install poetry
 	@$(VENV_BIN)/poetry shell
-	@poetry check
-	@poetry lock
-	@poetry install
+	@$(VENV_BIN)/poetry check
+	@$(VENV_BIN)/poetry lock
+	@$(VENV_BIN)/poetry install
 	@make dev
 else
 	@python -m venv $(VENV)
