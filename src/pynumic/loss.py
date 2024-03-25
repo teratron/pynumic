@@ -1,7 +1,7 @@
 """TODO: loss.py - """
 import math
-from typing import Callable, Iterable, Generator, Any
 from functools import wraps
+from typing import Callable, Iterable, Generator, Any
 
 from pynumic.exceptions import NotANumberError, InfinityError
 
@@ -69,9 +69,12 @@ def _total_loss(func: Callable[[Any], Iterable[float]]) -> Callable[[Any], float
             miss = func(obj)
             if isinstance(miss, Generator):
                 count = 0.0
-                for value in miss:
-                    loss += __get_loss(value, obj.loss_mode)
-                    count += 1
+                # for value in miss:
+                #     loss += __get_loss(value, obj.loss_mode)
+                #     count += 1
+                loss += __get_loss(list(miss)[0], obj.loss_mode)
+                # loss += __get_loss(next(miss), obj.loss_mode)
+                count += 1
 
                 if count > 1:
                     loss /= count
