@@ -9,7 +9,7 @@ install: ## install and setup virtual environment and poetry
 ifeq ($(shell ls -A | grep -E $(VENV)), $(VENV))
 	@$(VENV_BIN)/python -m pip install --upgrade pip
 	@$(VENV_BIN)/pip install -U pip setuptools
-	@$(VENV_BIN)/pip install poetry
+	@$(VENV_BIN)/pip install -U pip poetry
 	@$(VENV_BIN)/poetry shell
 	@$(VENV_BIN)/poetry check
 	@$(VENV_BIN)/poetry lock
