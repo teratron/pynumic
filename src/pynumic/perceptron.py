@@ -90,7 +90,7 @@ class Perceptron(Propagation, Interface):
         self._data_target = data_target
         self._calculate_neurons()
 
-        ## noinspection PyArgumentList
+        # noinspection PyArgumentList
         return self._calculate_loss()
 
     def train(self, data_input: list[float], data_target: list[float]) -> tuple[int, float]:
@@ -160,12 +160,12 @@ class Perceptron(Propagation, Interface):
         return min_count, min_loss
 
     def write(
-        self,
-        filename: str | None = None,
-        *,
-        flag: str | None = None,
-        config: str | None = None,
-        weights: str | None = None,
+            self,
+            filename: str | None = None,
+            *,
+            flag: str | None = None,
+            config: str | None = None,
+            weights: str | None = None,
     ) -> None:
         """Writes the configuration and/or weights to a file.
 
