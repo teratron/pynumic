@@ -6,9 +6,7 @@ from pynumic import Pynumic
 
 def main() -> None:
     """TODO:"""
-    # Returns a new neural network
-    # instance with the default parameters
-    # for Perceptron neural network.
+    # Returns a new neural network instance.
     pn = Pynumic(
             bias=True,
             hidden_layers=[5, 3],
@@ -22,11 +20,11 @@ def main() -> None:
     dataset = [0.27, -0.31, -0.52, 0.66, 0.81, -0.13, 0.2, 0.49, 0.11, -0.73, 0.28]
     len_input = 3  # Number of input data.
     len_output = 2  # Number of output data.
+    len_data = len(dataset) - len_output + 1
 
     start = time.time()
 
     # Training.
-    len_data = len(dataset) - len_output + 1
     for _ in range(10_000):
         for i in range(len_input, len_data):
             _, _ = pn.train(dataset[i - len_input:i], dataset[i:i + len_output])
