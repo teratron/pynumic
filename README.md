@@ -8,7 +8,7 @@
 [![Code style: mypy](https://img.shields.io/badge/code%20style-mypy-green)](https://github.com/python/mypy)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000)](https://github.com/psf/black)
 
-___
+---
 
 ## Description
 
